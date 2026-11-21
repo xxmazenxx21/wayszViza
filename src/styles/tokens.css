@@ -141,6 +141,12 @@
   --logo-plane:       var(--sky-500);
 }
 [data-site="visa"] .theme-dark { --color-link: var(--sky-400); }   /* links on dark sections: sky, not horizon */
+[data-site="visa"] [data-brand="main"] {   /* WaysZ's own amber, e.g. the Home §1.9 boarding pass that leads to waysz.org */
+  --color-accent:        var(--horizon-500);
+  --color-accent-strong: var(--horizon-500);
+  --color-on-accent:     var(--midnight-900);
+  --color-accent-ink:    var(--horizon-700);
+}
 :root:not([data-site="visa"]) { --color-accent-strong: var(--horizon-500); }
 
 /* ---------- TYPOGRAPHY ---------- */

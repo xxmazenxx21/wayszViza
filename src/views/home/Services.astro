@@ -1,0 +1,96 @@
+---
+/**
+ * Home §1.2–1.5 — Visa Consultation · Document Readiness · Application Guidance · Appointment Preparation
+ * (brief part 04: Arabic name + the brief's English name + text). Each links to its detail page.
+ * Scene: motion/scenes/paper-services.ts. ONE sticky screen with four rests: each service is a page turn onto its
+ * own pop-up diorama (bridge.paper.turn / act). Panels are stacked and faded with opacity only: a focused link
+ * scrolls its panel into place. css tier: our four stills cross-fade with the panels. No JS: a plain list.
+ */
+import { localizePath, useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const items = [
+  { slug: 'visa-consultation', en: 'Visa Consultation', ar: 'استشارة التأشيرة',
+    text: { ar: 'جلسة مخصصة لفهم غرض سفرك ووضعك، وتحديد نوع التأشيرة المناسب ومتطلباته والخطوات المتوقعة.', en: 'A dedicated session to understand the purpose of your trip and your situation, and to identify the right visa type, its requirements and the expected steps.' } },
+  { slug: 'document-readiness', en: 'Document Readiness', ar: 'جاهزية المستندات',
+    text: { ar: 'قائمة مستندات مخصصة لحالتك، ومراجعة ما جهزته، وتنبيهك إلى أي نواقص قبل التقديم.', en: 'A document checklist tailored to your case, a review of what you have prepared, and alerts about anything missing before you apply.' } },
+  { slug: 'application-guidance', en: 'Application Guidance', ar: 'الإرشاد في الطلب',
+    text: { ar: 'إرشادك خطوة بخطوة في تعبئة نموذج الطلب، وتوضيح كل خانة لتتجنب الأخطاء الشائعة.', en: 'Step-by-step guidance as you fill in the application form, with every field explained so you avoid common mistakes.' } },
+  { slug: 'appointment-preparation', en: 'Appointment Preparation', ar: 'الاستعداد للموعد',
+    text: { ar: 'تجهيزك لموعد التقديم أو المقابلة: ما الذي تحضره، وكيف تجيب عن الأسئلة المتوقعة بوضوح وصدق.', en: 'Preparing you for your application appointment or interview: what to bring, and how to answer the expected questions clearly and honestly.' } },
+];
+---
+<section class="psvc" data-scene="paper-services" data-shot data-waypoint aria-labelledby="psvc-title">
+  <div class="psvc__sticky">
+    <div class="psvc__in container">
+      <h2 class="psvc__label" id="psvc-title">{t.nav.services}</h2>
+      <ol class="psvc__list" role="list">
+        {items.map((s, i) => (
+          <li class="psvc__item" data-i={i}>
+            <figure class="psvc__still paper-still" aria-hidden="true">
+              <img src={`/media/img/paper-s${i + 1}.webp`} alt="" width="1200" height="900" loading="lazy" decoding="async" />
+            </figure>
+            <div class="psvc__panel">
+              {lang === 'ar' && <p class="psvc__en" lang="en" dir="ltr">{s.en}</p>}
+              <h3 class="psvc__name">{lang === 'ar' ? s.ar : s.en}</h3>
+              <p class="psvc__text">{s.text[lang]}</p>
+              <a class="link-arrow psvc__link" href={localizePath(`/visa-services/${s.slug}/`, lang)}>
+                {t.cta.details}<span class="visually-hidden">{' — '}{lang === 'ar' ? s.ar : s.en}</span>
+                <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="psvc__ticks" aria-hidden="true">{items.map(() => <span></span>)}</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .psvc { position: relative; }
+  .psvc__in { position: relative; padding-block: var(--section-y); }
+  .psvc__label { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-link); letter-spacing: 0.02em; }
+  .psvc__list { display: grid; gap: var(--space-8); margin-block-start: var(--space-6); }
+  .psvc__still { margin: 0; }
+  .psvc__still img { width: 100%; height: auto; border-radius: var(--radius-lg); }
+  .psvc__panel { max-width: 32rem; margin-block-start: var(--space-5); }
+  .psvc__en { font-size: var(--text-sm); color: var(--color-ink-muted); letter-spacing: 0.02em; }
+  .psvc__name { margin-block-start: var(--space-2); font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem); line-height: 1.2; }
+  :global([dir='rtl']) .psvc__name { line-height: 1.4; }
+  .psvc__text { margin-block-start: var(--space-4); font-size: var(--text-lg); line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 88%, transparent); }
+  .psvc__link { margin-block-start: var(--space-5); color: var(--color-link); font-weight: var(--weight-bold); text-decoration: none; }
+  .psvc__ticks { display: none; }
+
+  /* with JS: one sticky screen, the panels stacked in the same place, the stills behind them (css tier) */
+  :global(.js) .psvc { height: 560vh; height: 560lvh; }
+  :global(.js) .psvc__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: clip; }
+  :global(.js) .psvc__in { position: static; height: 100%; display: grid; align-content: end; padding-block: calc(76px + var(--space-6)) var(--space-8); }
+  :global(.js) .psvc__list { display: grid; margin: 0; }
+  :global(.js) .psvc__item { grid-area: 1 / 1; }
+  :global(.js) .psvc__still { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s var(--ease-out); pointer-events: none; }
+  :global(.js) .psvc__still img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; border-radius: 0; }
+  :global(.js) .psvc__panel { position: relative; z-index: 2; opacity: 0; translate: 0 24px; transition: opacity 0.6s var(--ease-out), translate 0.6s var(--ease-out); }
+  :global(.js) .psvc__item.is-active .psvc__panel { opacity: 1; translate: 0 0; }
+  :global(.js) .psvc__item.is-active .psvc__still { opacity: 1; }
+  :global(.js) .psvc__ticks { display: flex; gap: var(--space-2); margin-block-start: var(--space-6); position: relative; z-index: 2; }
+  .psvc__ticks span { width: 28px; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--color-ink) 22%, transparent); transition: background-color 0.4s var(--ease-out), width 0.4s var(--ease-out); }
+  .psvc__ticks span:global(.is-on) { width: 48px; background: var(--color-accent); }
+  /* the text always sits on a dark gradient (a sticky child keeps it behind the panels) */
+  :global(.js) .psvc__in::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 92%, transparent) 0%, color-mix(in srgb, var(--color-bg) 55%, transparent) 38%, transparent 62%);
+  }
+  @media (min-width: 1024px) {
+    :global(.js) .psvc__in { align-content: center; padding-block: calc(76px + var(--space-6)) var(--space-6); }
+    :global(.js) .psvc__in::before { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 45%, transparent) 38%, transparent 58%); }
+    :global([dir='rtl'].js) .psvc__in::before { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 45%, transparent) 38%, transparent 58%); }
+    :global(.js) .psvc__still { inset-inline-start: 38%; -webkit-mask: radial-gradient(closest-side, black 72%, transparent); mask: radial-gradient(closest-side, black 72%, transparent); }
+    :global(.js) .psvc__still img { object-fit: contain; }
+    :global(html:not(.js)) .psvc__item { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; }
+  }
+  .psvc__label, .psvc__ticks { position: relative; z-index: 2; }
+  @media (max-width: 639px) { .psvc__text { font-size: var(--text-base); } }
+</style>

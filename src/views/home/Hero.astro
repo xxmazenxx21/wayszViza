@@ -1,0 +1,105 @@
+---
+/**
+ * Home — hero (brief part 04 §1: main title · subtitle · two buttons; the alternative title too).
+ * Scene: motion/scenes/paper-hero.ts. The booklet is drawn by the act `paper` in the page's stage host.
+ * The headline words rise from a mask (data-intro on the h1 only); the lead and the buttons are painted at once
+ * and never hidden (LCP). Scrolling: the text leaves, the cover opens, and the alternative title takes the screen
+ * while the booklet lies down. css tier / no JS: our still of the closed booklet.
+ */
+import { localizePath, useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const copy = {
+  ar: {
+    title: 'طريقك إلى التأشيرة يبدأ بخطوة صحيحة',
+    alt: 'ملف مكتمل.. وخطوات واضحة.. واستعداد أفضل لموعدك',
+    lead: 'سواء كنت تسافر للدراسة أو العمل أو الإقامة أو لزيارة عائلتك، نقدم لك استشارات متخصصة وإرشادًا عمليًا يساعدك على فهم متطلبات التأشيرة، وتجهيز ملفك، والاستعداد لموعدك بثقة.',
+  },
+  en: {
+    title: 'Your path to a visa starts with the right step',
+    alt: 'A complete file. Clear steps. Better prepared for your appointment.',
+    lead: 'Whether you are traveling to study, work, live abroad or visit your family, we offer specialized consultations and practical guidance to help you understand the visa requirements, prepare your file and get ready for your appointment with confidence.',
+  },
+}[lang];
+---
+<section class="phero" data-scene="paper-hero" data-shot data-waypoint aria-labelledby="phero-title">
+  <div class="phero__sticky">
+    <div class="phero__still paper-still" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 1023px)" srcset="/media/img/paper-hero-m.webp" width="780" height="1688" />
+        <img src="/media/img/paper-hero.webp" alt="" width="1100" height="1100" decoding="async" fetchpriority="high" />
+      </picture>
+    </div>
+    <div class="phero__scrim" aria-hidden="true"></div>
+
+    <div class="phero__content container">
+      <h1 class="phero__title" id="phero-title" data-intro>{copy.title}</h1>
+      <p class="phero__lead">{copy.lead}</p>
+      <div class="phero__actions">
+        <a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.start}</a>
+        <a class="btn btn--ghost" href={localizePath('/visa-services/', lang)}>{t.cta.explore}</a>
+      </div>
+    </div>
+    <div class="phero__altbox container"><p class="phero__alt">{copy.alt}</p></div>
+  </div>
+</section>
+
+<style>
+  .phero { position: relative; }
+  .phero__sticky {
+    position: relative; overflow: clip;
+    min-height: 100vh; min-height: 100svh;
+    display: grid; align-items: end;
+  }
+  :global(.js) .phero { height: 210vh; height: 210lvh; }
+  :global(.js) .phero__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; min-height: 36rem; }
+  :global(.js) .phero__content { padding-block-end: calc(100lvh - 100svh + var(--space-8)); }
+
+  /* the still (never mirrored): full screen behind the text on phones (the text stays the largest paint),
+     soft-edged on the free side of wide screens */
+  .phero__still { position: absolute; inset: 0; pointer-events: none; }
+  .phero__still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+  @media (min-width: 1024px) {
+    .phero__still {
+      inset-block: 6% 4%; inset-inline: 46% 0;
+      -webkit-mask: radial-gradient(closest-side, black 70%, transparent); mask: radial-gradient(closest-side, black 70%, transparent);
+    }
+    .phero__still img { object-fit: contain; object-position: 50% 50%; }
+  }
+  .phero__scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 94%, transparent) 0%, color-mix(in srgb, var(--color-bg) 72%, transparent) 36%, transparent 64%);
+  }
+  @media (min-width: 1024px) {
+    .phero__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 80%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 38%, transparent 58%); }
+    :global([dir='rtl']) .phero__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 80%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 38%, transparent 58%); }
+    .phero__sticky { align-items: center; }
+  }
+
+  .phero__content { position: relative; z-index: 2; padding-block: calc(76px + var(--space-7)) var(--space-8); }
+  .phero__title { max-width: 13ch; font-size: clamp(2.6rem, 1.2rem + 5.6vw, 6.4rem); line-height: 1.08; letter-spacing: -0.015em; }
+  :global([dir='rtl']) .phero__title { letter-spacing: 0; line-height: 1.32; max-width: 12ch; }
+  .phero__lead { margin-block-start: var(--space-5); max-width: 46ch; font-size: var(--text-lg); line-height: 1.75; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  .phero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-block-start: var(--space-6); }
+  .phero__actions .btn { min-height: 54px; padding-inline: var(--space-7); font-size: var(--text-base); }
+
+  /* the alternative title: in the flow without JS; with JS it takes the middle of the screen while the booklet opens */
+  .phero__altbox { position: relative; z-index: 2; padding-block-end: var(--space-8); }
+  .phero__alt {
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: clamp(1.6rem, 1rem + 2.4vw, 3.1rem); line-height: 1.35;
+    max-width: 15ch; text-wrap: balance;
+  }
+  :global([dir='rtl']) .phero__alt { line-height: 1.55; }
+  /* with JS it takes the text side of the screen while the booklet opens on the other */
+  :global(.js) .phero__altbox { position: absolute; inset-inline: 0; top: 50%; translate: 0 -50%; padding: 0; pointer-events: none; }
+  :global(.js) .phero__alt { opacity: 0; }
+  @media (max-width: 1023px) { :global(.js) .phero__altbox { top: auto; bottom: 10%; translate: 0 0; } }
+
+  @media (max-width: 639px) {
+    .phero__lead { font-size: var(--text-base); }
+    .phero__actions { gap: var(--space-3); }
+    .phero__actions .btn { flex: 1 1 100%; min-height: 50px; }
+  }
+</style>

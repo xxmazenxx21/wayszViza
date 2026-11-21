@@ -1,0 +1,66 @@
+---
+/**
+ * Home — a short FAQ (addition): five questions people really ask a visa consultancy, in our own words.
+ * Ideas from boundless.com, atlys.com, visahq.com, y-axis.com, oravisa.com and official guidance — no text taken.
+ * Nothing promises a visa, an approval, an appointment or a processing time.
+ * Scenes: accordion (open / close) + paper-faq (closed answers `inert`, the rows arrive once). No JS: all open.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const items = {
+  ar: [
+    ['هل تضمنون الموافقة على التأشيرة؟', 'لا. قرار منح التأشيرة أو رفضها للسفارة أو الجهة الرسمية المختصة وحدها. ما نقدمه استشارة وإرشاد: ملف أوضح، وخطوات مفهومة، واستعداد أفضل لموعدك.'],
+    ['متى أبدأ التجهيز قبل موعد سفري؟', 'كلما بدأت مبكرًا كان أفضل؛ فمواعيد التقديم ومدة دراسة الطلبات تختلف من دولة لأخرى ومن وقت لآخر، ولا يستطيع أحد أن يعدك بمدة محددة. نساعدك على ترتيب خطواتك لتكون جاهزًا دون تأخير من جانبك.'],
+    ['هل يمكنني التقديم بنفسي دون استشارة؟', 'نعم، يمكن ذلك في كثير من الحالات. وتفيدك الاستشارة أكثر إذا لم تكن متأكدًا من نوع التأشيرة، أو تسافر لأول مرة، أو سبق رفض طلب لك، أو تريد مراجعة ملفك قبل التقديم.'],
+    ['ماذا أجهز قبل جلسة الاستشارة؟', 'يكفي أن تكون المعلومات معك: بيانات جواز سفرك، والدولة التي تقصدها، وموعد سفرك المتوقع وغرضه، وأي خطابات لديك مثل دعوة أو قبول دراسي، وخطاب الرفض إن وُجد. لا ترسل صور المستندات عبر الموقع.'],
+    ['سبق رفض طلبي، هل يمكنني التقديم مرة أخرى؟', 'غالبًا لا يمنعك الرفض من إعادة التقديم، لكن ذلك يختلف حسب الدولة وسبب الرفض. نبدأ بمراجعة خطاب الرفض لفهم أسبابه، ثم نوضح لك ما يحتاج إلى تحسين قبل أن تقرر.'],
+  ],
+  en: [
+    ['Do you guarantee visa approval?', 'No. The decision to grant or refuse a visa belongs to the embassy or the competent authority alone. What we offer is advice and guidance: a clearer file, steps you understand, and better preparation for your appointment.'],
+    ['How early should I start preparing before my trip?', 'The earlier the better: appointment availability and processing times differ from one country to another and change over time, and no one can promise you a set timeframe. We help you plan your steps so nothing is delayed on your side.'],
+    ['Can I apply on my own without a consultation?', 'Yes, in many cases you can. A consultation helps most when you are unsure which visa you need, are traveling for the first time, have had an application refused, or want your file reviewed before you apply.'],
+    ['What should I prepare before the consultation session?', 'Having the information with you is enough: your passport details, your destination, your expected travel date and purpose, any letters you have such as an invitation or an admission letter, and a refusal letter if there is one. Don’t send copies of documents through the website.'],
+    ['My application was refused before. Can I apply again?', 'A refusal usually doesn’t stop you from reapplying, but this depends on the country and the reason for the refusal. We start by reviewing the refusal letter to understand why, then explain what needs improving before you decide.'],
+  ],
+}[lang];
+---
+<section class="pfaq section" data-scene="accordion paper-faq" data-waypoint aria-labelledby="pfaq-title">
+  <div class="container pfaq__in">
+    <h2 class="pfaq__title" id="pfaq-title">{t.visa.faq}</h2>
+    <div class="pfaq__list">
+      {items.map(([q, a], i) => (
+        <div class="faq__item">
+          <h3 class="pfaq__q">
+            <button type="button" aria-expanded="false" aria-controls={`pfaq-${i}`}>
+              <span>{q}</span>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            </button>
+          </h3>
+          <div class="faq__panel" id={`pfaq-${i}`}><p class="pfaq__a">{a}</p></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pfaq { background: var(--color-bg-alt); }
+  .pfaq__in { display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) { .pfaq__in { grid-template-columns: 1fr 2fr; align-items: start; } }
+  .pfaq__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .pfaq__list { border-block-start: 1px solid var(--color-border); }
+  .pfaq :global(.faq__item) { border-block-end: 1px solid var(--color-border); }
+  .pfaq__q { font: inherit; }
+  .pfaq__q button {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+    width: 100%; padding-block: var(--space-5); text-align: start;
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg); line-height: 1.5;
+  }
+  .pfaq__q button:hover { color: var(--color-accent-ink); }
+  .pfaq__q svg { flex: none; fill: none; stroke: var(--color-accent-ink); stroke-width: 1.8; stroke-linecap: round; transition: rotate var(--dur-base) var(--ease-out); }
+  .pfaq__q button[aria-expanded='true'] svg { rotate: 45deg; }
+  .pfaq__a { padding-block-end: var(--space-5); color: var(--color-ink-muted); line-height: 1.85; max-width: 62ch; }
+</style>

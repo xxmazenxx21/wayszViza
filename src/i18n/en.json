@@ -28,7 +28,8 @@
     "visitMain": "Visit the WaysZ website",
     "whatsapp": "Message us on WhatsApp",
     "call": "Call us",
-    "email": "Send an email"
+    "email": "Send an email",
+    "details": "Details"
   },
   "mainSite": {
     "title": "Part of WaysZ"

@@ -1,0 +1,83 @@
+---
+/**
+ * Home §1.6 «خطوات المساعدة» — «خطوات بسيطة نحو ملف جاهز» + the four steps (brief part 04).
+ * Scene: motion/scenes/paper-steps.ts. The booklet's stitching becomes a sky-blue thread: a dashed stitch line runs
+ * through the four steps and the thread is drawn over it with the scroll; each step lights when the thread
+ * reaches it. The SVG is decorative and mirrors in RTL (the thread follows the reading direction). No JS: drawn.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = {
+  ar: { title: 'خطوات بسيطة نحو ملف جاهز', steps: [
+    ['أرسل طلبك', 'الدولة ونوع التأشيرة وموعد سفرك المتوقع.'],
+    ['جلسة الاستشارة', 'نناقش وضعك ونحدد المسار والمتطلبات.'],
+    ['قائمة مستنداتك', 'قائمة مخصصة بالمستندات والمعلومات المطلوبة.'],
+    ['مراجعة وإرشاد', 'نراجع ملفك ونرشدك في الطلب والموعد.'],
+  ] },
+  en: { title: 'Simple steps to a ready file', steps: [
+    ['Send your request', 'The country, the visa type and your expected travel date.'],
+    ['The consultation session', 'We discuss your situation and set the path and the requirements.'],
+    ['Your document checklist', 'A tailored list of the documents and information required.'],
+    ['Review and guidance', 'We review your file and guide you through your application and appointment.'],
+  ] },
+}[lang];
+// one gentle stitch line through four stops (wide screens: across · small screens: down)
+// wide: through the start of each of the four columns (where the step numbers sit on the line), then out
+const wide = 'M21 60 C 110 12, 190 108, 277 60 S 450 12, 534 60 S 700 108, 790 60 S 940 20, 995 54';
+const tall = 'M30 10 C -10 120, 70 200, 30 300 S -10 480, 30 590 S 70 760, 30 880';
+---
+<section class="psteps section theme-dark" data-scene="paper-steps" data-waypoint aria-labelledby="psteps-title">
+  <div class="container">
+    <h2 class="psteps__title" id="psteps-title">{copy.title}</h2>
+    <div class="psteps__route">
+      <svg class="psteps__svg psteps__svg--wide" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="psteps__stitch" d={wide} /><path class="psteps__thread" d={wide} />
+      </svg>
+      <svg class="psteps__svg psteps__svg--tall" viewBox="0 0 60 890" preserveAspectRatio="none" aria-hidden="true">
+        <path class="psteps__stitch" d={tall} /><path class="psteps__thread" d={tall} />
+      </svg>
+      <ol class="psteps__list" role="list">
+        {copy.steps.map(([title, text], i) => (
+          <li class="pstep">
+            <span class="pstep__num" aria-hidden="true">{i + 1}</span>
+            <h3 class="pstep__title">{title}</h3>
+            <p class="pstep__text">{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .psteps { position: relative; overflow: clip; }
+  .psteps__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; max-width: 18ch; }
+  :global([dir='rtl']) .psteps__title { line-height: 1.4; }
+  .psteps__route { position: relative; margin-block-start: var(--space-8); }
+  .psteps__svg { position: absolute; pointer-events: none; overflow: visible; fill: none; }
+  :global([dir='rtl']) .psteps__svg { scale: -1 1; }
+  .psteps__stitch { stroke: color-mix(in srgb, var(--color-ink) 28%, transparent); stroke-width: 2; stroke-dasharray: 7 9; vector-effect: non-scaling-stroke; }
+  .psteps__thread { stroke: var(--color-accent); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 60%, transparent)); }
+  .psteps__svg--wide { inset: 0 0 auto 0; width: 100%; height: 120px; }
+  .psteps__svg--tall { display: none; }
+  .psteps__list { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); padding-block-start: 128px; }
+  .pstep__num {
+    position: absolute; top: -94px; inset-inline-start: 0; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg);
+    background: var(--color-bg); border: 2px solid color-mix(in srgb, var(--color-ink) 30%, transparent);
+    transition: background-color 0.5s var(--ease-out), border-color 0.5s var(--ease-out), color 0.5s var(--ease-out), scale 0.5s var(--ease-out);
+  }
+  .pstep { position: relative; }
+  .pstep:global(.is-on) .pstep__num, :global(html:not(.js)) .pstep__num { background: var(--color-accent-strong); border-color: var(--color-accent); color: var(--color-on-accent); scale: 1.08; }
+  .pstep__title { font-size: var(--text-xl); line-height: 1.4; }
+  .pstep__text { margin-block-start: var(--space-3); color: var(--color-ink-muted); line-height: 1.8; }
+  @media (max-width: 1023px) {
+    .psteps__svg--wide { display: none; }
+    .psteps__svg--tall { display: block; inset-block: 0; inset-inline-start: 0; width: 60px; height: 100%; }
+    .psteps__list { grid-template-columns: 1fr; gap: var(--space-7); padding-block-start: 0; padding-inline-start: 84px; }
+    .pstep__num { top: 0; inset-inline-start: -80px; }
+    .pstep { min-height: 3.5rem; }
+  }
+</style>

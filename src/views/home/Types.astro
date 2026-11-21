@@ -1,0 +1,94 @@
+---
+/**
+ * Home — «أنواع التأشيرات» (addition, built on brief part 04 §2.2): the five categories as cards with a photo, the
+ * brief's short description and its «تناسب:» line, each linking to its detail page; + «لست متأكدًا من نوع تأشيرتك؟»
+ * → the consultation page. Light motion only (data-reveal). Photos: docs/media-credits.md (Pexels).
+ */
+import { Image } from 'astro:assets';
+import { localizePath, useTranslations, type Lang } from '../../i18n';
+import student from '../../assets/media/visa-student.jpg';
+import business from '../../assets/media/visa-business.jpg';
+import immigration from '../../assets/media/visa-immigration.jpg';
+import family from '../../assets/media/visa-family.jpg';
+import tourist from '../../assets/media/visa-tourist.jpg';
+
+interface Props { lang: Lang; names: Record<string, { ar: string; en: string }> }
+const { lang, names } = Astro.props;
+const t = useTranslations(lang);
+const suits = { ar: 'تناسب:', en: 'Suited to:' }[lang];
+const cards = [
+  { slug: 'student-visa', img: student, en: 'Student Visa',
+    text: { ar: 'للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.', en: 'For enrolling in universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.' },
+    fit: { ar: 'الطلاب المقبولين أو المتقدمين لبرامج دراسية.', en: 'Students who have been accepted to, or are applying for, study programs.' } },
+  { slug: 'business-visa', img: business, en: 'Business Visa',
+    text: { ar: 'لحضور الاجتماعات والمعارض والمؤتمرات الدولية أو زيارة الشركاء. نرشدك في خطابات الدعوة ومستندات جهة العمل.', en: 'For attending meetings and international exhibitions and conferences, or visiting partners. We guide you on invitation letters and your employer’s documents.' },
+    fit: { ar: 'رجال الأعمال والعارضين والمشاركين في المؤتمرات.', en: 'Business people, exhibitors and conference participants.' } },
+  { slug: 'immigration-residence-visa', img: immigration, en: 'Immigration & Residence Visa',
+    text: { ar: 'للإقامة الطويلة أو العمل أو الهجرة إلى دولة أخرى. نساعدك على فهم البرامج المتاحة وشروطها وتجهيز ملفك.', en: 'For a long stay, work or immigration to another country. We help you understand the available programs and their conditions, and prepare your file.' },
+    fit: { ar: 'الراغبين في الإقامة أو العمل أو الاستقرار بالخارج.', en: 'People who want to live, work or settle abroad.' } },
+  { slug: 'family-visa', img: family, en: 'Family Visa',
+    text: { ar: 'لزيارة الأقارب أو الالتحاق بأفراد الأسرة المقيمين بالخارج. نرشدك في إثبات صلة القرابة وتجهيز مستندات الداعي.', en: 'For visiting relatives or joining family members who live abroad. We guide you on proving your relationship and preparing the inviting person’s documents.' },
+    fit: { ar: 'من لديهم أقارب من الدرجة الأولى أو أزواج بالخارج.', en: 'People with first-degree relatives or a spouse abroad.' } },
+  { slug: 'tourist-visa', img: tourist, en: 'Tourist Visa',
+    text: { ar: 'للزيارات القصيرة. نساعدك على توضيح غرض الزيارة، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة.', en: 'For short visits. We help you explain the purpose of your visit and organize your financial documents and proof of your ties to home.' },
+    fit: { ar: 'المسافرين في زيارات قصيرة المدة.', en: 'Travelers on short visits.' } },
+];
+const unsure = {
+  ar: { title: 'لست متأكدًا من نوع تأشيرتك؟', text: 'أخبرنا بغرض سفرك ووجهتك ومدة إقامتك، وسنساعدك على تحديد الفئة المناسبة ومتطلباتها قبل أن تبدأ.' },
+  en: { title: 'Not sure which visa you need?', text: 'Tell us the purpose of your trip, your destination and how long you plan to stay, and we’ll help you identify the right category and its requirements before you start.' },
+}[lang];
+---
+<section class="ptypes section" data-waypoint aria-labelledby="ptypes-title">
+  <div class="container">
+    <h2 class="ptypes__title" id="ptypes-title" data-reveal>{t.nav.categories}</h2>
+    <ul class="ptypes__grid" role="list">
+      {cards.map((c) => (
+        <li class="ptype" data-reveal>
+          <a class="ptype__link" href={localizePath(`/visa-services/${c.slug}/`, lang)}>
+            <div class="ptype__media">
+              <Image src={c.img} alt="" widths={[420, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw" format="webp" quality={66} loading="lazy" decoding="async" />
+            </div>
+            <div class="ptype__body">
+              {lang === 'ar' && <p class="ptype__en" lang="en" dir="ltr">{c.en}</p>}
+              <h3 class="ptype__name">{names[c.slug]?.[lang] ?? c.en}</h3>
+              <p class="ptype__text">{c.text[lang]}</p>
+              <p class="ptype__fit"><strong>{suits}</strong>{' '}{c.fit[lang]}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+      <li class="ptype ptype--unsure" data-reveal>
+        <div class="ptype__body">
+          <h3 class="ptype__name">{unsure.title}</h3>
+          <p class="ptype__text">{unsure.text}</p>
+          <a class="link-arrow ptype__more" href={localizePath('/consultation/', lang)}>
+            {t.cta.request}
+            <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ptypes { background: var(--color-bg); }
+  .ptypes__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .ptypes__grid { display: grid; gap: var(--space-5); margin-block-start: var(--space-7); grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .ptype { border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; }
+  .ptype__link { display: flex; flex-direction: column; width: 100%; text-decoration: none; color: inherit; }
+  .ptype__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-bg-alt); }
+  .ptype__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-slow) var(--ease-out); }
+  .ptype__link:hover .ptype__media :global(img), .ptype__link:focus-visible .ptype__media :global(img) { scale: 1.05; }
+  .ptype__body { padding: var(--space-5) var(--space-5) var(--space-6); display: grid; gap: var(--space-2); align-content: start; }
+  .ptype__en { font-size: var(--text-xs); color: var(--color-ink-muted); letter-spacing: 0.02em; }
+  .ptype__name { font-size: var(--text-xl); line-height: 1.35; }
+  .ptype__link:hover .ptype__name { color: var(--color-accent-ink); }
+  .ptype__text { color: var(--color-ink-muted); line-height: 1.8; }
+  .ptype__fit { font-size: var(--text-sm); color: var(--color-ink-muted); margin-block-start: var(--space-2); }
+  .ptype__fit strong { color: var(--color-ink); font-weight: var(--weight-bold); }
+  .ptype--unsure { background: var(--color-brand); color: var(--color-on-brand); align-items: end; }
+  .ptype--unsure .ptype__body { padding: var(--space-7) var(--space-6); }
+  .ptype--unsure .ptype__text { color: color-mix(in srgb, var(--color-on-brand) 82%, transparent); }
+  .ptype__more { color: var(--color-on-brand); font-weight: var(--weight-bold); text-decoration: none; margin-block-start: var(--space-4); }
+</style>

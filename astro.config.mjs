@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://waysz-visa.com',
   trailingSlash: 'always',          // matches build.format "directory" → /about/ → about/index.html
-  build: { format: 'directory' },
+  build: { format: 'directory', inlineStylesheets: 'always' },   // no render-blocking CSS request: FCP / LCP on slow mobile networks
   i18n: {
     defaultLocale: 'ar',
     locales: ['ar', 'en'],

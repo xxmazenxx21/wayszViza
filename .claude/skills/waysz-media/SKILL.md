@@ -123,7 +123,8 @@ ffmpeg -i BlackMarble_2016_01deg.jpg -vf "scale=2048:1024:flags=lanczos" -c:v li
 that act rendered in OUR palette (sky accent on Visa — never reuse a WaysZ still, it is amber). The acts keep their
 dev poster switches (`?globe=poster`, `?scales=poster`, `?gala=curtain|hall`, `?sky=…`); WaysZ's render scripts
 (`scripts/render-*-still.mjs` in the WaysZ repo) show how to screenshot them. Re-render whenever the palette or the
-act changes, convert to WebP (quality 80).
+act changes, convert to WebP (quality 80). The Home paper world has its own: `node scripts/render-paper-still.mjs`
+(dev server running; writes `public/media/img/paper-*.webp`).
 
 **Environment light for 3D** — a Poly Haven HDRI (CC0), 1k download, scaled small (reflections on rough metal need
 no detail): `ffmpeg -i in_1k.hdr -vf "scale=256:128:flags=area" public/media/img/NAME.hdr` (≈ 70 KB, still HDR).
