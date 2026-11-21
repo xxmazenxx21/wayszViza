@@ -1,0 +1,75 @@
+---
+/**
+ * Home §1.1 «تعريف بخدمات التأشيرات» — «كيف نساعدك في رحلة التأشيرة؟» + the whole paragraph (brief part 04).
+ * Scene: motion/scenes/paper-help.ts. The first spread of the booklet pops up behind it: three paper pieces
+ * show the three problems the paragraph names, and scrolling fixes them in turn (bridge.paper.fix). The same
+ * three phrases are marked in the text and get their accent underline as each one is fixed.
+ * css tier / no JS: our still of the spread with the three problems fixed.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+// the paragraph, cut at the three problems it names: [text, problem, text, problem, text, problem, text]
+const copy = {
+  ar: {
+    title: 'كيف نساعدك في رحلة التأشيرة؟',
+    parts: ['كثيرًا ما يُرفض طلب التأشيرة بسبب ', 'نقص مستند', '، أو ', 'خطأ في تعبئة الطلب', '، أو ', 'عدم وضوح غرض السفر',
+      '. في WaysZ Visa نساعدك على فهم المتطلبات وتجنب هذه الأخطاء، لتتقدم ملفًا مكتملًا ومنظمًا يعكس وضعك بوضوح. قرار منح التأشيرة يعود للسفارة وحدها، ودورنا أن تتقدم وأنت أكثر استعدادًا.'],
+  },
+  en: {
+    title: 'How do we help on your visa journey?',
+    parts: ['Visa applications are often refused because of ', 'a missing document', ', ', 'a mistake in the application form', ', or ', 'an unclear purpose of travel',
+      '. At WaysZ Visa we help you understand the requirements and avoid these mistakes, so you apply with a complete, organized file that shows your situation clearly. The decision to grant a visa belongs to the embassy alone; our role is to make sure you apply better prepared.'],
+  },
+}[lang];
+---
+<section class="phelp" data-scene="paper-help" data-shot data-waypoint aria-labelledby="phelp-title">
+  <div class="phelp__sticky">
+    <div class="phelp__still paper-still" aria-hidden="true">
+      <img src="/media/img/paper-help.webp" alt="" width="1400" height="1000" loading="lazy" decoding="async" />
+    </div>
+    <div class="phelp__scrim" aria-hidden="true"></div>
+    <div class="phelp__content container">
+      <div class="phelp__card">
+        <h2 class="phelp__title" id="phelp-title">{copy.title}</h2>
+        <p class="phelp__text">
+          {copy.parts.map((part, i) => (i % 2 ? <span class="phelp__fix" data-fix={(i - 1) / 2}>{part}</span> : part))}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .phelp { position: relative; }
+  .phelp__sticky { position: relative; overflow: clip; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; }
+  :global(.js) .phelp { height: 260vh; height: 260lvh; }
+  :global(.js) .phelp__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; }
+
+  .phelp__still { position: absolute; inset: 0; pointer-events: none; }
+  .phelp__still img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  @media (min-width: 1024px) {
+    .phelp__still { inset-inline: 40% 0; -webkit-mask: radial-gradient(closest-side, black 72%, transparent); mask: radial-gradient(closest-side, black 72%, transparent); }
+    .phelp__still img { object-fit: contain; }
+    .phelp__sticky { align-items: center; }
+  }
+  .phelp__scrim { position: absolute; inset: 0; pointer-events: none; -webkit-mask: linear-gradient(to bottom, transparent, black 22%); mask: linear-gradient(to bottom, transparent, black 22%); background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 92%, transparent) 0%, color-mix(in srgb, var(--color-bg) 62%, transparent) 40%, transparent 66%); }
+  @media (min-width: 1024px) {
+    .phelp__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 50%, transparent) 40%, transparent 60%); }
+    :global([dir='rtl']) .phelp__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 50%, transparent) 40%, transparent 60%); }
+  }
+  .phelp__content { position: relative; z-index: 2; padding-block: var(--space-9) var(--space-8); }
+  .phelp__card { max-width: 34rem; }
+  .phelp__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.2; }
+  :global([dir='rtl']) .phelp__title { line-height: 1.4; }
+  .phelp__text { margin-block-start: var(--space-5); font-size: var(--text-lg); line-height: 1.9; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  /* the three problems: underlined in the accent once fixed (the act fixes the same three pieces) */
+  .phelp__fix {
+    background: linear-gradient(var(--color-accent), var(--color-accent)) no-repeat 0 100% / 0% 2px;
+    transition: background-size 0.7s var(--ease-out), color 0.7s var(--ease-out);
+  }
+  :global([dir='rtl']) .phelp__fix { background-position: 100% 100%; }
+  .phelp__fix:global(.is-fixed), :global(html:not(.js)) .phelp__fix { background-size: 100% 2px; color: var(--color-ink); }
+  @media (max-width: 639px) { .phelp__text { font-size: var(--text-base); } }
+</style>

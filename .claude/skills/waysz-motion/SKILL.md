@@ -191,6 +191,8 @@ even there every GSAP scene, Lenis and the cursor run. Smoothness = the stage's 
 
 ## Scenes (`src/motion/scenes/<name>.ts`)
 
+WaysZ Visa Home («رحلة الورق», act `paper`): paper-thread · paper-hero · paper-help · paper-services · paper-steps ·
+paper-faq · paper-cta (+ accordion, boarding-pass, footer-landing). Contract: `reference.md` → «paper».
 Built for the WaysZ pages (names below = the WaysZ page that uses them; all available here as lazy chunks):
 Home: preloader · hero-takeoff · image-sequence · areas · media-reveal · globe-route · approach ·
 boarding-pass · footer-landing (every page). Immigration page: page-hero · journey-route · dossier ·

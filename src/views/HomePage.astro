@@ -1,59 +1,63 @@
 ---
 /**
- * Home (brief part 01 «ثانيًا: موقع WaysZ Visa» §1 · copy: part 04 §1). Skeleton: the hero carries its copy,
- * every other section is a <TodoSection> in the brief's order — replace one at a time.
+ * Home — «رحلة الورق» / "The Paper Journey" (docs/home-creative-treatment.md).
+ * Copy: brief part 04 «محتوى موقع WaysZ Visa», Home Page, every element in its order, word for word (Arabic is the
+ * source; English is a faithful translation). Additions built on the brief: «أنواع التأشيرات» (part 04 §2.2) and a
+ * short FAQ (our own words). Nothing promises a visa, an approval, an appointment or a processing time.
+ *
+ * ONE stage host (`.paper__stage`, CSS sticky) behind hero → §1.1 → §1.2–1.5: the act `paper` (scene paper-thread)
+ * draws the booklet there; the sections scroll over it. §1.8 has its own host for the reprise (scene paper-cta).
+ * One file per section in views/home/. css tier / no JS: our own stills of the paper world (render-paper-still.mjs).
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TodoSection from '../components/TodoSection.astro';
-import { site } from '../lib/site';
-import { localizePath, useTranslations, type Lang } from '../i18n';
+import Hero from './home/Hero.astro';
+import Help from './home/Help.astro';
+import Services from './home/Services.astro';
+import Types from './home/Types.astro';
+import Steps from './home/Steps.astro';
+import Faq from './home/Faq.astro';
+import Notice from './home/Notice.astro';
+import Cta from './home/Cta.astro';
+import Main from './home/Main.astro';
+import { useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-
-// Hero (part 04 §1). Alternative title in the brief: «ملف مكتمل.. وخطوات واضحة.. واستعداد أفضل لموعدك»
-const copy = {
-  ar: {
-    title: 'طريقك إلى التأشيرة يبدأ بخطوة صحيحة',
-    lead: 'سواء كنت تسافر للدراسة أو العمل أو الإقامة أو لزيارة عائلتك، نقدم لك استشارات متخصصة وإرشادًا عمليًا يساعدك على فهم متطلبات التأشيرة، وتجهيز ملفك، والاستعداد لموعدك بثقة.',
-  },
-  en: {
-    title: 'Your path to a visa starts with the right step',
-    lead: 'Whether you are traveling to study, work, live abroad or visit your family, we offer specialized consultations and practical guidance to help you understand the visa requirements, prepare your file and get ready for your appointment with confidence.',
-  },
-}[lang];
+const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
+const names = Object.fromEntries(visas.map((v) => [v.id, { ar: v.data.ar.name, en: v.data.en.name }]));
 ---
 <BaseLayout lang={lang} title={t.pages.home.title} description={t.pages.home.description} preloader headerOverlay>
-  <!-- Hero (part 04 §1): main title, subtitle, two buttons -->
-  <section class="hero theme-dark">
-    <div class="container hero__inner stack">
-      <h1>{copy.title}</h1>
-      <p class="lead">{copy.lead}</p>
-      <div class="hero__actions">
-        <a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.start}</a>
-        <a class="btn btn--ghost" href={localizePath('/visa-services/', lang)}>{t.cta.explore}</a>
-      </div>
+  <div class="paper theme-dark">
+    <div class="paper__stage stage-host" data-scene="paper-thread" aria-hidden="true"></div>
+    <div class="paper__body">
+      <Hero lang={lang} />
+      <Help lang={lang} />
+      <Services lang={lang} />
     </div>
-  </section>
-
-  <TodoSection ref="1.1" title="تعريف بخدمات التأشيرات — «كيف نساعدك في رحلة التأشيرة؟»" />
-  <TodoSection ref="1.2" title="استشارة التأشيرة — Visa Consultation" />
-  <TodoSection ref="1.3" title="جاهزية المستندات — Document Readiness" />
-  <TodoSection ref="1.4" title="الإرشاد في الطلب — Application Guidance" />
-  <TodoSection ref="1.5" title="الاستعداد للموعد — Appointment Preparation" />
-  <TodoSection ref="1.6" title="خطوات المساعدة — «خطوات بسيطة نحو ملف جاهز»" />
-  <TodoSection ref="1.7" title="توضيح أن الموافقة ليست مضمونة" />
-  <TodoSection ref="1.8" title="زر بدء الاستشارة">
-    <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)}>{t.cta.start}</a></p>
-  </TodoSection>
-  <TodoSection ref="1.9" title="رابط WaysZ الرئيسي — «جزء من WaysZ»">
-    <p><a class="btn btn--dark" href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></p>
-  </TodoSection>
+  </div>
+  <Types lang={lang} names={names} />
+  <Steps lang={lang} />
+  <Faq lang={lang} />
+  <Notice lang={lang} />
+  <Cta lang={lang} />
+  <Main lang={lang} />
 </BaseLayout>
 
-<style>
-  .hero { min-height: 100svh; display: grid; align-items: center; padding-block: 120px var(--space-8); }
-  .hero h1 { font-size: var(--text-hero); max-width: 18ch; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); padding-block-start: var(--space-4); }
+<style is:global>
+  /* One stage host for hero → §1.5: it sticks to the screen while the sections scroll over it (legal-thread pattern). */
+  .paper { position: relative; background: var(--color-bg); }
+  .paper__stage { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; }
+  .paper__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
+  /* without JS there is no canvas: the sections simply follow each other with their stills */
+  html:not(.js) .paper__stage { display: none; }
+  html:not(.js) .paper__body { margin-block-start: 0; }
+  /* our stills of the paper world (css tier, no JS) step aside while the canvas paints */
+  .paper-still { transition: opacity 0.9s var(--ease-out); }
+  .paper__stage.is-drawing ~ .paper__body .paper-still,
+  .paper__stage.is-drawing ~ .paper__body .psvc__item.is-active .paper-still,   /* beats the panels' own .is-active rule */
+  .pcta__stage.is-drawing ~ .paper-still { opacity: 0; }
+  /* dev: re-rendering the stills (scripts/render-paper-still.mjs) */
+  .is-poster .paper__body, .is-poster .pcta__in, .is-poster .pcta .paper-still { visibility: hidden; }
 </style>

@@ -151,3 +151,22 @@ export const sky = {
   compact: false,                            // portrait screens: the four constellations stand in a column
   poster: '' as '' | 'scatter' | 'all' | (typeof SKY_AREAS)[number],   // dev only (?sky=…): stills for the css tier
 };
+
+/**
+ * WaysZ Visa Home — «رحلة الورق» / "The Paper Journey" (docs/home-creative-treatment.md). Written by the scenes
+ * paper-thread · paper-hero · paper-help · paper-services · paper-cta; read by acts/paper.ts (two instances: the
+ * 'journey' host behind hero → §1.5 and the 'finale' host of §1.8). Sections of the journey host, in page order:
+ * 0 hero · 1 §1.1 how we help · 2 §1.2–1.5 services.
+ */
+export type PaperPoster = '' | 'hero' | 'help' | 's1' | 's2' | 's3' | 's4' | 'finale';
+export const paper = {
+  shot: 0,                                   // journey: section index + progress inside it (0…3) → camera, cover, lay-down, pop-up
+  fix: 0,                                    // §1.1: 0…3 — the three problems fixed in turn (missing piece · field · signpost)
+  turn: 0,                                   // §1.2–1.5: 0 = the §1.1 spread · k = service k's diorama (1…4); fractions = mid page-turn
+  act: 0,                                    // 0…1: the current service diorama's own motion (sheets fly in, fields light, door opens…)
+  ribbon: 0,                                 // §1.8: 0…1 the ribbon bookmark slides out of the closed booklet
+  seal: 0,                                   // §1.8: counts the «ملف جاهز» seal landings (the booklet bounces once per landing)
+  side: 1 as 1 | -1,                         // 1 = LTR (text on the left, booklet hinged on its left) · -1 = RTL (mirrored layout, never mirrored art)
+  compact: false,                            // small / portrait screens: the booklet holds the upper part of the screen
+  poster: '' as PaperPoster,                 // dev only (?paper=hero|help|s1…s4|finale): a still for the css tier
+};

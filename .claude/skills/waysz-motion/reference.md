@@ -271,6 +271,40 @@ starts from exactly it), `sky-all` (css tier: behind the hero once the title set
 - **services-unite** (`Unite.astro`): 300lvh sticky; progress = `sky.unite`; each part of the sentence gets `.is-on` when
   its arc draws (`UNITE` in bridge.ts), the closing line when the ring closes. Heading by words once.
 
+### paper — WaysZ Visa Home «رحلة الورق» (act `paper`, scenes paper-thread · paper-hero · paper-help · paper-services · paper-steps · paper-faq · paper-cta)
+
+```html
+<div class="paper theme-dark">
+  <div class="paper__stage stage-host" data-scene="paper-thread" aria-hidden="true"></div>   <!-- ONE sticky host -->
+  <div class="paper__body">                                                                  <!-- margin-top: -100lvh -->
+    <section data-scene="paper-hero" data-shot>…</section>      <!-- 0 -->
+    <section data-scene="paper-help" data-shot>…</section>      <!-- 1 -->
+    <section data-scene="paper-services" data-shot>…</section>  <!-- 2 -->
+  </div>
+</div>
+…
+<section class="pcta" data-scene="paper-cta"><div class="pcta__stage stage-host"></div>…</section>   <!-- finale host -->
+```
+
+- `createPaperAct(host, 'journey' | 'finale')` — one act, two hosts; the stage hands the canvas to the most visible
+  host. The finale act is built in idle time right after the stage boots (programs + atlas shared, nothing compiles
+  mid-scroll).
+- Bridge `paper`: `shot` (section + progress, from paper-thread → camera crane, cover angle, lay-down, first pop-up) ·
+  `fix` 0…3 (§1.1) · `turn` 0…4 (0 = §1.1 spread, k = service k; fractions = page turn) · `act` 0…1 (the diorama's
+  own motion during a rest) · `ribbon` 0…1 · `seal` (counter: the booklet bounces) · `side` · `compact` · `poster`.
+- Budget (kept): planes only; cover hinge, page curl and every pop-up hinge / slide / swing / spin in the vertex
+  shader; ONE merged geometry per diorama (shadows included); 480 instanced flakes in two meshes; ONE runtime canvas
+  atlas 2048²; fake light; no shadow maps, render targets, MSAA, bloom, models or HDRI; one overlay quad for grain +
+  vignette. Measured: 9–13 draw calls per frame, act chunk 16 KB gzip.
+- No depth buffer: parts are ordered by `renderOrder` (night −10 · flakes behind −5 · edges 0 · pages / cover lying
+  open 1 · turning page 2 · dioramas 3 · cover closed 4 · ribbon 5 · flakes in front 8 · finish 10), pieces inside a
+  diorama by merge order (far → near, shadows first).
+- A diorama is a list of `Piece`s (acts/paper.ts): drawing, hinge point on the spread, yaw, standing angle, offset
+  in its own plane, rise / act windows, motion (`travel` · `swing` · `spin`) and fade (`in` · `out` · `glow`).
+  New spread = new list + new drawings in the atlas; no new geometry code.
+- RTL: the layout mirrors (hinge on the right, pages turn the other way, `x × side`), drawings never do.
+- css tier / no JS: stills from `scripts/render-paper-still.mjs` (`?paper=hero|help|s1…s4|finale`).
+
 ### destinations (Motion Lab) — sticky cards that stack
 
 Kept for the Motion Lab; Home uses `areas`.
@@ -300,16 +334,15 @@ paths they name live in the WaysZ repo) or add new scenes.
 | ------- | ----------------------------------------- | ----- | ------------------------------------------------------------- |
 | —       | Intro                                     | logo  | `preloader` (unchanged) — BUILT (kept from WaysZ)              |
 | —       | Header                                    | —     | transparent over the hero, glass after 80px, mobile menu, «خدمات التأشيرات» submenu (two groups) — BUILT |
-| 1       | Home · Hero (title, subtitle, 2 buttons)  | TODO  | TODO                                                          |
-| 1.1     | Home · how we help                        | TODO  | TODO                                                          |
-| 1.2     | Home · Visa Consultation                  | TODO  | TODO                                                          |
-| 1.3     | Home · Document Readiness                 | TODO  | TODO                                                          |
-| 1.4     | Home · Application Guidance               | TODO  | TODO                                                          |
-| 1.5     | Home · Appointment Preparation            | TODO  | TODO                                                          |
-| 1.6     | Home · help steps (4)                     | TODO  | TODO                                                          |
-| 1.7     | Home · approval is not guaranteed         | —     | TODO (a legal notice: static, never animated)                  |
-| 1.8     | Home · start-consultation CTA             | TODO  | TODO                                                          |
-| 1.9     | Home · «جزء من WaysZ» (link to waysz.org) | TODO  | TODO                                                          |
+| 1       | Home · Hero (title, subtitle, 2 buttons + the alternative title) | act `paper`: closed booklet among paper flakes, foil mark · still `paper-hero(-m).webp` | `paper-thread` (one sticky host, hero → §1.5) · `paper-hero` (sticky 210lvh: words rise, text leaves, cover opens, booklet lies down, alternative title on the text side) — BUILT |
+| 1.1     | Home · how we help                        | act `paper`: the first spread pops up, three problems fixed · still `paper-help.webp` | `paper-help` (sticky 260lvh → `paper.fix` 0…3, the three phrases underlined in turn) — BUILT |
+| 1.2–1.5 | Home · the four services                  | act `paper`: a page turn (curl) per service onto its pop-up diorama · stills `paper-s1…s4.webp` | `paper-services` (sticky 560lvh, 4 rests → `paper.turn` / `paper.act`, panels by opacity) — BUILT |
+| +       | Home · «أنواع التأشيرات» (5 categories + not sure) | Pexels photos (`visa-*.jpg`) | `data-reveal` — BUILT |
+| 1.6     | Home · help steps (4)                     | —     | `paper-steps`: the stitching becomes a sky-blue thread (DrawSVG, scrubbed), steps light — BUILT |
+| +       | Home · FAQ (5)                            | —     | `accordion` + `paper-faq` — BUILT |
+| 1.7     | Home · approval is not guaranteed         | —     | none: a static card, never animated — BUILT |
+| 1.8     | Home · start-consultation CTA             | act `paper` (finale host): the booklet returns, ribbon slides out · still `paper-finale.webp` | `paper-cta`: the «ملف جاهز» seal (DOM) lands once, the booklet bounces — BUILT |
+| 1.9     | Home · «جزء من WaysZ» (link to waysz.org) | WaysZ gate photo | `boarding-pass` reused, reversed (WaysZ Visa → WaysZ), amber via `[data-brand="main"]` — BUILT |
 | —       | Footer                                    | logo  | `footer-landing` (runway + touchdown) — BUILT (kept from WaysZ); the legal notice is never animated |
 | 2       | Visa Services · intro                     | TODO  | TODO                                                          |
 | 2.1     | Visa Services · the four services         | TODO  | TODO                                                          |
@@ -320,7 +353,8 @@ paths they name live in the WaysZ repo) or add new scenes.
 | —       | Contact · intro · contact items · quick buttons · consultation card | TODO | TODO                            |
 | 4       | Consultation · intro + form + §4.8 warning | TODO | TODO (`form-flight` is the toolkit's form scene)               |
 
-Pins: Home may use 3, other pages 2. Prefer CSS sticky + scrub whenever a scene only holds the screen.
+Pins: Home may use 3 and uses 0 — the hero, §1.1 and §1.2–1.5 are CSS sticky + scrub. Other pages: max 2.
+Home concept and budgets: `docs/home-creative-treatment.md`.
 
 ## What to reuse on the next pages
 
