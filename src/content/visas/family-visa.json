@@ -1,0 +1,82 @@
+{
+  "kind": "category",
+  "order": 4,
+  "ar": {
+    "name": "التأشيرة العائلية",
+    "description": "تريد زيارة أقاربك أو الالتحاق بأفراد أسرتك المقيمين بالخارج؟ نرشدك في إثبات صلة القرابة، وتجهيز مستندات الداعي، وتنظيم ملفك بحيث يعكس غرض زيارتك بوضوح.",
+    "audience": [
+      "من يزور أقارب من الدرجة الأولى مقيمين بالخارج.",
+      "الأزواج والأبناء الراغبون في الالتحاق بأحد أفراد الأسرة المقيم بالخارج.",
+      "المقيمون بالخارج الذين يدعون أفراد أسرهم ويريدون فهم ما يُطلب منهم."
+    ],
+    "help": [
+      "تحديد نوع التأشيرة المناسب لحالتك: زيارة عائلية أم لمّ شمل.",
+      "الإرشاد في المستندات التي تثبت صلة القرابة، وترجمتها ترجمة معتمدة عبر WaysZ.",
+      "توضيح مستندات الداعي، مثل خطاب الدعوة وإثبات إقامته وقدرته المالية إن طُلبت.",
+      "مراجعة ملفك قبل التقديم، وتجهيزك للمقابلة إن كانت مطلوبة."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "مستندات صلة القرابة، مثل شهادة الميلاد أو عقد الزواج.",
+      "خطاب دعوة من الداعي يوضح غرض الزيارة ومدتها.",
+      "صورة من جواز سفر الداعي وما يثبت إقامته في بلد الزيارة.",
+      "ما يثبت القدرة المالية لك أو للداعي.",
+      "ما يثبت ارتباطك بالعودة في الزيارات القصيرة، مثل خطاب جهة العمل أو الدراسة."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف المتطلبات عادةً حسب الدولة ونوع التأشيرة ودرجة القرابة.",
+    "notGuaranteed": [
+      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
+      "لا نضمن قبول طلبات لمّ الشمل؛ فشروطها تحددها الجهة المختصة وحدها.",
+      "رسوم السفارة ومراكز التقديم وتكاليف الترجمة والتوثيق غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "ما الفرق بين الزيارة العائلية ولمّ الشمل؟", "a": "الزيارة العائلية إقامة قصيرة تعود بعدها، أما لمّ الشمل فيعني الإقامة مع أحد أفراد أسرتك المقيم بالخارج. لكل منهما متطلبات مختلفة، ونساعدك على تحديد الأنسب لحالتك." },
+      { "q": "هل يحتاج الداعي إلى تقديم مستندات؟", "a": "في أغلب الحالات نعم، مثل خطاب الدعوة وما يثبت إقامته، وأحيانًا ما يثبت قدرته المالية. نوضح لكما ما يُطلب عادةً حسب الدولة." },
+      { "q": "مستندات القرابة صادرة باللغة العربية، هل أحتاج إلى ترجمتها؟", "a": "غالبًا نعم، ويمكنك ترجمتها ترجمة معتمدة من خلال خدمات WaysZ." }
+    ],
+    "cta": {
+      "title": "اقترب خطوة من عائلتك",
+      "text": "ابدأ استشارتك الآن، ونرشدك إلى المستندات التي تناسب حالتك ودرجة قرابتك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Family Visa",
+    "description": "Want to visit your relatives, or join family members who live abroad? We guide you on proving your family relationship, preparing the inviting person’s documents, and organizing your file so it shows the purpose of your visit clearly.",
+    "audience": [
+      "People visiting first-degree relatives who live abroad.",
+      "Spouses and children who want to join a family member living abroad.",
+      "Residents abroad who are inviting family members and want to understand what is expected of them."
+    ],
+    "help": [
+      "Choosing the right visa type for your case: a family visit or family reunification.",
+      "Guidance on the documents that prove your relationship, with certified translation through WaysZ.",
+      "Explaining the inviting person’s documents, such as the invitation letter and proof of their residence and financial means, if requested.",
+      "Reviewing your file before you apply, and preparing you for the interview if one is required."
+    ],
+    "documents": [
+      "A valid passport.",
+      "Proof of relationship, such as a birth certificate or marriage certificate.",
+      "An invitation letter from the inviting person stating the purpose and length of the visit.",
+      "A copy of the inviting person’s passport and proof of their residence in the country you will visit.",
+      "Proof of financial means, yours or the inviting person’s.",
+      "For short visits, proof of your ties to home, such as a letter from your employer or school."
+    ],
+    "documentsNote": "This list is for guidance only; requirements usually vary by country, visa type and the degree of relationship.",
+    "notGuaranteed": [
+      "We do not guarantee visa approval or how long it takes to be issued.",
+      "We do not guarantee that family reunification applications will be accepted; their conditions are set by the competent authority alone.",
+      "Embassy and application center fees, and translation and legalization costs, are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "What is the difference between a family visit and family reunification?", "a": "A family visit is a short stay after which you return home; family reunification means living with a family member who resides abroad. Each has different requirements, and we help you choose the one that fits your case." },
+      { "q": "Does the inviting person need to submit documents?", "a": "In most cases, yes, such as the invitation letter and proof of their residence, and sometimes proof of their financial means. We explain to both of you what is usually requested, depending on the country." },
+      { "q": "My relationship documents are in Arabic. Do I need to translate them?", "a": "Usually, yes, and you can have them translated with a certified translation through WaysZ services." }
+    ],
+    "cta": {
+      "title": "One step closer to your family",
+      "text": "Start your consultation now, and we’ll guide you to the documents that fit your case and your degree of relationship.",
+      "button": "Start your consultation"
+    }
+  }
+}

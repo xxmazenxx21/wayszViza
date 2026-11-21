@@ -14,14 +14,21 @@
     "consult": "Request a consultation",
     "main": "WaysZ",
     "menu": "Open menu",
-    "close": "Close menu"
+    "close": "Close menu",
+    "about": "About us",
+    "contact": "Contact",
+    "categories": "Visa types",
+    "services": "Our services",
+    "submenu": "Visa services menu"
   },
   "cta": {
     "start": "Start your consultation",
     "explore": "Explore our services",
     "request": "Request a consultation",
     "visitMain": "Visit the WaysZ website",
-    "whatsapp": "Message us on WhatsApp"
+    "whatsapp": "Message us on WhatsApp",
+    "call": "Call us",
+    "email": "Send an email"
   },
   "mainSite": {
     "title": "Part of WaysZ"
@@ -69,6 +76,14 @@
     "consultation": {
       "title": "Request your consultation | WaysZ Visa",
       "description": "Tell us about your trip, and one of our consultants will contact you to set the right next steps for your case."
+    },
+    "about": {
+      "title": "About us | WaysZ Visa",
+      "description": "WaysZ Visa is a specialized platform of WaysZ for visa consultations and guidance through visa procedures — with clear steps and full honesty about what we offer and what we don’t guarantee."
+    },
+    "contact": {
+      "title": "Contact us | WaysZ Visa",
+      "description": "We’re glad to hear from you. Tell us your question, and the WaysZ Visa team will contact you as soon as possible."
     },
     "notFound": {
       "title": "Page not found | WaysZ Visa",

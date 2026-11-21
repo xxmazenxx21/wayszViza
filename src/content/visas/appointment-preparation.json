@@ -1,0 +1,80 @@
+{
+  "kind": "service",
+  "order": 4,
+  "ar": {
+    "name": "الاستعداد للموعد",
+    "description": "نجهزك لموعد التقديم أو المقابلة: ما الذي تحضره معك، وكيف ترتب مستنداتك، وكيف تجيب عن الأسئلة المتوقعة بوضوح وصدق.",
+    "audience": [
+      "من لديه موعد تقديم أو مقابلة ويريد أن يذهب مستعدًا.",
+      "من يشعر بالقلق من أسئلة المقابلة.",
+      "من سبق رفض طلبه بعد مقابلة ويريد الاستعداد بشكل أفضل."
+    ],
+    "help": [
+      "قائمة بما تحضره يوم الموعد، وترتيب مستنداتك بحيث يسهل الوصول إليها.",
+      "شرح ما يحدث عادةً في الموعد، مثل تسليم المستندات وأخذ البصمات والصورة.",
+      "التدرب على الأسئلة المتوقعة حسب نوع تأشيرتك، وكيف تجيب بإيجاز وصدق.",
+      "مراجعة اتساق إجاباتك مع ما ورد في طلبك ومستنداتك."
+    ],
+    "documents": [
+      "خطاب تأكيد الموعد.",
+      "جواز السفر والمستندات الأصلية مع نسخ منها، حسب ما تطلبه الجهة.",
+      "نسخة من نموذج الطلب الذي أرسلته.",
+      "إيصال دفع الرسوم، إن كان مطلوبًا.",
+      "صور شخصية بالمواصفات المطلوبة، إن طُلبت."
+    ],
+    "documentsNote": "القائمة استرشادية؛ اتبع دائمًا التعليمات الواردة في خطاب الموعد أو على موقع السفارة أو مركز التقديم.",
+    "notGuaranteed": [
+      "الاستعداد الجيد لا يضمن الموافقة؛ فالقرار للموظف المختص والجهة الرسمية وحدها.",
+      "لا نحجز المواعيد نيابة عنك، ولا نضمن توفرها في تاريخ معين.",
+      "لا نحضر الموعد أو المقابلة نيابة عنك أو معك."
+    ],
+    "faq": [
+      { "q": "هل تعطونني إجابات جاهزة أحفظها؟", "a": "لا؛ ننصحك بأن تجيب بصدق وبكلماتك، ونساعدك على ترتيب أفكارك والتعبير عن وضعك بوضوح." },
+      { "q": "ماذا أفعل إذا لم أعرف إجابة سؤال؟", "a": "الأفضل أن تقول ذلك بهدوء وصدق بدلًا من التخمين، ونتدرب معك على مواقف مماثلة." },
+      { "q": "هل أحضر مستندات أكثر مما طُلب؟", "a": "التزم أولًا بالقائمة الرسمية، ويمكنك إحضار مستندات داعمة مرتبة ومنفصلة إذا كانت ذات صلة بطلبك." }
+    ],
+    "cta": {
+      "title": "اذهب إلى موعدك مستعدًا",
+      "text": "ابدأ استشارتك الآن، ونجهزك لموعد التقديم أو المقابلة بثقة.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Appointment Preparation",
+    "description": "We prepare you for your application appointment or interview: what to bring, how to organize your documents, and how to answer the expected questions clearly and honestly.",
+    "audience": [
+      "People with an application appointment or interview who want to arrive prepared.",
+      "People who feel anxious about interview questions.",
+      "People whose application was refused after an interview and who want to prepare better."
+    ],
+    "help": [
+      "A list of what to bring on the day, and organizing your documents so they are easy to reach.",
+      "Explaining what usually happens at the appointment, such as handing in documents and giving fingerprints and a photo.",
+      "Practicing the questions expected for your visa type, and how to answer briefly and honestly.",
+      "Checking that your answers are consistent with your application and documents."
+    ],
+    "documents": [
+      "Your appointment confirmation letter.",
+      "Your passport and original documents with copies, as the authority requests.",
+      "A copy of the application form you submitted.",
+      "The fee payment receipt, if required.",
+      "Personal photos to the required specifications, if requested."
+    ],
+    "documentsNote": "This list is for guidance only; always follow the instructions in your appointment letter or on the website of the embassy or application center.",
+    "notGuaranteed": [
+      "Good preparation does not guarantee approval; the decision belongs to the competent officer and the official body alone.",
+      "We do not book appointments on your behalf, and we do not guarantee their availability on a specific date.",
+      "We do not attend the appointment or interview for you or with you."
+    ],
+    "faq": [
+      { "q": "Will you give me ready-made answers to memorize?", "a": "No. We advise you to answer honestly and in your own words, and we help you organize your thoughts and explain your situation clearly." },
+      { "q": "What should I do if I don’t know the answer to a question?", "a": "It is better to say so calmly and honestly than to guess, and we practice similar situations with you." },
+      { "q": "Should I bring more documents than requested?", "a": "Stick to the official list first. You can bring supporting documents, organized and kept separate, if they are relevant to your application." }
+    ],
+    "cta": {
+      "title": "Go to your appointment prepared",
+      "text": "Start your consultation now, and we’ll prepare you for your application appointment or interview with confidence.",
+      "button": "Start your consultation"
+    }
+  }
+}

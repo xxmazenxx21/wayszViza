@@ -1,0 +1,82 @@
+{
+  "kind": "category",
+  "order": 5,
+  "ar": {
+    "name": "تأشيرة الزيارة القصيرة",
+    "description": "تخطط لرحلة سياحية أو زيارة قصيرة؟ نساعدك على توضيح غرض زيارتك وخط سير رحلتك، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة، ليقدّم ملفك صورة متسقة وواضحة.",
+    "audience": [
+      "المسافرون في رحلات سياحية قصيرة المدة.",
+      "من يزور أصدقاء أو يحضر مناسبة خاصة بالخارج لفترة قصيرة.",
+      "من يتقدم لتأشيرة زيارة لأول مرة ويريد تجنب الأخطاء الشائعة."
+    ],
+    "help": [
+      "شرح متطلبات تأشيرة الزيارة القصيرة للدولة المقصودة.",
+      "مساعدتك على إعداد خط سير واضح يتوافق مع حجوزاتك ومدة إجازتك.",
+      "مراجعة مستنداتك المالية وما يثبت ارتباطك بالعودة، والتأكد من اتساقها مع بيانات الطلب.",
+      "تجهيزك للمقابلة إن كانت مطلوبة."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "كشف حساب بنكي حديث.",
+      "خطاب من جهة العمل يوضح الإجازة وموعد العودة، أو مستندات النشاط لأصحاب الأعمال.",
+      "حجز مبدئي للإقامة وخط سير الرحلة.",
+      "حجز طيران ذهاب وعودة، أو ما يوضح خطة السفر.",
+      "تأمين سفر، إن كان مطلوبًا."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف المستندات المطلوبة عادةً حسب الدولة ووضعك المهني والمالي.",
+    "notGuaranteed": [
+      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
+      "لا نحجز تذاكر الطيران أو الفنادق نيابة عنك، ولا نضمن توفر مواعيد في تاريخ معين.",
+      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "هل أحجز تذاكر الطيران والفندق قبل التقديم؟", "a": "تطلب بعض الدول حجزًا مبدئيًا، لكن يُنصح عادةً بعدم دفع مبالغ غير قابلة للاسترداد قبل صدور القرار. نوضح لك ما يُطلب في حالتك." },
+      { "q": "لماذا يهتم موظف التأشيرات بما يثبت عودتي؟", "a": "لأن تأشيرة الزيارة مؤقتة؛ لذلك تساعد مستندات مثل خطاب العمل أو الدراسة والالتزامات العائلية على توضيح أنك ستعود بعد رحلتك." },
+      { "q": "سبق رفض طلب زيارة لي، هل أعيد التقديم؟", "a": "نراجع معك خطاب الرفض وملفك السابق، ونوضح لك نقاط التحسين قبل أن تقرر إعادة التقديم." }
+    ],
+    "cta": {
+      "title": "رحلتك القادمة تبدأ بملف منظم",
+      "text": "ابدأ استشارتك الآن، ونساعدك على تجهيز ملف زيارة واضح ومتسق.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Tourist Visa",
+    "description": "Planning a holiday or a short visit? We help you explain the purpose of your visit and your itinerary, and organize your financial documents and proof of your ties to home, so your file gives a consistent, clear picture.",
+    "audience": [
+      "Travelers on short holiday trips.",
+      "People visiting friends or attending a private occasion abroad for a short time.",
+      "First-time visit visa applicants who want to avoid common mistakes."
+    ],
+    "help": [
+      "Explaining the short-visit visa requirements of your destination country.",
+      "Helping you prepare a clear itinerary that matches your bookings and the length of your leave.",
+      "Reviewing your financial documents and proof of ties to home, and checking that they match the details in your application.",
+      "Preparing you for the interview if one is required."
+    ],
+    "documents": [
+      "A valid passport.",
+      "A recent bank statement.",
+      "A letter from your employer stating your leave and return date, or business documents for business owners.",
+      "A provisional accommodation booking and your travel itinerary.",
+      "A return flight booking, or something that shows your travel plan.",
+      "Travel insurance, if required."
+    ],
+    "documentsNote": "This list is for guidance only; the documents usually requested vary by country and by your professional and financial situation.",
+    "notGuaranteed": [
+      "We do not guarantee visa approval or how long it takes to be issued.",
+      "We do not book flights or hotels on your behalf, and we do not guarantee appointment availability on a specific date.",
+      "Embassy and application center fees are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "Should I book my flight and hotel before applying?", "a": "Some countries ask for a provisional booking, but it is usually advised not to pay non-refundable amounts before the decision. We explain what is requested in your case." },
+      { "q": "Why does the visa officer care about proof that I will return?", "a": "Because a visit visa is temporary. Documents such as a letter from your employer or school, and your family commitments, help show that you will return after your trip." },
+      { "q": "A visit visa of mine was refused before. Should I reapply?", "a": "We review the refusal letter and your previous file with you, and explain the points to improve before you decide to reapply." }
+    ],
+    "cta": {
+      "title": "Your next trip starts with an organized file",
+      "text": "Start your consultation now, and we’ll help you prepare a clear, consistent visit file.",
+      "button": "Start your consultation"
+    }
+  }
+}

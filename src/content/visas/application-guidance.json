@@ -1,0 +1,80 @@
+{
+  "kind": "service",
+  "order": 3,
+  "ar": {
+    "name": "الإرشاد في تعبئة الطلب",
+    "description": "نرشدك خطوة بخطوة في تعبئة نموذج طلب التأشيرة، ونوضح المقصود بكل خانة، لتتجنب الأخطاء الشائعة مثل الخانات الفارغة أو التواريخ غير المتطابقة أو البيانات المتعارضة.",
+    "audience": [
+      "من يعبئ نموذج طلب تأشيرة لأول مرة.",
+      "من يجد صعوبة في فهم بعض خانات النموذج أو مصطلحاته.",
+      "من يريد التأكد من اتساق بيانات النموذج مع مستنداته."
+    ],
+    "help": [
+      "شرح أقسام النموذج والمقصود بكل خانة.",
+      "الإرشاد في كتابة البيانات كما وردت في جواز السفر والمستندات.",
+      "مراجعة النموذج معك قبل الإرسال، للتأكد من اكتماله واتساقه.",
+      "توضيح خطوات ما بعد التعبئة، مثل حجز الموعد ودفع الرسوم عبر القنوات الرسمية."
+    ],
+    "documents": [
+      "جواز السفر، لنقل البيانات كما وردت فيه.",
+      "تواريخ الرحلة وعنوان الإقامة المتوقع.",
+      "بيانات عملك أو دراستك.",
+      "بيانات الجهة الداعية أو المضيفة، إن وُجدت.",
+      "تفاصيل أسفارك السابقة، إن طلبها النموذج."
+    ],
+    "documentsNote": "يُعبأ النموذج ويُرسل باسمك عبر القنوات الرسمية؛ ولا تشارك كلمات المرور أو بيانات الدخول الخاصة بحساباتك مع أي أحد.",
+    "notGuaranteed": [
+      "النموذج الصحيح لا يضمن الموافقة على التأشيرة؛ فالقرار للجهة المختصة وحدها.",
+      "لا نضمن توفر مواعيد تقديم في تاريخ معين بعد إرسال الطلب.",
+      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "هل تعبئون النموذج بدلًا مني؟", "a": "نرشدك ونراجع معك كل خانة، ويُقدَّم الطلب باسمك وعلى مسؤوليتك وفق إجراءات الجهة الرسمية." },
+      { "q": "ماذا لو اكتشفت خطأً بعد إرسال الطلب؟", "a": "تختلف إمكانية التعديل من جهة لأخرى؛ نوضح لك الخيارات المتاحة عادةً، ولهذا ننصح دائمًا بالمراجعة قبل الإرسال." },
+      { "q": "هل يجب أن تتطابق بيانات النموذج مع المستندات؟", "a": "نعم؛ فالتعارض بين النموذج والمستندات من الأسباب الشائعة لتأخير الطلبات أو رفضها." }
+    ],
+    "cta": {
+      "title": "كل خانة في مكانها الصحيح",
+      "text": "ابدأ استشارتك، ونرشدك في تعبئة طلبك خطوة بخطوة.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Application Guidance",
+    "description": "We guide you step by step as you fill in the visa application form and explain what each field means, so you avoid common mistakes such as empty fields, dates that don’t match, or conflicting details.",
+    "audience": [
+      "People filling in a visa application form for the first time.",
+      "People who find some of the form’s fields or terms hard to understand.",
+      "People who want to make sure the form matches their documents."
+    ],
+    "help": [
+      "Explaining the sections of the form and what each field means.",
+      "Guidance on entering your details exactly as they appear in your passport and documents.",
+      "Reviewing the form with you before you submit it, to check it is complete and consistent.",
+      "Explaining the steps after the form, such as booking the appointment and paying the fees through the official channels."
+    ],
+    "documents": [
+      "Your passport, to copy your details exactly as they appear in it.",
+      "Your travel dates and expected address during your stay.",
+      "Details of your work or studies.",
+      "Details of the inviting or host party, if any.",
+      "Details of your previous travel, if the form asks for them."
+    ],
+    "documentsNote": "The form is filled in and submitted in your name through the official channels; never share your account passwords or login details with anyone.",
+    "notGuaranteed": [
+      "A correct form does not guarantee visa approval; the decision belongs to the competent authority alone.",
+      "We do not guarantee appointment availability on a specific date after you submit the application.",
+      "Embassy and application center fees are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "Do you fill in the form for me?", "a": "We guide you and review every field with you; the application is submitted in your name and under your responsibility, according to the official body’s procedures." },
+      { "q": "What if I find a mistake after submitting?", "a": "Whether you can correct it differs from one authority to another. We explain the options usually available, which is why we always recommend reviewing before you submit." },
+      { "q": "Do the form details have to match my documents?", "a": "Yes. Inconsistencies between the form and the documents are a common reason for applications being delayed or refused." }
+    ],
+    "cta": {
+      "title": "Every field in its right place",
+      "text": "Start your consultation, and we’ll guide you through filling in your application step by step.",
+      "button": "Start your consultation"
+    }
+  }
+}

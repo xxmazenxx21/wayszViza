@@ -57,7 +57,6 @@ pattern from the Motion Lab. Follow CLAUDE.md. Finish with npm run check = 0 err
 
 ## 5 · Still open
 - Form destination (email) → `src/lib/forms.ts` `TODO(endpoint)`.
-- Which visa categories get a detail page (only `student-visa` so far) → `src/content/visas/`.
 - Real email / phone / WhatsApp / address / hours of WaysZ Visa → `src/lib/site.ts` `TODO(client)`.
 - Final logo (SVG, plane as a separate layer) and brand colors → replace LAYER 1 in `src/styles/tokens.css` (same edit in the WaysZ repo;
   the Visa look is the `[data-site="visa"]` block).

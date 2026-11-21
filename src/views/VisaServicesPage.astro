@@ -1,8 +1,7 @@
 ---
 /**
  * Visa Services (brief part 01 «ثانيًا» §2 · copy: part 04 §2). Skeleton: intro + one <TodoSection> per section.
- * A category card links to /visa-services/<slug>/ only when src/content/visas/<slug>.json exists;
- * otherwise it points to the consultation page.
+ * Every service and category links to its detail page (src/content/visas/<slug>.json, one template).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -18,42 +17,22 @@ const copy = {
     title: 'خدمات التأشيرات',
     lead: 'سواء كنت تسافر للدراسة أو العمل أو حضور مؤتمر، أو لزيارة عائلتك أو الإقامة بالخارج، نساعدك على فهم متطلبات تأشيرتك وتجهيز ملفك خطوة بخطوة.',
     unsure: 'لست متأكدًا من نوع تأشيرتك؟',
-    categories: {
-      student: 'تأشيرة الدراسة',
-      business: 'تأشيرة الأعمال والمؤتمرات',
-      immigration: 'تأشيرة الهجرة والإقامة',
-      family: 'التأشيرة العائلية',
-      tourist: 'تأشيرة الزيارة القصيرة',
-    },
   },
   en: {
     title: 'Visa services',
     lead: 'Whether you are traveling to study, work or attend a conference, or to visit your family or live abroad, we help you understand your visa requirements and prepare your file step by step.',
     unsure: 'Not sure which visa you need?',
-    categories: {
-      student: 'Student Visa',
-      business: 'Business & Conference Visa',
-      immigration: 'Immigration & Residence Visa',
-      family: 'Family Visa',
-      tourist: 'Tourist Visa',
-    },
   },
 }[lang];
 
-// §2.2 the five categories, in the brief's order, and the slug their detail page would have
-const CATEGORIES = [
-  { key: 'student', slug: 'student-visa' },
-  { key: 'business', slug: 'business-visa' },
-  { key: 'immigration', slug: 'immigration-residence-visa' },
-  { key: 'family', slug: 'family-visa' },
-  { key: 'tourist', slug: 'tourist-visa' },
-] as const;
-const pages = new Set((await getCollection('visas')).map((v) => v.id));
+// §2.1 the four services · §2.2 the five categories — each one is a page of src/content/visas/ (kind + order)
+const visas = (await getCollection('visas')).sort((x, y) => x.data.order - y.data.order);
+const list = (kind: 'category' | 'service') => visas
+  .filter((v) => v.data.kind === kind)
+  .map((v) => ({ label: v.data[lang].name, href: localizePath(`/visa-services/${v.id}/`, lang) }));
+const services = list('service');
+const categories = list('category');
 const consult = localizePath('/consultation/', lang);
-const categories = CATEGORIES.map((c) => ({
-  label: copy.categories[c.key],
-  href: pages.has(c.slug) ? localizePath(`/visa-services/${c.slug}/`, lang) : consult,
-}));
 ---
 <BaseLayout lang={lang} title={t.pages.visaServices.title} description={t.pages.visaServices.description}>
   <header class="intro container stack">
@@ -61,7 +40,11 @@ const categories = CATEGORIES.map((c) => ({
     <p class="lead">{copy.lead}</p>
   </header>
 
-  <TodoSection ref="2.1" title="عرض خدمات التأشيرات — استشارة التأشيرة · جاهزية المستندات · الإرشاد في تعبئة الطلب · الاستعداد للموعد" />
+  <TodoSection ref="2.1" title="عرض خدمات التأشيرات — استشارة التأشيرة · جاهزية المستندات · الإرشاد في تعبئة الطلب · الاستعداد للموعد">
+    <ul role="list">
+      {services.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+    </ul>
+  </TodoSection>
   <TodoSection ref="2.2" title="فئات التأشيرات (2.3 وصف مختصر لكل فئة) + «لست متأكدًا من نوع تأشيرتك؟»">
     <ul role="list">
       {categories.map((c) => <li><a href={c.href}>{c.label}</a></li>)}

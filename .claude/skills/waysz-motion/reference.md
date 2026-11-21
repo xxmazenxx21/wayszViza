@@ -299,7 +299,7 @@ paths they name live in the WaysZ repo) or add new scenes.
 | Brief § | Section                                   | Media | Motion                                                        |
 | ------- | ----------------------------------------- | ----- | ------------------------------------------------------------- |
 | —       | Intro                                     | logo  | `preloader` (unchanged) — BUILT (kept from WaysZ)              |
-| —       | Header                                    | —     | transparent over the hero, glass after 80px, mobile menu — BUILT (kept from WaysZ) |
+| —       | Header                                    | —     | transparent over the hero, glass after 80px, mobile menu, «خدمات التأشيرات» submenu (two groups) — BUILT |
 | 1       | Home · Hero (title, subtitle, 2 buttons)  | TODO  | TODO                                                          |
 | 1.1     | Home · how we help                        | TODO  | TODO                                                          |
 | 1.2     | Home · Visa Consultation                  | TODO  | TODO                                                          |
@@ -315,7 +315,9 @@ paths they name live in the WaysZ repo) or add new scenes.
 | 2.1     | Visa Services · the four services         | TODO  | TODO                                                          |
 | 2.2     | Visa Services · five categories + «لست متأكدًا…» | TODO | TODO                                                     |
 | 2.4     | Visa Services · request-consultation CTA  | TODO  | TODO                                                          |
-| 3       | Visa detail template (nine elements)      | TODO  | TODO (§3.9 legal notice: static, never animated)               |
+| 3       | Visa detail template (nine elements) — 5 categories + 4 services | TODO | TODO (§3.9 legal notice: static, never animated) |
+| —       | About · intro · WaysZ & WaysZ Visa · why · how we work · CTA | TODO | TODO                                  |
+| —       | Contact · intro · contact items · quick buttons · consultation card | TODO | TODO                            |
 | 4       | Consultation · intro + form + §4.8 warning | TODO | TODO (`form-flight` is the toolkit's form scene)               |
 
 Pins: Home may use 3, other pages 2. Prefer CSS sticky + scrub whenever a scene only holds the screen.
