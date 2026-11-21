@@ -1,0 +1,81 @@
+{
+  "order": 1,
+  "ar": {
+    "name": "تأشيرة الدراسة",
+    "description": "حصلت على قبول دراسي بالخارج، أو تستعد للتقديم؟ نرشدك في متطلبات تأشيرة الدراسة للدولة التي تقصدها، ونساعدك على تنظيم مستندات القبول والتمويل، وتقديم خطتك الدراسية بشكل واضح ومقنع.",
+    "audience": [
+      "الطلاب الحاصلون على قبول من جامعة أو معهد بالخارج.",
+      "المتقدمون للدراسات العليا أو برامج اللغة أو التبادل الطلابي.",
+      "أولياء الأمور الراغبون في فهم المتطلبات المالية لأبنائهم."
+    ],
+    "help": [
+      "شرح متطلبات تأشيرة الدراسة للدولة المقصودة.",
+      "مراجعة خطاب القبول والمستندات الأكاديمية والمالية.",
+      "الإرشاد في خطاب الغرض من الدراسة إن كان مطلوبًا.",
+      "تجهيزك لمقابلة التأشيرة، وترجمة مستنداتك ترجمة معتمدة عبر WaysZ."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "خطاب القبول من المؤسسة التعليمية.",
+      "الشهادات وكشوف الدرجات (مترجمة عند الحاجة).",
+      "إثبات القدرة المالية أو المنحة الدراسية.",
+      "شهادة إتقان اللغة إن كانت مطلوبة.",
+      "تأمين صحي إن كان مطلوبًا."
+    ],
+    "documentsNote": "القائمة استرشادية وتختلف حسب الدولة والمؤسسة التعليمية ووضع المتقدم.",
+    "notGuaranteed": [
+      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
+      "لا نضمن القبول الجامعي أو توفر مواعيد في تاريخ معين.",
+      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "هل تقدمون الطلب نيابة عني؟", "a": "خدمتنا استشارية وإرشادية؛ نساعدك على تجهيز ملفك وفهم الخطوات، ويتم التقديم وفق إجراءات السفارة." },
+      { "q": "سبق رفض طلبي، هل يمكنكم مساعدتي؟", "a": "نعم، نراجع خطاب الرفض وملفك السابق ونرشدك إلى نقاط التحسين قبل إعادة التقديم." },
+      { "q": "هل تحتاج مستنداتي إلى ترجمة؟", "a": "في أغلب الحالات نعم، ويمكنك ترجمتها ترجمة معتمدة من خلال خدمات WaysZ." }
+    ],
+    "cta": {
+      "title": "خطوتك الدراسية القادمة تبدأ هنا",
+      "text": "ابدأ استشارتك الآن واحصل على قائمة مستندات مخصصة لحالتك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Student Visa",
+    "description": "Have you been accepted to study abroad, or are you getting ready to apply? We guide you through the student visa requirements of the country you are heading to, and help you organize your admission and funding documents and present your study plan clearly and convincingly.",
+    "audience": [
+      "Students accepted by a university or institute abroad.",
+      "Applicants to postgraduate studies, language programs or student exchange.",
+      "Parents who want to understand the financial requirements for their children."
+    ],
+    "help": [
+      "Explaining the student visa requirements of your destination country.",
+      "Reviewing your admission letter and your academic and financial documents.",
+      "Guidance on the statement of purpose, if one is required.",
+      "Preparing you for the visa interview, and certified translation of your documents through WaysZ."
+    ],
+    "documents": [
+      "A valid passport.",
+      "The admission letter from the educational institution.",
+      "Certificates and transcripts (translated when needed).",
+      "Proof of financial means or a scholarship.",
+      "A language proficiency certificate, if required.",
+      "Health insurance, if required."
+    ],
+    "documentsNote": "This list is for guidance only and varies by country, educational institution and the applicant’s situation.",
+    "notGuaranteed": [
+      "We do not guarantee visa approval or how long it takes to be issued.",
+      "We do not guarantee university admission or appointment availability on a specific date.",
+      "Embassy and application center fees are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "Do you submit the application on my behalf?", "a": "Our service is advisory and guidance only: we help you prepare your file and understand the steps, and the application is submitted according to the embassy’s procedures." },
+      { "q": "My application was refused before. Can you help me?", "a": "Yes. We review the refusal letter and your previous file, and guide you to the points to improve before you reapply." },
+      { "q": "Do my documents need to be translated?", "a": "In most cases, yes, and you can have them translated with a certified translation through WaysZ services." }
+    ],
+    "cta": {
+      "title": "Your next study step starts here",
+      "text": "Start your consultation now and get a document checklist tailored to your case.",
+      "button": "Start your consultation"
+    }
+  }
+}

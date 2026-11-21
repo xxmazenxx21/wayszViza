@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://waysz-visa.com/sitemap-index.xml

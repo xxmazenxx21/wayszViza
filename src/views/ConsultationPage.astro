@@ -1,0 +1,150 @@
+---
+/**
+ * Consultation (brief part 01 «ثانيًا» §4 · copy: part 04 §4). Plain markup for now (no design yet).
+ * The form follows the contract in src/lib/forms.ts (messages: t.form, brief part 05).
+ * Destination: TODO(endpoint) in forms.ts — no provider chosen.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import countries from '../data/countries.json';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const copy = {
+  ar: {
+    title: 'اطلب استشارتك',
+    lead: 'أخبرنا بتفاصيل سفرك، وسيتواصل معك أحد مستشارينا لتحديد الخطوات المناسبة لحالتك.',
+    name: 'الاسم بالكامل', namePh: 'اكتب اسمك كما في جواز السفر',
+    phone: 'رقم الهاتف', phonePh: '01xxxxxxxxx',   // brief: «مثال: 01xxxxxxxxx» — the Arabic word scrambles inside the LTR input
+    country: 'الدولة المقصودة', countryPh: 'اختر الدولة التي تخطط للسفر إليها',
+    visaType: 'نوع التأشيرة',
+    visaTypes: ['دراسة', 'أعمال ومؤتمرات', 'هجرة وإقامة', 'عائلية', 'زيارة قصيرة', 'لست متأكدًا'],
+    purpose: 'الغرض من السفر', purposePh: 'مثال: دراسة جامعية، حضور مؤتمر، عمل، زيارة أقارب...',
+    date: 'موعد السفر المتوقع', dateHint: 'اختر الشهر المتوقع للسفر',
+    contact: 'وسيلة التواصل', contacts: ['مكالمة هاتفية', 'واتساب', 'بريد إلكتروني'],
+    message: 'وصف الاستفسار', messagePh: 'اكتب باختصار وضعك وما تحتاج المساعدة فيه، وهل سبق رفض طلب لك',
+    send: 'إرسال طلب الاستشارة',
+    warnLabel: 'تنبيه:',
+    warn: 'لا ترسل صورة جواز السفر أو أي مستندات شخصية أو بيانات حساسة عبر هذا النموذج. سيوضح لك المستشار المستندات المطلوبة وطريقة مشاركتها بأمان عند الحاجة.',
+  },
+  en: {
+    title: 'Request your consultation',
+    lead: 'Tell us about your trip, and one of our consultants will contact you to set the right next steps for your case.',
+    name: 'Full name', namePh: 'Write your name as it appears in your passport',
+    phone: 'Phone number', phonePh: 'e.g. 01xxxxxxxxx',
+    country: 'Destination country', countryPh: 'Choose the country you plan to travel to',
+    visaType: 'Visa type',
+    visaTypes: ['Study', 'Business & conferences', 'Immigration & residence', 'Family', 'Short visit', 'Not sure'],
+    purpose: 'Purpose of travel', purposePh: 'e.g. university studies, attending a conference, work, visiting relatives…',
+    date: 'Expected travel date', dateHint: 'Choose the month you expect to travel',
+    contact: 'Preferred contact method', contacts: ['Phone call', 'WhatsApp', 'Email'],
+    message: 'Your inquiry', messagePh: 'Briefly describe your situation, what you need help with, and whether an application of yours has been refused before',
+    send: 'Send consultation request',
+    warnLabel: 'Warning:',
+    warn: 'Do not send a copy of your passport or any personal documents or sensitive data through this form. Your consultant will explain which documents are needed and how to share them safely when necessary.',
+  },
+}[lang];
+
+// §4.2 «قائمة»: the brief gives no list — every country of src/data/countries.json (ISO 3166-1), named by the
+// browser-independent Intl data at build time, sorted in the page's language.
+const names = new Intl.DisplayNames([lang], { type: 'region' });
+const destinations = countries
+  .map(([id]) => ({ id: String(id), name: names.of(String(id)) ?? String(id) }))
+  .sort((a, b) => a.name.localeCompare(b.name, lang));
+const contactValues = ['phone', 'whatsapp', 'email'];
+---
+<BaseLayout lang={lang} title={t.pages.consultation.title} description={t.pages.consultation.description}>
+  <section class="consult container stack">
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+
+    <!-- §4.1 consultation form -->
+    <form class="form stack" data-form="consultation" data-messages={JSON.stringify(t.form)} novalidate>
+      <div class="field">
+        <label for="c-name">{copy.name}</label>
+        <input id="c-name" name="name" required autocomplete="name" placeholder={copy.namePh} aria-describedby="c-name-error" />
+        <p id="c-name-error" class="field__error" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="c-phone">{copy.phone}</label>
+        <input id="c-phone" name="phone" type="tel" required dir="ltr" autocomplete="tel" pattern="[0-9+\s\-]{8,}" placeholder={copy.phonePh} aria-describedby="c-phone-error" />
+        <p id="c-phone-error" class="field__error" aria-live="polite"></p>
+      </div>
+      <!-- §4.2 -->
+      <div class="field">
+        <label for="c-country">{copy.country}</label>
+        <select id="c-country" name="country" required aria-describedby="c-country-error">
+          <option value="">{copy.countryPh}</option>
+          {destinations.map((d) => <option value={d.id}>{d.name}</option>)}
+        </select>
+        <p id="c-country-error" class="field__error" aria-live="polite"></p>
+      </div>
+      <!-- §4.3 -->
+      <div class="field">
+        <label for="c-visa">{copy.visaType}</label>
+        <select id="c-visa" name="visaType" required aria-describedby="c-visa-error">
+          <option value="">—</option>
+          {copy.visaTypes.map((v) => <option>{v}</option>)}
+        </select>
+        <p id="c-visa-error" class="field__error" aria-live="polite"></p>
+      </div>
+      <!-- §4.4 -->
+      <div class="field">
+        <label for="c-purpose">{copy.purpose}</label>
+        <input id="c-purpose" name="purpose" required placeholder={copy.purposePh} aria-describedby="c-purpose-error" />
+        <p id="c-purpose-error" class="field__error" aria-live="polite"></p>
+      </div>
+      <!-- §4.5 (optional) -->
+      <div class="field">
+        <label for="c-date">{copy.date}</label>
+        <input id="c-date" name="travelDate" type="month" dir="ltr" aria-describedby="c-date-hint" />
+        <p id="c-date-hint" class="field__hint">{copy.dateHint}</p>
+      </div>
+      <!-- §4.6 — the error of the group is announced under the first radio's id -->
+      <fieldset class="field">
+        <legend>{copy.contact}</legend>
+        {copy.contacts.map((label, i) => (
+          <label class="choice">
+            <input type="radio" name="contactMethod" value={contactValues[i]} required
+                   id={i === 0 ? 'c-contact' : `c-contact-${contactValues[i]}`}
+                   aria-describedby={i === 0 ? 'c-contact-error' : undefined} />
+            {" "}{label}
+          </label>
+        ))}
+        <p id="c-contact-error" class="field__error" aria-live="polite"></p>
+      </fieldset>
+      <!-- §4.7 (optional) -->
+      <div class="field">
+        <label for="c-message">{copy.message}</label>
+        <textarea id="c-message" name="message" rows="5" placeholder={copy.messagePh}></textarea>
+      </div>
+
+      <!-- §4.8 do not send passports or sensitive documents -->
+      <p class="warn" role="note"><strong>{copy.warnLabel}</strong>{" "}{copy.warn}</p>
+
+      <div>
+        <button class="btn btn--accent" type="submit">{copy.send}</button>
+      </div>
+      <p class="form__status" data-form-status role="status"></p>
+      <p class="form__consent">{t.form.consent}</p>
+    </form>
+  </section>
+</BaseLayout>
+
+<style>
+  .consult { padding-block: 160px var(--section-y); }
+  .form { max-width: 40rem; }
+  .field { display: grid; gap: var(--space-2); border: 0; padding: 0; margin: 0; }
+  .field input:not([type='radio']), .field select, .field textarea {
+    width: 100%; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    background: var(--color-surface);
+  }
+  .choice { display: flex; align-items: center; gap: var(--space-2); }
+  .field__error { color: var(--color-error); font-size: var(--text-sm); }
+  .field__hint, .form__consent { color: var(--color-ink-muted); font-size: var(--text-sm); }
+  .form__status[data-state='success'] { color: var(--color-success); }
+  .form__status[data-state='error'] { color: var(--color-error); }
+  .warn { padding: var(--space-4); border-inline-start: 4px solid var(--color-error); background: var(--color-surface); }
+</style>

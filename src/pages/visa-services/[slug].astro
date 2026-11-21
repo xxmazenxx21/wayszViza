@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import VisaDetailPage from '../../views/VisaDetailPage.astro';
+
+export async function getStaticPaths() {
+  const visas = await getCollection('visas');
+  return visas.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<VisaDetailPage lang="ar" entry={entry} />

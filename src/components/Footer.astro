@@ -1,0 +1,96 @@
+---
+/** Site footer (brief part 01 §ثانيًا «Footer»). The plane "lands" here: motion/scenes/footer-landing.ts */
+import Logo from './Logo.astro';
+import { site, telHref, waHref } from '../lib/site';
+import { localizePath, useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[lang] || site.hours[lang]);   // TODO(client): empty until site.ts is filled
+---
+<footer class="site-footer theme-dark" data-scene="footer-landing">
+  <!-- touchdown: runway centre line + threshold lights (decorative) -->
+  <div class="site-footer__runway" aria-hidden="true"><span class="site-footer__dashes"></span><span class="site-footer__lights"></span></div>
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <Logo class="site-footer__mark" />
+      <p>{t.footer.about}</p>
+    </div>
+
+    <nav aria-label={t.footer.quickLinks}>
+      <h2>{t.footer.quickLinks}</h2>
+      <ul role="list">
+        <li><a href={localizePath('/', lang)}>{t.nav.home}</a></li>
+        <li><a href={localizePath('/visa-services/', lang)}>{t.nav.visaServices}</a></li>
+        <li><a href={localizePath('/consultation/', lang)}>{t.nav.consult}</a></li>
+      </ul>
+    </nav>
+
+    {hasContact && <div>
+      <h2>{t.footer.contact}</h2>
+      <ul role="list">
+        {site.email && <li><a href={`mailto:${site.email}`}><bdi>{site.email}</bdi></a></li>}
+        {site.phone && <li><a href={telHref(site.phone)}><bdi>{site.phone}</bdi></a></li>}
+        {site.whatsapp && <li><a href={waHref(site.whatsapp, t.whatsapp.message)} rel="noopener">{t.cta.whatsapp}</a></li>}
+        {site.address[lang] && <li>{site.address[lang]}</li>}
+        {site.hours[lang] && <li>{site.hours[lang]}</li>}
+      </ul>
+    </div>}
+
+    <!-- brief part 04 §1.9: link to the main site -->
+    <div>
+      <h2>{t.mainSite.title}</h2>
+      <ul role="list">
+        <li><a href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__legal">
+    <!-- brief part 04 §3.9: the fixed legal notice — static, never animated -->
+    <p><strong>{t.legal.label}</strong>{" "}{t.legal.text}</p>
+    <p>© {year} {site.name}. {t.footer.rights}</p>
+    <!-- TODO: privacy policy + terms pages (not in the brief yet), then link them here -->
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; padding-block: var(--space-9) var(--space-6); overflow: hidden; }
+  .site-footer__runway { position: absolute; inset-inline: 0; top: var(--space-7); height: 14px; pointer-events: none; }
+  .site-footer__dashes {
+    position: absolute; inset-block: 6px; inset-inline: -40% -40%; height: 2px;
+    background: repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink) 34%, transparent) 0 56px, transparent 56px 104px);
+  }
+  .site-footer__lights {
+    position: absolute; inset: 0; opacity: 0.9;
+    background: radial-gradient(circle 3px at 50% 50%, var(--color-accent) 96%, transparent) 0 0 / 104px 14px repeat-x;
+    -webkit-mask: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    mask: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  }
+  .site-footer__grid {
+    display: grid; gap: var(--space-7);
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+  }
+  .site-footer__brand p { color: var(--color-ink-muted); max-width: 42ch; margin-block-start: var(--space-5); }
+  .site-footer :global(.site-footer__mark) { width: 120px; }
+  .site-footer h2 { font-size: var(--text-base); margin-block-end: var(--space-4); }
+  .site-footer ul { display: grid; gap: var(--space-2); }
+  .site-footer a { color: var(--color-ink-muted); text-decoration: none; }
+  .site-footer a:hover { color: var(--color-ink); }
+  .site-footer__legal {
+    margin-block-start: var(--space-8); padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
+    display: grid; gap: var(--space-2);
+    color: var(--color-ink-muted); font-size: var(--text-xs);
+  }
+  @media (max-width: 1023px) {
+    .site-footer__grid { grid-template-columns: 1fr 1fr; }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+  /* Curtain reveal on desktop (footer shorter than the viewport) */
+  @media (min-width: 1024px) {
+    .site-footer { position: sticky; bottom: 0; z-index: 0; }
+  }
+</style>

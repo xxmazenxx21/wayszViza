@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "siteName": "WaysZ Visa",
+    "description": "A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad."
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "home": "WaysZ Visa — Home"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "visaServices": "Visa services",
+    "consult": "Request a consultation",
+    "main": "WaysZ",
+    "menu": "Open menu",
+    "close": "Close menu"
+  },
+  "cta": {
+    "start": "Start your consultation",
+    "explore": "Explore our services",
+    "request": "Request a consultation",
+    "visitMain": "Visit the WaysZ website",
+    "whatsapp": "Message us on WhatsApp"
+  },
+  "mainSite": {
+    "title": "Part of WaysZ"
+  },
+  "visa": {
+    "audience": "Who is it for?",
+    "help": "How we help",
+    "documents": "Documents and information needed to start",
+    "notGuaranteed": "What we don’t guarantee",
+    "faq": "Frequently asked questions"
+  },
+  "legal": {
+    "label": "Legal notice:",
+    "text": "WaysZ Visa is a private consultancy and is not affiliated with any embassy, consulate or government body. The decision to grant a visa rests solely with the competent authority. The information on this page is for guidance only, and requirements may change without prior notice."
+  },
+  "footer": {
+    "about": "A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.",
+    "quickLinks": "Quick links",
+    "contact": "Contact us",
+    "rights": "All rights reserved."
+  },
+  "whatsapp": {
+    "tooltip": "Chat with us on WhatsApp",
+    "message": "Hello WaysZ Visa, I'd like to ask about: "
+  },
+  "form": {
+    "required": "This field is required",
+    "phone": "Please enter a valid phone number",
+    "email": "Please enter a valid email address",
+    "service": "Please choose a service",
+    "success": "Your consultation request has been received. One of our consultants will contact you through the method you chose.",
+    "error": "The message couldn't be sent. Please try again or reach us on WhatsApp.",
+    "sending": "Sending…",
+    "consent": "By sending this form you agree that we may contact you about your request. Please don't send documents or sensitive personal data through this form."
+  },
+  "pages": {
+    "home": {
+      "title": "WaysZ Visa | Your path to a visa starts with the right step",
+      "description": "Whether you are traveling to study, work, live abroad or visit your family, we offer specialized consultations and practical guidance to help you understand the visa requirements, prepare your file and get ready for your appointment with confidence."
+    },
+    "visaServices": {
+      "title": "Visa services | WaysZ Visa",
+      "description": "Whether you are traveling to study, work or attend a conference, or to visit your family or live abroad, we help you understand your visa requirements and prepare your file step by step."
+    },
+    "consultation": {
+      "title": "Request your consultation | WaysZ Visa",
+      "description": "Tell us about your trip, and one of our consultants will contact you to set the right next steps for your case."
+    },
+    "notFound": {
+      "title": "Page not found | WaysZ Visa",
+      "description": "We couldn't find that page.",
+      "heading": "This road doesn't exist",
+      "back": "Back to home"
+    }
+  }
+}
