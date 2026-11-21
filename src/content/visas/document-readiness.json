@@ -1,0 +1,78 @@
+{
+  "kind": "service",
+  "order": 2,
+  "ar": {
+    "name": "جاهزية المستندات",
+    "description": "قائمة مستندات مخصصة لحالتك، ومراجعة ما جهزته، وتنبيهك إلى أي نواقص أو تعارض في البيانات قبل التقديم؛ فنقص مستند واحد قد يؤخر طلبك أو يضعفه.",
+    "audience": [
+      "من حدد نوع تأشيرته ويريد قائمة مستندات واضحة لحالته.",
+      "من جهّز ملفه ويريد مراجعته قبل موعد التقديم.",
+      "من سبق رفض طلبه بسبب نقص المستندات أو عدم وضوحها."
+    ],
+    "help": [
+      "نعد لك قائمة مستندات مخصصة حسب نوع التأشيرة ووضعك.",
+      "نراجع ما جهزته، ونتأكد من اكتماله واتساق بياناته بين المستندات ونموذج الطلب.",
+      "ننبهك إلى النواقص، وإلى ما يحتاج إلى تحديث أو توضيح.",
+      "نرشدك إلى المستندات التي تحتاج ترجمة معتمدة، ويمكنك إتمامها عبر WaysZ."
+    ],
+    "documents": [
+      "نوع التأشيرة والدولة المقصودة.",
+      "قائمة بالمستندات التي جهزتها حتى الآن.",
+      "موعد التقديم، إن كان محددًا.",
+      "أي متطلبات وصلتك من السفارة أو مركز التقديم أو الجهة الداعية."
+    ],
+    "documentsNote": "لا ترسل صور مستنداتك عبر نموذج الموقع؛ سيوضح لك المستشار طريقة مشاركتها بأمان عند الحاجة.",
+    "notGuaranteed": [
+      "اكتمال الملف لا يضمن الموافقة على التأشيرة؛ فالقرار للجهة المختصة وحدها.",
+      "لا نستخرج المستندات الرسمية نيابة عنك، وصحة البيانات الواردة فيها مسؤولية صاحبها.",
+      "رسوم السفارة ومراكز التقديم وتكاليف استخراج المستندات غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "هل تصلح قائمة المستندات نفسها لكل الدول؟", "a": "لا؛ تختلف المستندات حسب الدولة ونوع التأشيرة ووضعك، لذلك نعد القائمة لحالتك تحديدًا." },
+      { "q": "هل تعدّلون بيانات مستنداتي لتبدو أقوى؟", "a": "لا؛ نراجع الاكتمال والاتساق وننبهك إلى ما ينقص، لكن المستندات يجب أن تكون صحيحة وصادرة من جهاتها الرسمية." },
+      { "q": "ماذا لو لم يتوفر لدي أحد المستندات؟", "a": "نوضح لك إن كان هناك بديل يُقبل عادةً، أو كيف تشرح وضعك بوضوح في طلبك." }
+    ],
+    "cta": {
+      "title": "ملف مكتمل.. وخطوات واضحة",
+      "text": "ابدأ استشارتك الآن واحصل على قائمة مستندات مخصصة لحالتك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Document Readiness",
+    "description": "A document checklist tailored to your case, a review of what you have prepared, and alerts about anything missing or inconsistent before you apply — because a single missing document can delay or weaken your application.",
+    "audience": [
+      "People who know their visa type and want a clear document checklist for their case.",
+      "People who have prepared their file and want it reviewed before the application appointment.",
+      "People whose application was refused because of missing or unclear documents."
+    ],
+    "help": [
+      "We prepare a document checklist tailored to your visa type and situation.",
+      "We review what you have prepared and check that it is complete and consistent between your documents and the application form.",
+      "We alert you to anything missing, and to anything that needs updating or explaining.",
+      "We point out the documents that need certified translation, which you can have done through WaysZ."
+    ],
+    "documents": [
+      "Your visa type and destination country.",
+      "A list of the documents you have prepared so far.",
+      "Your application date, if it is set.",
+      "Any requirements you received from the embassy, the application center or the inviting party."
+    ],
+    "documentsNote": "Don’t send copies of your documents through the website form; your consultant will explain how to share them safely when necessary.",
+    "notGuaranteed": [
+      "A complete file does not guarantee visa approval; the decision belongs to the competent authority alone.",
+      "We do not obtain official documents on your behalf, and the accuracy of the information in them is the responsibility of their owner.",
+      "Embassy and application center fees, and the cost of obtaining documents, are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "Does the same document checklist work for every country?", "a": "No. Documents vary by country, visa type and your situation, so we prepare the checklist for your case specifically." },
+      { "q": "Will you change the details of my documents to make them look stronger?", "a": "No. We check completeness and consistency and tell you what is missing, but documents must be accurate and issued by the official bodies that issue them." },
+      { "q": "What if I don’t have one of the documents?", "a": "We explain whether an alternative is usually accepted, or how to explain your situation clearly in your application." }
+    ],
+    "cta": {
+      "title": "A complete file, and clear steps",
+      "text": "Start your consultation now and get a document checklist tailored to your case.",
+      "button": "Start your consultation"
+    }
+  }
+}

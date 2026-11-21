@@ -1,0 +1,104 @@
+---
+/**
+ * About Us. Skeleton: every section is a <TodoSection> carrying its copy (no design yet).
+ * Sources: intro = brief part 04 intro · relation = part 03 (WaysZ) §4.4, the text written about WaysZ Visa ·
+ * why = part 04 §1.1 (verbatim lead) + §1.7, points written for this page · how = part 04 §1.6 · CTA = part 04 §1.8 / §1.9.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TodoSection from '../components/TodoSection.astro';
+import { site } from '../lib/site';
+import { localizePath, useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const copy = {
+  ar: {
+    title: 'من نحن',
+    intro: 'موقع متخصص في استشارات التأشيرات والإرشاد في إجراءاتها، لكل من يسافر للعمل أو الدراسة أو الزيارة أو الإقامة.',
+    introMore: 'نرافقك من أول سؤال عن نوع التأشيرة المناسب حتى يوم موعدك، بخطوات واضحة، وحدود معلنة لما نقدمه وما لا نضمنه.',
+    relationTitle: 'العلاقة بين WaysZ و WaysZ Visa',
+    relation: 'WaysZ Visa منصة متخصصة تابعة لـ WaysZ، تركز بالكامل على استشارات التأشيرات والإرشاد في إجراءاتها. وبينما يعرض الموقع الرئيسي خدماتنا المتنوعة، تقدم WaysZ Visa تجربة مخصصة لمن يخطط للسفر أو الدراسة أو الهجرة، وتستفيد من خبرات فريق WaysZ في الترجمة المعتمدة واستشارات السفارات والاستشارات القانونية؛ كما تدعم المشاركين الدوليين في المعارض والمؤتمرات التي ننظمها.',
+    whyTitle: 'لماذا WaysZ Visa؟',
+    whyLead: 'كثيرًا ما يُرفض طلب التأشيرة بسبب نقص مستند، أو خطأ في تعبئة الطلب، أو عدم وضوح غرض السفر. في WaysZ Visa نساعدك على فهم المتطلبات وتجنب هذه الأخطاء، لتتقدم ملفًا مكتملًا ومنظمًا يعكس وضعك بوضوح. قرار منح التأشيرة يعود للسفارة وحدها، ودورنا أن تتقدم وأنت أكثر استعدادًا.',
+    why: [
+      ['وضوح من البداية', 'نشرح لك نوع التأشيرة المناسب ومتطلباته وخطواته بلغة بسيطة، قبل أن تبدأ التجهيز.'],
+      ['ملف مخصص لحالتك', 'قائمة مستندات تناسب وضعك وغرض سفرك، لا قائمة عامة تُعطى للجميع.'],
+      ['صراحة فيما لا نضمنه', 'خدماتنا استشارية وإرشادية فقط؛ لا نعدك بموافقة ولا بموعد، ولا نملك أي تأثير على قرار الجهة المختصة.'],
+      ['خبرات WaysZ إلى جانبك', 'ترجمة معتمدة واستشارات السفارات والاستشارات القانونية عبر فريق WaysZ عند الحاجة.'],
+    ],
+    howTitle: 'كيف نعمل',
+    how: [
+      ['أرسل طلبك', 'الدولة ونوع التأشيرة وموعد سفرك المتوقع.'],
+      ['جلسة الاستشارة', 'نناقش وضعك ونحدد المسار والمتطلبات.'],
+      ['قائمة مستنداتك', 'قائمة مخصصة بالمستندات والمعلومات المطلوبة.'],
+      ['مراجعة وإرشاد', 'نراجع ملفك ونرشدك في الطلب والموعد.'],
+    ],
+    ctaTitle: 'جاهز لبدء رحلتك؟',
+    ctaText: 'ابدأ استشارتك الآن، ودعنا نساعدك على التقديم وأنت أكثر استعدادًا.',
+  },
+  en: {
+    title: 'About us',
+    intro: 'A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.',
+    introMore: 'We walk with you from your first question about the right visa to the day of your appointment, with clear steps and openly stated limits on what we offer and what we don’t guarantee.',
+    relationTitle: 'WaysZ and WaysZ Visa',
+    relation: 'WaysZ Visa is a specialized platform of WaysZ that focuses entirely on visa consultations and guidance through visa procedures. While the main website presents our wide range of services, WaysZ Visa offers a dedicated experience for anyone planning to travel, study or immigrate, drawing on the WaysZ team’s experience in certified translation, embassy consultations and legal advice. It also supports the international participants in the exhibitions and conferences we organize.',
+    whyTitle: 'Why WaysZ Visa?',
+    whyLead: 'Visa applications are often refused because of a missing document, a mistake in the application form, or an unclear purpose of travel. At WaysZ Visa we help you understand the requirements and avoid these mistakes, so you apply with a complete, organized file that shows your situation clearly. The decision to grant a visa belongs to the embassy alone; our role is to make sure you apply better prepared.',
+    why: [
+      ['Clarity from the start', 'We explain the right visa type, its requirements and its steps in plain language, before you start preparing.'],
+      ['A file built for your case', 'A document checklist that fits your situation and the purpose of your trip, not a generic list handed to everyone.'],
+      ['Honest about what we don’t guarantee', 'Our services are advisory and guidance only: we don’t promise an approval or an appointment, and we have no influence over the competent authority’s decision.'],
+      ['WaysZ experience at your side', 'Certified translation, embassy consultations and legal advice through the WaysZ team, when you need them.'],
+    ],
+    howTitle: 'How we work',
+    how: [
+      ['Send your request', 'The country, the visa type and your expected travel date.'],
+      ['The consultation session', 'We discuss your situation and set the path and the requirements.'],
+      ['Your document checklist', 'A tailored list of the documents and information required.'],
+      ['Review and guidance', 'We review your file and guide you through the application and the appointment.'],
+    ],
+    ctaTitle: 'Ready to start your journey?',
+    ctaText: 'Start your consultation now, and let us help you apply better prepared.',
+  },
+}[lang];
+---
+<BaseLayout lang={lang} title={t.pages.about.title} description={t.pages.about.description}>
+  <header class="intro container stack">
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.intro}</p>
+    <p>{copy.introMore}</p>
+  </header>
+
+  <TodoSection ref="about.1" title="العلاقة بين WaysZ و WaysZ Visa — brief part 03 §4.4">
+    <h2>{copy.relationTitle}</h2>
+    <p>{copy.relation}</p>
+    <p><a href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></p>
+  </TodoSection>
+
+  <TodoSection ref="about.2" title="لماذا WaysZ Visa؟ — part 04 §1.1 + §1.7">
+    <h2>{copy.whyTitle}</h2>
+    <p>{copy.whyLead}</p>
+    <ul role="list">{copy.why.map(([h, p]) => <li><h3>{h}</h3><p>{p}</p></li>)}</ul>
+  </TodoSection>
+
+  <TodoSection ref="about.3" title="كيف نعمل — part 04 §1.6">
+    <h2>{copy.howTitle}</h2>
+    <ol role="list">{copy.how.map(([h, p]) => <li><h3>{h}</h3><p>{p}</p></li>)}</ol>
+  </TodoSection>
+
+  <TodoSection ref="about.4" title="CTA — part 04 §1.8 + رابط WaysZ">
+    <h2>{copy.ctaTitle}</h2>
+    <p>{copy.ctaText}</p>
+    <p class="actions">
+      <a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.start}</a>
+      <a class="btn btn--ghost" href={site.mainSite} rel="noopener">{t.cta.visitMain}</a>
+    </p>
+  </TodoSection>
+</BaseLayout>
+
+<style>
+  .intro { padding-block: 160px var(--space-6); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+</style>

@@ -6,7 +6,8 @@ The website of **WaysZ Visa** at **waysz-visa.com** — the visa-consultation pl
 and guidance through visa procedures (choosing the right visa, preparing documents, filling in the application,
 getting ready for the appointment), for anyone traveling to work, study, visit or live abroad.
 
-Pages: Home · Visa Services · Visa Service Details (ONE template → many pages) · Consultation (request form) · 404.
+Pages: Home · Visa Services · Visa Service Details (ONE template → nine pages: five visa categories + four services) ·
+About · Contact · Consultation (the request form) · 404.
 Arabic AND English.
 
 This repo is the sister of **WaysZ** (waysz.org, its own repo): same framework, rules, skills, plugins, logo, logo
@@ -127,7 +128,7 @@ wayszViza/
    ├─ assets/logo/waysz-mark.svg  TEMP logo, the same mark as WaysZ (parts are classes — see "Logo")
    ├─ components/                 Header · Footer · Logo · Preloader · FlightRail · WhatsAppFloat · TodoSection
    │                              + BgVideo · ImageSequence · Lottie · CursorPlane (media toolkit)
-   ├─ content/visas/*.json        one file per visa service / category (AR + EN) — student-visa so far
+   ├─ content/visas/*.json        one file per visa category (kind 'category', 5) or service (kind 'service', 4) — AR + EN
    ├─ content.config.ts           schema of a visa page (the nine elements of brief part 04 §3)
    ├─ data/countries.json         countries of the globe (built with the borders) — also the destination list of the form
    ├─ i18n/                       ar.json · en.json (same keys) · index.ts helpers
@@ -139,8 +140,8 @@ wayszViza/
    │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
    ├─ pages/                      THIN wrappers only (AR at /, EN under /en/)
    ├─ styles/                     tokens.css (identical to WaysZ's) · base.css
-   └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · ConsultationPage ·
-                                  NotFoundPage · MotionLab (one folder per page's sections once they are built, e.g. views/home/)
+   └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · AboutPage · ContactPage ·
+                                  ConsultationPage · NotFoundPage · MotionLab (one folder per page's sections once they are built, e.g. views/home/)
 ```
 
 ## Pages & languages
@@ -156,13 +157,17 @@ wayszViza/
 
 ## Content model — one template, many pages
 
-- `src/content/visas/<slug>.json` — the file name is the slug. Shape in `src/content.config.ts`: the nine elements of
+- `src/content/visas/<slug>.json` — the file name is the slug. `kind`: `category` (the five visa types of §2.2) or
+  `service` (the four services of §1.2–1.5 / §2.1); `order` = order inside its kind. Shape in `src/content.config.ts`: the nine elements of
   brief part 04 §3 (name · description · audience «لمن تناسب؟» · help «كيف نساعد؟» · documents + note · notGuaranteed
   «ما لا نضمنه» · faq · cta). §3.9, the legal notice, is FIXED text in i18n (`legal`) — never in a file.
 - `src/pages/visa-services/[slug].astro` and `src/pages/en/visa-services/[slug].astro` generate every visa page
   through `src/views/VisaDetailPage.astro`. NEVER hand-write a page per visa.
-- The Visa Services page (`/visa-services/`, static, wins over `[slug]`) lists the five categories of §2.2; a card links
-  to `/visa-services/<slug>/` only when that file exists, otherwise to `/consultation/`.
+- The Visa Services page (`/visa-services/`, static, wins over `[slug]`) and the header submenu «خدمات التأشيرات» list
+  both groups from the collection («أنواع التأشيرات» = categories · «خدماتنا» = services), each linking to its page.
+- Copy of a visa page beyond the brief: ideas from research, written in our own words; never promise a visa, an
+  approval, an appointment or a processing time; no fees, prices, country names or country-specific rules as facts
+  (documents are "usually requested / may be requested"); every page keeps «ما لا نضمنه» and the fixed legal notice.
 
 ## Media (real footage, photos, Lottie)
 

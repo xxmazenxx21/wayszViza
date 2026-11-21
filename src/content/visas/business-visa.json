@@ -1,0 +1,82 @@
+{
+  "kind": "category",
+  "order": 2,
+  "ar": {
+    "name": "تأشيرة الأعمال والمؤتمرات",
+    "description": "مدعو إلى اجتماع عمل، أو تشارك في معرض أو مؤتمر دولي؟ نرشدك في متطلبات تأشيرة الأعمال، ونساعدك على تجهيز خطابات الدعوة ومستندات جهة العمل، وعرض غرض زيارتك ومدتها بوضوح.",
+    "audience": [
+      "رجال الأعمال والموظفون المسافرون لحضور اجتماعات أو زيارة شركاء.",
+      "العارضون والزوار في المعارض التجارية الدولية.",
+      "المتحدثون والمشاركون في المؤتمرات والفعاليات المهنية."
+    ],
+    "help": [
+      "التأكد من أن تأشيرة الأعمال هي النوع المناسب لغرض رحلتك.",
+      "مراجعة خطاب الدعوة من الجهة المضيفة أو منظم الفعالية، والتأكد من وضوح بياناته.",
+      "الإرشاد في خطاب جهة العمل وما يوضحه عن وظيفتك وغرض الرحلة ومدتها.",
+      "تنظيم مستنداتك وتجهيزك للمقابلة إن كانت مطلوبة، مع ترجمة معتمدة عبر WaysZ عند الحاجة."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "خطاب دعوة من الشركة المضيفة أو منظم الفعالية.",
+      "خطاب من جهة عملك يوضح وظيفتك وغرض الرحلة ومدتها.",
+      "ما يثبت التسجيل في الفعالية، إن وُجد.",
+      "ما يثبت القدرة على تغطية تكاليف الرحلة.",
+      "مستندات النشاط التجاري لأصحاب الأعمال، إن طُلبت."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف المستندات المطلوبة عادةً حسب الدولة وطبيعة الزيارة ووضعك المهني.",
+    "notGuaranteed": [
+      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
+      "لا نضمن توفر مواعيد تقديم قبل تاريخ الفعالية.",
+      "رسوم السفارة ومراكز التقديم ورسوم الفعاليات غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "لدي مؤتمر في تاريخ محدد، متى أبدأ التجهيز؟", "a": "كلما بدأت مبكرًا كان أفضل؛ فمواعيد التقديم ومدة دراسة الطلبات تختلف من دولة لأخرى. نساعدك على ترتيب خطواتك ليكون ملفك جاهزًا دون تأخير من جانبك." },
+      { "q": "هل يكفي خطاب الدعوة وحده؟", "a": "غالبًا لا؛ فعادةً ما تُطلب مستندات تدعمه، مثل خطاب جهة العمل وما يثبت القدرة المالية. نوضح لك ما يناسب حالتك." },
+      { "q": "أنا صاحب عمل خاص، ماذا أقدم بدلًا من خطاب جهة العمل؟", "a": "عادةً تُستخدم مستندات تثبت نشاطك، مثل السجل التجاري والبطاقة الضريبية وكشوف حساب النشاط، وتختلف المتطلبات حسب الدولة." }
+    ],
+    "cta": {
+      "title": "رحلة عملك القادمة تبدأ بملف واضح",
+      "text": "ابدأ استشارتك الآن، ونساعدك على تجهيز مستندات زيارتك بخطوات واضحة.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Business & Conference Visa",
+    "description": "Invited to a business meeting, or taking part in an international exhibition or conference? We guide you through the business visa requirements and help you prepare the invitation letters and employer documents, and present the purpose and length of your visit clearly.",
+    "audience": [
+      "Business people and employees traveling for meetings or to visit partners.",
+      "Exhibitors and visitors at international trade exhibitions.",
+      "Speakers and participants at conferences and professional events."
+    ],
+    "help": [
+      "Making sure a business visa is the right type for the purpose of your trip.",
+      "Reviewing the invitation letter from the host company or event organizer, and checking that its details are clear.",
+      "Guidance on your employer’s letter and what it should state about your job and the purpose and length of the trip.",
+      "Organizing your documents and preparing you for the interview if one is required, with certified translation through WaysZ when needed."
+    ],
+    "documents": [
+      "A valid passport.",
+      "An invitation letter from the host company or event organizer.",
+      "A letter from your employer stating your job and the purpose and length of the trip.",
+      "Proof of registration for the event, if any.",
+      "Proof that you can cover the costs of the trip.",
+      "Business activity documents for business owners, if requested."
+    ],
+    "documentsNote": "This list is for guidance only; the documents usually requested vary by country, the nature of the visit and your professional situation.",
+    "notGuaranteed": [
+      "We do not guarantee visa approval or how long it takes to be issued.",
+      "We do not guarantee that application appointments will be available before the event date.",
+      "Embassy, application center and event fees are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "My conference is on a set date. When should I start preparing?", "a": "The earlier the better: appointment availability and processing times differ from one country to another. We help you plan your steps so your file is ready without delays on your side." },
+      { "q": "Is the invitation letter enough on its own?", "a": "Usually not. Supporting documents are commonly requested, such as an employer’s letter and proof of financial means. We explain what fits your case." },
+      { "q": "I own my own business. What do I submit instead of an employer’s letter?", "a": "Documents that prove your business activity are usually used, such as the commercial register, tax card and business bank statements. Requirements vary by country." }
+    ],
+    "cta": {
+      "title": "Your next business trip starts with a clear file",
+      "text": "Start your consultation now, and we’ll help you prepare the documents for your visit in clear steps.",
+      "button": "Start your consultation"
+    }
+  }
+}

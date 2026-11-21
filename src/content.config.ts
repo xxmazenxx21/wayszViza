@@ -1,5 +1,7 @@
 /**
- * Content collections. One JSON file per visa service / category in src/content/visas/<slug>.json.
+ * Content collections. One JSON file per visa category OR service in src/content/visas/<slug>.json
+ * (brief part 04 §3: «قالب واحد لكل خدمة أو فئة تأشيرة»). `kind` says which group it belongs to (header submenu,
+ * Visa Services page): 'category' = the five visa types of §2.2 · 'service' = the four services of §1.2–1.5 / §2.1.
  * The file name is the slug: student-visa.json → /visa-services/student-visa/ and /en/visa-services/student-visa/
  * Shape = the Visa Service Details Template (brief part 04 §3, nine elements) in BOTH languages:
  *   1 name · 2 description · 3 audience «لمن تناسب؟» · 4 help «كيف نساعد؟»
@@ -26,7 +28,8 @@ const localized = z.object({
 const visas = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/visas' }),
   schema: z.object({
-    order: z.number(),        // order of the categories on the Visa Services page (brief part 04 §2.2)
+    kind: z.enum(['category', 'service']),
+    order: z.number(),        // order inside its kind, as in the brief (§2.2 categories · §2.1 services)
     ar: localized,
     en: localized,
   }),

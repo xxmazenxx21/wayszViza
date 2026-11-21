@@ -1,0 +1,82 @@
+{
+  "kind": "category",
+  "order": 3,
+  "ar": {
+    "name": "تأشيرة الهجرة والإقامة",
+    "description": "تفكر في الإقامة الطويلة أو العمل أو الاستقرار في دولة أخرى؟ نساعدك على فهم البرامج والمسارات المتاحة لوضعك وشروطها العامة، ونرشدك في تجهيز ملفك خطوة بخطوة.",
+    "audience": [
+      "الراغبون في العمل بالخارج، خاصة من لديهم عقد أو عرض وظيفي.",
+      "الراغبون في الإقامة الطويلة أو الاستقرار مع أسرهم بالخارج.",
+      "من يريد فهم الخيارات المتاحة له قبل أن يتخذ قراره."
+    ],
+    "help": [
+      "جلسة لفهم أهدافك ووضعك، وشرح المسارات المحتملة ومتطلباتها العامة.",
+      "قائمة مستندات مخصصة لملفك، ومراجعة ما جهزته وتنبيهك إلى النواقص.",
+      "الإرشاد في تعبئة النماذج وكتابة الخطابات المطلوبة.",
+      "ترجمة مستنداتك ترجمة معتمدة، واستشارة قانونية في الهجرة والجنسية عند الحاجة، عبر WaysZ."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "عقد العمل أو عرض الوظيفة، إن وُجد.",
+      "الشهادات الدراسية وشهادات الخبرة (مترجمة عند الحاجة).",
+      "ما يثبت القدرة المالية.",
+      "مستندات الحالة الاجتماعية، مثل شهادات الميلاد أو عقد الزواج، إن كانت الأسرة مرافقة.",
+      "صحيفة الحالة الجنائية والفحص الطبي، إن طُلبا."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف برامج الهجرة والإقامة ومتطلباتها كثيرًا حسب الدولة والبرنامج ووضع المتقدم.",
+    "notGuaranteed": [
+      "لا نضمن القبول في أي برنامج هجرة أو الموافقة على الإقامة أو مدة البت في الطلب.",
+      "لا نضمن الحصول على وظيفة أو عقد عمل بالخارج.",
+      "الرسوم الحكومية ورسوم السفارات ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
+    ],
+    "faq": [
+      { "q": "هل تساعدونني في إيجاد وظيفة بالخارج؟", "a": "لا؛ خدمتنا استشارية وإرشادية في إجراءات التأشيرة والإقامة. وإذا كان لديك عرض عمل، نساعدك على فهم متطلبات تأشيرته وتجهيز ملفك." },
+      { "q": "كيف أعرف المسار المناسب لي؟", "a": "نبدأ بجلسة نفهم فيها هدفك وتعليمك وخبرتك ووضعك العائلي، ثم نوضح لك المسارات المحتملة ومتطلباتها العامة، ويبقى القرار النهائي لك." },
+      { "q": "هل يمكن أن تتغير الشروط أثناء تجهيز ملفي؟", "a": "نعم، فقد تعدّل الجهات الرسمية متطلباتها في أي وقت؛ لذلك نراجع المعلومات معك، ونرشدك إلى التحقق منها في المصدر الرسمي قبل التقديم." }
+    ],
+    "cta": {
+      "title": "خطوتك الأولى نحو الإقامة تبدأ بفهم واضح",
+      "text": "ابدأ استشارتك، وتعرّف على المسارات المتاحة لوضعك ومتطلباتها قبل أن تقرر.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Immigration & Residence Visa",
+    "description": "Thinking about a long stay, working or settling in another country? We help you understand the programs and paths open to someone in your situation and their general conditions, and guide you as you prepare your file step by step.",
+    "audience": [
+      "People who want to work abroad, especially those with a contract or job offer.",
+      "People who want a long stay abroad or to settle there with their family.",
+      "Anyone who wants to understand their options before making a decision."
+    ],
+    "help": [
+      "A session to understand your goals and situation, and to explain the possible paths and their general requirements.",
+      "A document checklist tailored to your file, a review of what you have prepared, and alerts about anything missing.",
+      "Guidance on filling in the forms and writing the letters that are required.",
+      "Certified translation of your documents, and legal advice on immigration and nationality when needed, through WaysZ."
+    ],
+    "documents": [
+      "A valid passport.",
+      "An employment contract or job offer, if any.",
+      "Academic certificates and experience certificates (translated when needed).",
+      "Proof of financial means.",
+      "Civil status documents, such as birth certificates or a marriage certificate, if your family will come with you.",
+      "A criminal record certificate and a medical examination, if requested."
+    ],
+    "documentsNote": "This list is for guidance only; immigration and residence programs and their requirements vary widely by country, program and the applicant’s situation.",
+    "notGuaranteed": [
+      "We do not guarantee acceptance into any immigration program, approval of residence, or how long a decision takes.",
+      "We do not guarantee a job or an employment contract abroad.",
+      "Government, embassy and application center fees are not included in the consultation fee."
+    ],
+    "faq": [
+      { "q": "Do you help me find a job abroad?", "a": "No. Our service is advisory and guidance on visa and residence procedures. If you have a job offer, we help you understand the requirements of its visa and prepare your file." },
+      { "q": "How do I know which path suits me?", "a": "We start with a session to understand your goal, education, experience and family situation, then explain the possible paths and their general requirements. The final decision is always yours." },
+      { "q": "Can the conditions change while I am preparing my file?", "a": "Yes. Official bodies may change their requirements at any time, so we review the information with you and guide you to check it with the official source before you apply." }
+    ],
+    "cta": {
+      "title": "Your first step toward residence starts with a clear understanding",
+      "text": "Start your consultation and learn which paths are open to you, and what they require, before you decide.",
+      "button": "Start your consultation"
+    }
+  }
+}
