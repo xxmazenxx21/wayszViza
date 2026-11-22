@@ -1,0 +1,65 @@
+---
+/**
+ * Visa Services — a short FAQ before §2.4 (addition): four questions about choosing the right visa type and what
+ * happens in a consultation, in our own words. Ideas from boundless.com, atlys.com, visahq.com, y-axis.com, oravisa.com
+ * and official visa guidance pages — no text, names or slogans taken. Nothing promises a visa, an approval, an
+ * appointment or a processing time; no country, fee or requirement is stated as a fact.
+ * Scenes: accordion (open / close) + terminal-faq (closed answers `inert`, rows arrive once). No canvas. No JS: all open.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const items = {
+  ar: [
+    ['كيف أعرف نوع التأشيرة المناسب لرحلتي؟', 'يتحدد نوع التأشيرة غالبًا بالغرض الرئيسي من سفرك، ومدة بقائك، وما ستفعله هناك: دراسة، أو عمل، أو زيارة، أو إقامة. وقد تختلف التسميات والشروط من دولة لأخرى، لذلك نبدأ بفهم وضعك، ثم نوضح لك الفئة الأقرب ومتطلباتها كما تعلنها الجهة المختصة.'],
+    ['ماذا لو كان لرحلتي أكثر من غرض؟', 'هذا شائع، كأن تحضر مؤتمرًا ثم تزور أقاربك. المهم هنا هو الغرض الأساسي للرحلة والمستندات التي تدعمه. نساعدك على ترتيب الأولويات واختيار الفئة التي تعبّر عن غرضك بوضوح وصدق.'],
+    ['ماذا يحدث في جلسة الاستشارة؟', 'نستمع إلى غرض سفرك ووجهتك ومدة إقامتك ووضعك الحالي، ثم نوضح لك نوع التأشيرة المناسب، والمستندات التي تُطلب عادة، والخطوات المتوقعة بالترتيب، لتخرج بصورة واضحة لما عليك تجهيزه.'],
+    ['وماذا بعد الاستشارة؟', 'القرار لك: قد تكتفي بالصورة الواضحة وتتقدّم بنفسك، أو تكمل معنا في جاهزية المستندات، والإرشاد في تعبئة الطلب، والاستعداد للموعد. وفي كل الأحوال يبقى قرار التأشيرة للسفارة أو الجهة المختصة وحدها.'],
+  ],
+  en: [
+    ['How do I know which visa type fits my trip?', 'The visa type usually depends on the main purpose of your trip, how long you will stay and what you will do there: study, work, a visit or living abroad. Names and conditions can differ from one country to another, so we start by understanding your situation, then explain the closest category and its requirements as the competent authority publishes them.'],
+    ['What if my trip has more than one purpose?', 'That is common, for example attending a conference and then visiting relatives. What matters is the main purpose of the trip and the documents that support it. We help you set your priorities and choose the category that reflects your purpose clearly and honestly.'],
+    ['What happens in a consultation session?', 'We listen to the purpose of your trip, your destination, how long you plan to stay and your current situation, then explain the right visa type, the documents usually requested and the expected steps in order, so you leave with a clear picture of what you need to prepare.'],
+    ['What happens after the consultation?', 'It is your call: you may be happy with the clear picture and apply on your own, or continue with us through document readiness, application guidance and appointment preparation. Either way, the visa decision rests with the embassy or the competent authority alone.'],
+  ],
+}[lang];
+---
+<section class="tfaq section theme-dark" data-scene="accordion terminal-faq" data-waypoint aria-labelledby="tfaq-title">
+  <div class="container tfaq__in">
+    <h2 class="tfaq__title" id="tfaq-title">{t.visa.faq}</h2>
+    <div class="tfaq__list">
+      {items.map(([q, a], i) => (
+        <div class="faq__item">
+          <h3 class="tfaq__q">
+            <button type="button" aria-expanded="false" aria-controls={`tfaq-${i}`}>
+              <span>{q}</span>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            </button>
+          </h3>
+          <div class="faq__panel" id={`tfaq-${i}`}><p class="tfaq__a">{a}</p></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tfaq { background: var(--color-bg-alt); }
+  .tfaq__in { display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) { .tfaq__in { grid-template-columns: 1fr 2fr; align-items: start; } }
+  .tfaq__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .tfaq__list { border-block-start: 1px solid var(--color-border); }
+  .tfaq :global(.faq__item) { border-block-end: 1px solid var(--color-border); }
+  .tfaq__q { font: inherit; }
+  .tfaq__q button {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+    width: 100%; padding-block: var(--space-5); text-align: start; color: inherit;
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg); line-height: 1.5;
+  }
+  .tfaq__q button:hover { color: var(--color-link); }
+  .tfaq__q svg { flex: none; fill: none; stroke: var(--color-link); stroke-width: 1.8; stroke-linecap: round; transition: rotate var(--dur-base) var(--ease-out); }
+  .tfaq__q button[aria-expanded='true'] svg { rotate: 45deg; }
+  .tfaq__a { padding-block-end: var(--space-5); color: var(--color-ink-muted); line-height: 1.85; max-width: 62ch; }
+</style>

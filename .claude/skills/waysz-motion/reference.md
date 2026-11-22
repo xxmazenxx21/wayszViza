@@ -305,6 +305,40 @@ starts from exactly it), `sky-all` (css tier: behind the hero once the title set
 - RTL: the layout mirrors (hinge on the right, pages turn the other way, `x × side`), drawings never do.
 - css tier / no JS: stills from `scripts/render-paper-still.mjs` (`?paper=hero|help|s1…s4|finale`).
 
+### terminal — WaysZ Visa Services «مطار الضوء» (act `terminal`, scenes terminal-thread · terminal-hero · terminal-rests · terminal-info · terminal-faq · terminal-cta)
+
+```html
+<div class="term theme-dark">
+  <div class="term__stage stage-host" data-scene="terminal-thread" aria-hidden="true"></div>   <!-- ONE sticky host -->
+  <div class="term__body">                                                                   <!-- margin-top: -100lvh -->
+    <section data-scene="terminal-hero" data-shot>…</section>                        <!-- 0 -->
+    <section data-scene="terminal-rests" data-rests="counter" data-shot>…</section>  <!-- 1 §2.1 -->
+    <section data-scene="terminal-rests" data-rests="gate" data-shot>…</section>     <!-- 2 §2.2 -->
+    <section data-scene="terminal-info" data-shot>…</section>                        <!-- 3 «لست متأكدًا…» -->
+  </div>
+</div>
+<section data-scene="accordion terminal-faq">…</section>                             <!-- no canvas -->
+<section class="tcta" data-scene="terminal-cta"><div class="tcta__stage stage-host"></div>…</section>   <!-- finale host -->
+```
+
+- `createTerminalAct(host, 'journey' | 'finale')` — one act, two hosts (the paper pattern); the finale act is built in idle
+  time right after the stage boots (same five programs, already compiled).
+- Bridge `terminal`: `shot` (section + progress, from terminal-thread → the camera walk: outside → doors → counters → gates →
+  the "i" desk) · `light` 0…1 (hero: doors open, the hall wakes) · `counter` 0…3 + `counterAct` 0…1 · `gate` 0…4 + `gateAct`
+  0…1 (terminal-rests: a walk / sideways dolly then a REST per item, panels `.is-active` by opacity) · `takeoff` 0…1 (finale) ·
+  `pointer` (mouse, a breath of the camera) · `side` · `compact` · `poster`.
+- World (acts/terminal.ts): a `World` builder merges every line (`line`, `path`, `ring`, `box`, `arch…`), panel (`quad…`) and
+  sprite (`dot`) into ONE geometry each. Per vertex: a light group (uGroup: hall, approach, counter k, gate k, world k, info,
+  runway, plane — woken by the act from the camera position), a motion (uSlot: spin · travel · appear · flutter · drift ·
+  checked-sheet · ribbon · wake · breathe) and a portal (world k is bright only where the camera sees it through arch k).
+  A new counter / glimpse = a new builder function; no new geometry or shader code.
+- Everything but the sky and the finish is ADDITIVE (order-independent on the depth-less canvas). No textures: sprite shapes
+  (glow, flare, the "i", ring, window) are SDFs. Lines: screen-space ribbons, core clamped 1.4–3.4 CSS px + halo, clipped at
+  the near plane. Measured: 6 draw calls (journey), 9 (finale), act chunk 14 KB gzip.
+- RTL: the world mirrors (`x × side`), the plane is built facing the runway (never mirrored), sprites never flip, clock
+  hands always turn clockwise.
+- css tier / no JS: stills from `scripts/render-terminal-still.mjs` (`?terminal=hero|s1…s4|g1…g5|info|finale`).
+
 ### destinations (Motion Lab) — sticky cards that stack
 
 Kept for the Motion Lab; Home uses `areas`.
@@ -344,17 +378,18 @@ paths they name live in the WaysZ repo) or add new scenes.
 | 1.8     | Home · start-consultation CTA             | act `paper` (finale host): the booklet returns, ribbon slides out · still `paper-finale.webp` | `paper-cta`: the «ملف جاهز» seal (DOM) lands once, the booklet bounces — BUILT |
 | 1.9     | Home · «جزء من WaysZ» (link to waysz.org) | WaysZ gate photo | `boarding-pass` reused, reversed (WaysZ Visa → WaysZ), amber via `[data-brand="main"]` — BUILT |
 | —       | Footer                                    | logo  | `footer-landing` (runway + touchdown) — BUILT (kept from WaysZ); the legal notice is never animated |
-| 2       | Visa Services · intro                     | TODO  | TODO                                                          |
-| 2.1     | Visa Services · the four services         | TODO  | TODO                                                          |
-| 2.2     | Visa Services · five categories + «لست متأكدًا…» | TODO | TODO                                                     |
-| 2.4     | Visa Services · request-consultation CTA  | TODO  | TODO                                                          |
+| 2       | Visa Services · intro (title + intro)     | act `terminal`: the floating airport of light, approach lights pulsing to the doors · still `terminal-hero(-m).webp` | `terminal-thread` (one sticky host, hero → «لست متأكدًا…») · `terminal-hero` (sticky 200lvh: words rise, text leaves, doors open, the camera glides in) — BUILT |
+| 2.1     | Visa Services · the four services         | act `terminal`: four counters wake in turn (desk + stools · sheets through an arch · kiosk fields · clock + board + seat) · stills `terminal-s1…s4.webp` | `terminal-rests` (`data-rests=counter`, sticky 480lvh, 4 rests → `counter` / `counterAct`, panels by opacity) — BUILT |
+| 2.2     | Visa Services · five categories + «لست متأكدًا…» | act `terminal`: sideways dolly along five gate arches, each a portal onto a glimpse (library · stage · city · two houses + ribbon · dawn balloons), then the "i" desk · stills `terminal-g1…g5 · info.webp` | `terminal-rests` (`data-rests=gate`, sticky 580lvh, 5 rests → `gate` / `gateAct`) · `terminal-info` — BUILT |
+| +       | Visa Services · FAQ (4)                   | —     | `accordion` + `terminal-faq` (no canvas) — BUILT |
+| 2.4     | Visa Services · request-consultation CTA  | act `terminal` (finale host): the end window, a plane of light rolls and lifts off · still `terminal-finale.webp` | `terminal-cta` (sticky 230lvh → `takeoff`; the call rises as the plane lifts; magnetic button) — BUILT |
 | 3       | Visa detail template (nine elements) — 5 categories + 4 services | TODO | TODO (§3.9 legal notice: static, never animated) |
 | —       | About · intro · WaysZ & WaysZ Visa · why · how we work · CTA | TODO | TODO                                  |
 | —       | Contact · intro · contact items · quick buttons · consultation card | TODO | TODO                            |
 | 4       | Consultation · intro + form + §4.8 warning | TODO | TODO (`form-flight` is the toolkit's form scene)               |
 
-Pins: Home may use 3 and uses 0 — the hero, §1.1 and §1.2–1.5 are CSS sticky + scrub. Other pages: max 2.
-Home concept and budgets: `docs/home-creative-treatment.md`.
+Pins: Home may use 3 and uses 0 — the hero, §1.1 and §1.2–1.5 are CSS sticky + scrub. Other pages: max 2 (Visa Services uses 0).
+Home concept and budgets: `docs/home-creative-treatment.md` · Visa Services: `docs/visa-services-creative-treatment.md`.
 
 ## What to reuse on the next pages
 

@@ -170,3 +170,24 @@ export const paper = {
   compact: false,                            // small / portrait screens: the booklet holds the upper part of the screen
   poster: '' as PaperPoster,                 // dev only (?paper=hero|help|s1…s4|finale): a still for the css tier
 };
+
+/**
+ * WaysZ Visa — Visa Services «مطار الضوء» / "Terminal of Light" (docs/visa-services-creative-treatment.md). Written
+ * by the scenes terminal-thread · terminal-hero · terminal-counters · terminal-gates · terminal-cta; read by
+ * acts/terminal.ts (two instances: the 'journey' host behind hero → «لست متأكدًا…» and the 'finale' host of §2.4).
+ * Sections of the journey host, in page order: 0 hero · 1 §2.1 counters · 2 §2.2 gates · 3 the information desk.
+ */
+export type TerminalPoster = '' | 'hero' | 's1' | 's2' | 's3' | 's4' | 'g1' | 'g2' | 'g3' | 'g4' | 'g5' | 'info' | 'finale';
+export const terminal = {
+  shot: 0,                                   // journey: section index + progress inside it (0…4) → the camera path
+  light: 0,                                  // hero: 0…1 — the doors slide open, the hall wakes, the camera glides in
+  counter: 0,                                // §2.1: 0…3 — position along the four counters (fractions = walking between)
+  counterAct: 0,                             // §2.1: 0…1 — the current counter's own motion during its rest
+  gate: 0,                                   // §2.2: 0…4 — position along the five gates (sideways dolly)
+  gateAct: 0,                                // §2.2: 0…1 — the current gate's glimpse coming alive
+  takeoff: 0,                                // §2.4: 0…1 — roll · rotate · lift-off · into the clouds
+  pointer: { x: 0, y: 0 },                   // mouse over the page, −1…1 (a breath of the camera; touch never writes it)
+  side: 1 as 1 | -1,                         // 1 = LTR (the concourse runs right) · -1 = RTL (mirrored layout, never mirrored plane / "i")
+  compact: false,                            // small / portrait screens: wider lens, the subject in the upper part
+  poster: '' as TerminalPoster,              // dev only (?terminal=hero|s1…s4|g1…g5|info|finale): a still for the css tier
+};

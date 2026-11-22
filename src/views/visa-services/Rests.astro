@@ -1,0 +1,115 @@
+---
+/**
+ * Visa Services §2.1 (the four services = the counters) and §2.2–2.3 (the five categories = the gates): one sticky
+ * screen each, with a rest per item. Scene: motion/scenes/terminal-rests.ts (`data-rests`). Names in Arabic AND the
+ * brief's English names (like bilingual airport signs); gate numbers live here, never in the 3D. Panels are stacked
+ * and faded with opacity only: a focused link scrolls its rest into place. css tier: our stills cross-fade with the
+ * panels. No JS: a plain list, each item with its still.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+export interface RestItem {
+  tag?: string;                                   // gate number
+  name: string;
+  alt: { text: string; lang: Lang };              // the name in the other language
+  text: string;
+  fit?: string;                                   // «تناسب:» line
+  href: string;
+  still: string;
+}
+interface Props { lang: Lang; kind: 'counter' | 'gate'; label: string; items: RestItem[] }
+const { lang, kind, label, items } = Astro.props;
+const t = useTranslations(lang);
+const suits = { ar: 'تناسب:', en: 'Suited to:' }[lang];
+const id = `rests-${kind}`;
+---
+<section class={`rests rests--${kind}`} data-scene="terminal-rests" data-rests={kind} data-shot data-waypoint aria-labelledby={id}>
+  <div class="rests__sticky">
+    <div class="rests__in container">
+      <h2 class="rests__label" id={id}>{label}</h2>
+      <ol class="rests__list" role="list">
+        {items.map((it) => (
+          <li class="rest">
+            <figure class="rest__still term-still" aria-hidden="true">
+              <img src={it.still} alt="" width="1000" height="1000" loading="lazy" decoding="async" />
+            </figure>
+            <div class="rest__panel">
+              {it.tag && <p class="rest__tag">{it.tag}</p>}
+              <h3 class="rest__name">{it.name}</h3>
+              <p class="rest__alt" lang={it.alt.lang} dir={it.alt.lang === 'ar' ? 'rtl' : 'ltr'}>{it.alt.text}</p>
+              <p class="rest__text">{it.text}</p>
+              {it.fit && <p class="rest__fit"><strong>{suits}</strong>{' '}{it.fit}</p>}
+              <a class="link-arrow rest__link" href={it.href}>
+                {t.cta.details}<span class="visually-hidden">{' — '}{it.name}</span>
+                <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="rests__ticks" aria-hidden="true">{items.map(() => <span></span>)}</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rests { position: relative; }
+  .rests__in { position: relative; padding-block: var(--section-y); }
+  .rests__label { font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.6rem); line-height: 1.3; }
+  .rests__list { display: grid; gap: var(--space-8); margin-block-start: var(--space-6); }
+  .rest__still { margin: 0; }
+  .rest__still img { width: 100%; max-width: 34rem; height: auto; border-radius: var(--radius-lg); }
+  .rest__panel {
+    position: relative; max-width: 30rem; margin-block-start: var(--space-5);
+    padding: var(--space-6); border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--color-surface) 70%, transparent), color-mix(in srgb, var(--color-bg) 82%, transparent));
+    border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent), 0 24px 60px color-mix(in srgb, var(--color-bg) 60%, transparent);
+  }
+  .rest__tag { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-link); }
+  .rest__name { margin-block-start: var(--space-2); font-size: clamp(1.8rem, 1.2rem + 2.2vw, 3rem); line-height: 1.2; }
+  :global([dir='rtl']) .rest__name { line-height: 1.4; }
+  .rest__alt { margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .rest__text { margin-block-start: var(--space-4); font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  .rest__fit { margin-block-start: var(--space-3); color: var(--color-ink-muted); line-height: 1.75; }
+  .rest__fit strong { color: var(--color-ink); font-weight: var(--weight-bold); }
+  .rest__link { margin-block-start: var(--space-5); color: var(--color-link); font-weight: var(--weight-bold); text-decoration: none; }
+  .rests__ticks { display: none; }
+
+  /* with JS: one sticky screen, the panels stacked in the same place, the stills behind them (css tier) */
+  :global(.js) .rests--counter { height: 480vh; height: 480lvh; }
+  :global(.js) .rests--gate { height: 580vh; height: 580lvh; }
+  :global(.js) .rests__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: clip; }
+  :global(.js) .rests__in { position: static; height: 100%; display: grid; align-content: end; padding-block: calc(76px + var(--space-5)) var(--space-6); }
+  :global(.js) .rests__list { margin-block-start: var(--space-4); }
+  :global(.js) .rest { grid-area: 1 / 1; }
+  /* lazy images without a box are never fetched: the stills wait until the section is near (terminal-rests adds .is-near) */
+  :global(.js) .rests:not(.is-near) .rest__still { display: none; }
+  :global(.js) .rest__still { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s var(--ease-out); pointer-events: none; }
+  :global(.js) .rest__still img { width: 100%; max-width: none; height: 100%; object-fit: cover; object-position: 50% 32%; border-radius: 0; }
+  :global(.js) .rest__panel { z-index: 2; margin: 0; opacity: 0; translate: 0 24px; pointer-events: none; transition: opacity 0.6s var(--ease-out), translate 0.6s var(--ease-out); }
+  :global(.js) .rest.is-active .rest__panel { opacity: 1; translate: 0 0; pointer-events: auto; }
+  :global(.js) .rest.is-active .rest__still { opacity: 1; }
+  :global(.js) .rests__ticks { display: flex; gap: var(--space-2); margin-block-start: var(--space-5); position: relative; z-index: 2; }
+  .rests__ticks span { width: 26px; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--color-ink) 24%, transparent); transition: background-color 0.4s var(--ease-out), width 0.4s var(--ease-out); }
+  .rests__ticks span:global(.is-on) { width: 46px; background: var(--color-accent); }
+  /* the text always sits on a dark gradient */
+  :global(.js) .rests__in::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 90%, transparent) 0%, color-mix(in srgb, var(--color-bg) 45%, transparent) 40%, transparent 62%);
+  }
+  .rests__label { position: relative; z-index: 2; }
+  @media (min-width: 1024px) {
+    :global(.js) .rests__in { align-content: center; }
+    :global(.js) .rests__in::before { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 78%, transparent) 0%, color-mix(in srgb, var(--color-bg) 35%, transparent) 34%, transparent 52%); }
+    :global([dir='rtl'].js) .rests__in::before { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 78%, transparent) 0%, color-mix(in srgb, var(--color-bg) 35%, transparent) 34%, transparent 52%); }
+    :global(.js) .rest__still { inset-inline-start: 34%; -webkit-mask: radial-gradient(closest-side, black 70%, transparent); mask: radial-gradient(closest-side, black 70%, transparent); }
+    :global(.js) .rest__still img { object-fit: contain; }
+    :global(html:not(.js)) .rest { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; }
+  }
+  @media (max-width: 639px) {
+    .rest__panel { padding: var(--space-5); }
+    .rest__text { font-size: var(--text-base); }
+    :global(.js) .rest__name { font-size: clamp(1.6rem, 1.2rem + 2vw, 2.2rem); }
+  }
+</style>
