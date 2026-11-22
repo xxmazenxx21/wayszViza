@@ -23,10 +23,14 @@ requests) — open the link once and replace the note with the contributor's nam
 | public/media/img/paper-hero.webp · paper-hero-m.webp        | our own render of the closed booklet (act `paper`, `scripts/render-paper-still.mjs`, `?paper=hero`) | WaysZ Visa | — | 2026-11-21 | css tier / no JS of the Home hero: 1100×1100 beside the text on wide screens (14 KB), 780×1688 full screen on phones (8 KB) |
 | public/media/img/paper-help.webp                            | our own render of the §1.1 spread, the three problems fixed (`?paper=help`)          | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.1: 1400×1000 (34 KB) |
 | public/media/img/paper-s1 · s2 · s3 · s4 (.webp)            | our own renders of the four service dioramas (`?paper=s1…s4`)                        | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.2–1.5: 1200×900 each (26–29 KB), loaded lazily |
+| public/media/img/terminal-hero.webp · terminal-hero-m.webp  | our own render of the floating terminal (act `terminal`, `scripts/render-terminal-still.mjs`, `?terminal=hero`) | WaysZ Visa | — | 2026-11-22 | css tier / no JS of the Visa Services hero: 1600×1000 full screen behind the text (29 KB), 780×1688 on phones (12 KB) |
+| public/media/img/terminal-s1…s4 · g1…g5 · info (.webp)       | our own renders of the four counters, the five gates and the information desk (`?terminal=s1…s4 · g1…g5 · info`) | WaysZ Visa | — | 2026-11-22 | css tier / no JS of Visa Services §2.1 · §2.2 · «لست متأكدًا…»: 1000×1000 each (18–29 KB), loaded lazily |
+| public/media/img/terminal-finale.webp                        | our own render of the end window and the runway (`?terminal=finale`)                  | WaysZ Visa            | —                      | 2026-11-22 | css tier / no JS of Visa Services §2.4: 1000×1000 (13 KB), loaded lazily |
 | public/media/img/paper-finale.webp                          | our own render of the closed booklet with its ribbon (`?paper=finale`)               | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.8: 1100×1100 (16 KB), loaded lazily |
 
 Astro generates the responsive WebP files of `src/assets/media/*` at build time (`dist/_astro/`).
 
 The first four rows are files the kept WaysZ toolkit uses (rows copied from the WaysZ credits log). The paper world of
-the Home page (act `paper`) is drawn at runtime from our own vector drawings: it ships no image, model or texture file.
+the Home page (act `paper`) is drawn at runtime from our own vector drawings: it ships no image, model or texture file. The same holds for the airport of light of the Visa Services page (act `terminal`):
+primitives built in code, sprite shapes drawn by the shader, no texture at all.
 Unsplash now answers scripted downloads with a browser check, so new photos came from Pexels (direct CDN files).

@@ -1,0 +1,56 @@
+---
+/**
+ * Visa Services §2.4 «زر طلب الاستشارة» — «جاهز لتحديد طريقك؟» + text + «اطلب استشارة» (brief part 04, word for word).
+ * Scene: motion/scenes/terminal-cta.ts. The end window of the terminal in its own stage host (act `terminal`, mode
+ * finale): a plane of light rolls down the lit runway and lifts off into the clouds while the call rises. Magnetic
+ * button. css tier / no JS: our still of the window and the runway.
+ */
+import { localizePath, useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const copy = {
+  ar: { title: 'جاهز لتحديد طريقك؟', text: 'أخبرنا بغرض سفرك ووجهتك، وسنساعدك على تحديد التأشيرة المناسبة وتجهيز ملفك.' },
+  en: { title: 'Ready to choose your path?', text: 'Tell us the purpose of your trip and your destination, and we’ll help you identify the right visa and prepare your file.' },
+}[lang];
+---
+<section class="tcta theme-dark" data-scene="terminal-cta" data-waypoint aria-labelledby="tcta-title">
+  <div class="tcta__sticky">
+    <div class="tcta__stage stage-host" aria-hidden="true"></div>
+    <div class="tcta__still term-still" aria-hidden="true">
+      <img src="/media/img/terminal-finale.webp" alt="" width="1000" height="1000" loading="lazy" decoding="async" />
+    </div>
+    <div class="tcta__scrim" aria-hidden="true"></div>
+    <div class="tcta__in container">
+      <h2 class="tcta__title" id="tcta-title">{copy.title}</h2>
+      <p class="tcta__lead">{copy.text}</p>
+      <a class="btn btn--accent tcta__btn" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.request}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tcta { position: relative; background: var(--color-bg); }
+  .tcta__sticky { position: relative; overflow: clip; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; }
+  :global(.js) .tcta { height: 230vh; height: 230lvh; }
+  :global(.js) .tcta__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; }
+  .tcta__stage, .tcta__still, .tcta__scrim { position: absolute; inset: 0; }
+  .tcta__still img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  @media (min-width: 1024px) {
+    .tcta__sticky { align-items: center; }
+    .tcta__still { inset-inline-start: 34%; -webkit-mask: radial-gradient(closest-side, black 72%, transparent); mask: radial-gradient(closest-side, black 72%, transparent); }
+    .tcta__still img { object-fit: contain; }
+  }
+  html:not(.js) .tcta__stage { display: none; }
+  .tcta__scrim { pointer-events: none; background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 92%, transparent) 0%, color-mix(in srgb, var(--color-bg) 50%, transparent) 42%, transparent 68%); }
+  @media (min-width: 1024px) {
+    .tcta__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 38%, transparent 58%); }
+    :global([dir='rtl']) .tcta__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 38%, transparent 58%); }
+  }
+  .tcta__in { position: relative; z-index: 2; padding-block: var(--section-y) calc(var(--space-8) + 100lvh - 100svh); }
+  .tcta__title { font-size: clamp(2.4rem, 1.2rem + 4.6vw, 5.4rem); line-height: 1.1; max-width: 13ch; }
+  :global([dir='rtl']) .tcta__title { line-height: 1.34; }
+  .tcta__lead { margin-block-start: var(--space-5); max-width: 38ch; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  .tcta__btn { margin-block-start: var(--space-6); min-height: 56px; padding-inline: var(--space-7); font-size: var(--text-base); }
+</style>

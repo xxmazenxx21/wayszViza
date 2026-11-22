@@ -1,61 +1,98 @@
 ---
 /**
- * Visa Services (brief part 01 «ثانيًا» §2 · copy: part 04 §2). Skeleton: intro + one <TodoSection> per section.
- * Every service and category links to its detail page (src/content/visas/<slug>.json, one template).
+ * Visa Services — «مطار الضوء» / "Terminal of Light" (docs/visa-services-creative-treatment.md).
+ * Copy: brief part 04 «2 صفحة خدمات التأشيرات», every element in its order, word for word (Arabic is the source; English
+ * is a faithful translation; the categories keep the brief's English names): title + intro · §2.1 the four services ·
+ * §2.2–2.3 the five categories with «تناسب:» · «لست متأكدًا من نوع تأشيرتك؟» · §2.4. Addition: a 4-question FAQ (our
+ * own words). Every service and category links to its detail page (src/content/visas/<slug>.json, one template).
+ *
+ * ONE stage host (`.term__stage`, CSS sticky) behind hero → §2.1 → §2.2 → the information desk: the act `terminal`
+ * (scene terminal-thread) draws the airport of light there; the sections scroll over it. §2.4 has its own host for the
+ * finale (scene terminal-cta). css tier / no JS: our own stills of the terminal (render-terminal-still.mjs).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TodoSection from '../components/TodoSection.astro';
+import Hero from './visa-services/Hero.astro';
+import Rests, { type RestItem } from './visa-services/Rests.astro';
+import Info from './visa-services/Info.astro';
+import Faq from './visa-services/Faq.astro';
+import Cta from './visa-services/Cta.astro';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const other: Lang = lang === 'ar' ? 'en' : 'ar';
+const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
+const byId = Object.fromEntries(visas.map((v) => [v.id, v.data]));
+const href = (slug: string) => localizePath(`/visa-services/${slug}/`, lang);
 
-const copy = {
-  ar: {
-    title: 'خدمات التأشيرات',
-    lead: 'سواء كنت تسافر للدراسة أو العمل أو حضور مؤتمر، أو لزيارة عائلتك أو الإقامة بالخارج، نساعدك على فهم متطلبات تأشيرتك وتجهيز ملفك خطوة بخطوة.',
-    unsure: 'لست متأكدًا من نوع تأشيرتك؟',
-  },
-  en: {
-    title: 'Visa services',
-    lead: 'Whether you are traveling to study, work or attend a conference, or to visit your family or live abroad, we help you understand your visa requirements and prepare your file step by step.',
-    unsure: 'Not sure which visa you need?',
-  },
-}[lang];
+// §2.1 — the brief's short description of each service (names from the collection: the same as the brief's)
+const services: RestItem[] = [
+  { slug: 'visa-consultation', ar: 'تحديد نوع التأشيرة المناسب لغرض سفرك وشرح متطلباته.', en: 'Identifying the right visa type for the purpose of your trip and explaining its requirements.' },
+  { slug: 'document-readiness', ar: 'قائمة مستندات مخصصة ومراجعة ملفك قبل التقديم.', en: 'A tailored document checklist and a review of your file before you apply.' },
+  { slug: 'application-guidance', ar: 'شرح خانات النموذج وتجنب الأخطاء الشائعة.', en: 'Explaining the fields of the form and avoiding common mistakes.' },
+  { slug: 'appointment-preparation', ar: 'تجهيزك لموعد التقديم أو المقابلة بثقة.', en: 'Getting you ready for your application appointment or interview with confidence.' },
+].map((s, i) => {
+  const d = byId[s.slug];
+  return { name: d[lang].name, alt: { text: d[other].name, lang: other }, text: s[lang], href: href(s.slug), still: `/media/img/terminal-s${i + 1}.webp` };
+});
 
-// §2.1 the four services · §2.2 the five categories — each one is a page of src/content/visas/ (kind + order)
-const visas = (await getCollection('visas')).sort((x, y) => x.data.order - y.data.order);
-const list = (kind: 'category' | 'service') => visas
-  .filter((v) => v.data.kind === kind)
-  .map((v) => ({ label: v.data[lang].name, href: localizePath(`/visa-services/${v.id}/`, lang) }));
-const services = list('service');
-const categories = list('category');
-const consult = localizePath('/consultation/', lang);
+// §2.2 + §2.3 — the five categories: Arabic name + the brief's English name, description, «تناسب:»
+const categories: RestItem[] = [
+  { slug: 'student-visa', en: 'Student Visa',
+    text: { ar: 'للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.', en: 'For enrolling in universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.' },
+    fit: { ar: 'الطلاب المقبولين أو المتقدمين لبرامج دراسية.', en: 'Students who have been accepted to, or are applying for, study programs.' } },
+  { slug: 'business-visa', en: 'Business Visa',
+    text: { ar: 'لحضور الاجتماعات والمعارض والمؤتمرات الدولية أو زيارة الشركاء. نرشدك في خطابات الدعوة ومستندات جهة العمل.', en: 'For attending meetings and international exhibitions and conferences, or visiting partners. We guide you on invitation letters and your employer’s documents.' },
+    fit: { ar: 'رجال الأعمال والعارضين والمشاركين في المؤتمرات.', en: 'Business people, exhibitors and conference participants.' } },
+  { slug: 'immigration-residence-visa', en: 'Immigration & Residence Visa',
+    text: { ar: 'للإقامة الطويلة أو العمل أو الهجرة إلى دولة أخرى. نساعدك على فهم البرامج المتاحة وشروطها وتجهيز ملفك.', en: 'For a long stay, work or immigration to another country. We help you understand the available programs and their conditions, and prepare your file.' },
+    fit: { ar: 'الراغبين في الإقامة أو العمل أو الاستقرار بالخارج.', en: 'People who want to live, work or settle abroad.' } },
+  { slug: 'family-visa', en: 'Family Visa',
+    text: { ar: 'لزيارة الأقارب أو الالتحاق بأفراد الأسرة المقيمين بالخارج. نرشدك في إثبات صلة القرابة وتجهيز مستندات الداعي.', en: 'For visiting relatives or joining family members who live abroad. We guide you on proving your relationship and preparing the inviting person’s documents.' },
+    fit: { ar: 'من لديهم أقارب من الدرجة الأولى أو أزواج بالخارج.', en: 'People with first-degree relatives or a spouse abroad.' } },
+  { slug: 'tourist-visa', en: 'Tourist Visa',
+    text: { ar: 'للزيارات القصيرة. نساعدك على توضيح غرض الزيارة، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة.', en: 'For short visits. We help you explain the purpose of your visit and organize your financial documents and proof of your ties to home.' },
+    fit: { ar: 'المسافرين في زيارات قصيرة المدة.', en: 'Travelers on short visits.' } },
+].map((c, i) => {
+  const ar = byId[c.slug].ar.name;
+  return {
+    tag: `${lang === 'ar' ? 'البوابة' : 'Gate'} ${i + 1}`,
+    name: lang === 'ar' ? ar : c.en,
+    alt: lang === 'ar' ? { text: c.en, lang: 'en' as Lang } : { text: ar, lang: 'ar' as Lang },
+    text: c.text[lang], fit: c.fit[lang], href: href(c.slug), still: `/media/img/terminal-g${i + 1}.webp`,
+  };
+});
+const labels = { ar: { services: t.nav.services, categories: 'فئات التأشيرات' }, en: { services: t.nav.services, categories: 'Visa categories' } }[lang];
 ---
-<BaseLayout lang={lang} title={t.pages.visaServices.title} description={t.pages.visaServices.description}>
-  <header class="intro container stack">
-    <h1>{copy.title}</h1>
-    <p class="lead">{copy.lead}</p>
-  </header>
-
-  <TodoSection ref="2.1" title="عرض خدمات التأشيرات — استشارة التأشيرة · جاهزية المستندات · الإرشاد في تعبئة الطلب · الاستعداد للموعد">
-    <ul role="list">
-      {services.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
-    </ul>
-  </TodoSection>
-  <TodoSection ref="2.2" title="فئات التأشيرات (2.3 وصف مختصر لكل فئة) + «لست متأكدًا من نوع تأشيرتك؟»">
-    <ul role="list">
-      {categories.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
-      <li>{copy.unsure}{" "}<a href={consult}>{t.cta.request}</a></li>
-    </ul>
-  </TodoSection>
-  <TodoSection ref="2.4" title="زر طلب الاستشارة — «جاهز لتحديد طريقك؟»">
-    <p><a class="btn btn--accent" href={consult}>{t.cta.request}</a></p>
-  </TodoSection>
+<BaseLayout lang={lang} title={t.pages.visaServices.title} description={t.pages.visaServices.description} headerOverlay>
+  <div class="term theme-dark">
+    <div class="term__stage stage-host" data-scene="terminal-thread" aria-hidden="true"></div>
+    <div class="term__body">
+      <Hero lang={lang} />
+      <Rests lang={lang} kind="counter" label={labels.services} items={services} />
+      <Rests lang={lang} kind="gate" label={labels.categories} items={categories} />
+      <Info lang={lang} />
+    </div>
+  </div>
+  <Faq lang={lang} />
+  <Cta lang={lang} />
 </BaseLayout>
 
-<style>
-  .intro { padding-block: 160px var(--space-6); }
+<style is:global>
+  /* One stage host for hero → the information desk: it sticks to the screen while the sections scroll over it. */
+  .term { position: relative; background: var(--color-bg); }
+  .term__stage { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; }
+  .term__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
+  /* without JS there is no canvas: the sections simply follow each other with their stills */
+  html:not(.js) .term__stage { display: none; }
+  html:not(.js) .term__body { margin-block-start: 0; }
+  /* our stills of the terminal (css tier, no JS) step aside while the canvas paints */
+  .term-still { transition: opacity 0.9s var(--ease-out); }
+  .term__stage.is-drawing ~ .term__body .term-still,
+  :root .term__stage.is-drawing ~ .term__body .rest.is-active .term-still,   /* beats the panels' own .is-active rule */
+  .tcta__stage.is-drawing ~ .term-still { opacity: 0; }
+  /* dev: re-rendering the stills (scripts/render-terminal-still.mjs) */
+  .is-poster .term__body, .is-poster .tcta__in, .is-poster .tcta .term-still { visibility: hidden; }
 </style>

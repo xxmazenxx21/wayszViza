@@ -80,7 +80,11 @@ even there every GSAP scene, Lenis and the cursor run. Smoothness = the stage's 
   `sky` (Services page: a procedural night sky — fbm Milky Way, aurora, 2600 field stars in depth — and four
   constellations, one star per service, whose lines draw each area's emblem; the camera frames the constellation the
   page asks for inside a DOM box (`sky.box`), cards light their star, a star under the pointer brings its card; the
-  finale draws arcs to one centre star and a ring. Instanced quads, all additive, no render target; ONE host).
+  finale draws arcs to one centre star and a ring. Instanced quads, all additive, no render target; ONE host),
+  `terminal` (WaysZ Visa Services: an airport floating over a cloud sea, drawn in light — ONE glowing-line mesh of
+  screen-space ribbons, ONE frosted-panel mesh, ONE instanced sprite mesh with SDF shapes, dust, a full-screen sky ray pass
+  with the cloud sea; per-vertex light groups / motions / gate portals; all additive, no texture, no render target;
+  6 draw calls, 9 in the finale; two hosts like `paper`).
 - **Hand-off between acts**: the canvas moves into the host of the act that is MOST visible. While it paints
   there the host has `.is-drawing` — hide the section's DOM media with CSS on that class
   (`.host.is-drawing ~ .card .media { visibility: hidden }`); when the canvas leaves, the DOM version is back.
@@ -193,6 +197,8 @@ even there every GSAP scene, Lenis and the cursor run. Smoothness = the stage's 
 
 WaysZ Visa Home («رحلة الورق», act `paper`): paper-thread · paper-hero · paper-help · paper-services · paper-steps ·
 paper-faq · paper-cta (+ accordion, boarding-pass, footer-landing). Contract: `reference.md` → «paper».
+WaysZ Visa Services («مطار الضوء», act `terminal`): terminal-thread · terminal-hero · terminal-rests · terminal-info ·
+terminal-faq · terminal-cta (+ accordion, footer-landing). Contract: `reference.md` → «terminal».
 Built for the WaysZ pages (names below = the WaysZ page that uses them; all available here as lazy chunks):
 Home: preloader · hero-takeoff · image-sequence · areas · media-reveal · globe-route · approach ·
 boarding-pass · footer-landing (every page). Immigration page: page-hero · journey-route · dossier ·
