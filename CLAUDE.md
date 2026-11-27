@@ -2,27 +2,39 @@
 
 ## What we are building
 
-The website of **WaysZ Visa** at **waysz-visa.com** — the visa-consultation platform of WaysZ: visa consultations
-and guidance through visa procedures (choosing the right visa, preparing documents, filling in the application,
-getting ready for the appointment), for anyone traveling to work, study, visit or live abroad.
+The website of **WaysZ Visa** at **waysz-visa.com** — the visa and immigration consultancy platform of WaysZ: visa
+consultation, file preparation, applications, appointments, refusal reviews, travel bookings, translation, corporate
+visas, and residency / citizenship by investment (the client is an authorized agent), for anyone traveling to visit,
+study, work, settle or invest abroad. The client's customers are high-end ("class A").
 
-Pages: Home · Visa Services · Visa Service Details (ONE template → nine pages: five visa categories + four services) ·
-About · Contact · Consultation (the request form) · 404.
+Pages: Home · Visa Services · Visa Service Details (ONE template → 18 pages: 9 visa categories + 9 services) ·
+Find your visa (assessment tool) · Consultation (the request form) · About · Contact · Privacy · Terms · 404.
 Arabic AND English.
 
-This repo is the sister of **WaysZ** (waysz.org, its own repo): same framework, rules, skills, plugins, logo, logo
-intro, motion system and 3D stage. The main site is `site.mainSite`. Do not build anything for WaysZ here except
-links to `site.mainSite`.
+This repo is the sister of **WaysZ** (waysz.org, its own repo): same framework, skills, plugins, logo, logo intro,
+motion system and 3D stage. The main site is `site.mainSite`; here it is only a link.
 
-Source of truth for structure and copy: `docs/brief/WaysZ-Website-Brief-v2.pdf` — part 01 «ثانيًا: موقع WaysZ Visa»
-(structure), part 04 «محتوى موقع WaysZ Visa» (copy), part 05 (shared microcopy: buttons, form messages).
-Sections are numbered (e.g. "1.6 Help steps"); use the same numbers in comments, TODOs and commits.
-The brief is Arabic; write the English version as a faithful, natural translation (flag doubtful
-terms in the PR description). Never invent services, visa categories, numbers, claims, clients or testimonials.
-Tone (brief part 04): practical and reassuring, and very clear about what we offer and what we do not guarantee.
-Never promise approval: the decision belongs to the embassy / consulate / competent authority only.
-Not built (brief part 01 «لن نعمل حاليًا»): backend, database, dashboard, login, online payment, real booking,
-document upload, CRM, request tracking, separate pages per country (the visa pages come only from the one template).
+## Source of truth
+
+1. **`docs/brief/WaysZ-Visa-Brief-v3.md`** — the current brief: structure, every page, the full copy (AR + EN) and
+   the open client questions. Sections are numbered (e.g. "§9.1", "1.5d"); use the same numbers in comments, TODOs
+   and commits.
+2. `docs/brief/WaysZ-Website-Brief-v2.pdf` — the original brief (parts 01 · 04 · 05). Use it only for what v3 marks ✅
+   (unchanged) or does not mention.
+3. The creative treatments (`docs/home-creative-treatment.md`, `docs/visa-services-creative-treatment.md`) and the
+   skills for look and motion.
+
+## Content stage (client decision)
+
+- Everything is built and shown on the **staging host first** (Vercel preview). The client reviews every page with
+  his own eyes and edits the content before the final upload to the domain.
+- So write freely: confident, persuasive, premium copy that sells the service. Take ideas and wording freely from
+  the client's old site (mg-visa.com, his own) and from the reference sites in the brief.
+- **Country names are welcome** everywhere: destination lists, category pages, form options, the assessment tool.
+- Anything the client still has to send (contact data, testimonials, stats, partner logos, licenses, legal texts)
+  goes in as a realistic placeholder marked `TODO(client)` in the code, so it is easy to find and replace.
+- When the brief and a page disagree, follow the brief. When the brief is silent, decide like a senior and list the
+  decision in the report.
 
 ## Quality policy (client decision — final)
 
@@ -53,11 +65,11 @@ scroll-driven motion and a real-time WebGL layer.
 
 **Creative freedom:** you are free to source your own photos, videos, 3D models, textures and animations, and
 to create your own animations, shaders and 3D, whenever it makes the site more impressive — no need to ask
-first. Only rule: external files come from a source with a clear free license (the approved list in "Media")
-and get a row in `docs/media-credits.md`.
+first. External files come from a source with a clear free license (the list in "Media") and get a row in
+`docs/media-credits.md`.
 The pages' motion storyboard lives in the waysz-motion skill (`reference.md`, one row per section). The Home concept
-(«رحلة الورق», a pop-up book of paper) is in `docs/home-creative-treatment.md`; the Visa Services concept («مطار الضوء», an airport
-drawn in light) is in `docs/visa-services-creative-treatment.md`.
+(«رحلة الورق», a pop-up book of paper) is in `docs/home-creative-treatment.md`; the Visa Services concept («مطار الضوء»,
+an airport drawn in light) is in `docs/visa-services-creative-treatment.md`.
 
 - full-screen background video, scroll-scrubbed image sequences (video → frames on a canvas),
   media that expands to full screen, sticky full-bleed media cards, huge staged typography,
@@ -69,7 +81,7 @@ drawn in light) is in `docs/visa-services-creative-treatment.md`.
   every scene also works without WebGL (the css fallback).
 - The logo "Take-off" intro (preloader) stays as it is.
   Reuse what exists when it is good enough; source or create something new when that is more impressive.
-  Trust and clarity still matter (people preparing a visa file): motion never hides content or slows reading.
+  Motion never hides content or slows reading: people come here to understand their visa path.
 
 ## Stack (do not change without asking)
 
@@ -87,6 +99,8 @@ drawn in light) is in `docs/visa-services-creative-treatment.md`.
 - **Node ≥ 22.23.4**. Approved dependencies: astro, gsap, lenis, three, lottie-web, @fontsource/almarai,
   @astrojs/sitemap. Dev only: playwright (visual QA scripts in `scripts/`), @types/three (types for three).
   Ask before adding ANY other dependency, with a one-line reason (no AOS, anime.js, Barba, Swiper…).
+- The site is static: no backend, database, login, payment or upload for now (brief v3 §17 lists them as later
+  phases). Interactive features (the assessment tool, form prefill) run in the browser.
 
 ## Commands
 
@@ -113,7 +127,7 @@ wayszViza/
 ├─ CLAUDE.md · README.md · astro.config.mjs · package.json
 ├─ .claude/skills/waysz-motion/   SKILL.md (motion rules + API) · reference.md (scenes + page storyboard)
 ├─ .claude/skills/waysz-media/    SKILL.md (sources, licenses, ffmpeg recipes, budgets, credits)
-├─ docs/brief/                    the approved brief (PDF) — parts 01 · 04 · 05 for WaysZ Visa
+├─ docs/brief/                    WaysZ-Visa-Brief-v3.md (CURRENT brief) · WaysZ-Website-Brief-v2.pdf (original)
 ├─ docs/visa-services-creative-treatment.md  Visa Services concept «مطار الضوء» + storyboard + budgets
 ├─ docs/home-creative-treatment.md  Home concept «رحلة الورق» + storyboard + budgets
 ├─ scripts/                       Playwright QA: qa-shots · qa-policy · qa-weight · qa-fps (+ qa-browser: shared launch)
@@ -121,20 +135,20 @@ wayszViza/
 ├─ docs/media-credits.md          one row per media file we ship (source, author, license)
 ├─ media-inbox/                   RAW downloads before optimizing — gitignored, never shipped
 ├─ public/
-│  ├─ media/video/                optimized background videos (mp4 + webm + poster) — none yet
-│  ├─ media/seq/<name>/           image sequences (frame_0001.webp …) — none yet
+│  ├─ media/video/                optimized background videos (mp4 + webm + poster)
+│  ├─ media/seq/<name>/           image sequences (frame_0001.webp …)
 │  ├─ media/lottie/               Lottie JSON files
 │  ├─ media/img/                  images loaded by JS only (globe texture, HDR light of the 3D acts)
 │  ├─ media/geo/                  country borders of the globe (TopoJSON, built by scripts/build-borders.mjs)
 │  └─ .htaccess · favicon.svg · robots.txt
 └─ src/
-   ├─ assets/media/               photos (optimized by Astro <Image>) — none yet
+   ├─ assets/media/               photos (optimized by Astro <Image>)
    ├─ assets/logo/waysz-mark.svg  TEMP logo, the same mark as WaysZ (parts are classes — see "Logo")
    ├─ components/                 Header · Footer · Logo · Preloader · FlightRail · WhatsAppFloat · TodoSection
    │                              + BgVideo · ImageSequence · Lottie · CursorPlane (media toolkit)
-   ├─ content/visas/*.json        one file per visa category (kind 'category', 5) or service (kind 'service', 4) — AR + EN
-   ├─ content.config.ts           schema of a visa page (the nine elements of brief part 04 §3)
-   ├─ data/countries.json         countries of the globe (built with the borders) — also the destination list of the form
+   ├─ content/visas/*.json        one file per visa category (kind 'category', 9) or service (kind 'service', 9) — AR + EN
+   ├─ content.config.ts           schema of a visa page (brief v3 §6)
+   ├─ data/countries.json         countries of the globe (built with the borders) — also the country lists of the forms
    ├─ i18n/                       ar.json · en.json (same keys) · index.ts helpers
    ├─ layouts/BaseLayout.astro    <html lang dir data-site="visa">, SEO, boot script, header/footer, cursor, motion init
    ├─ lib/                        forms.ts · site.ts (client data, mainSite) · borders.ts (decodes the borders, country at a point)
@@ -144,9 +158,9 @@ wayszViza/
    │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (paper — the Visa Home · terminal — Visa Services · flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
    ├─ pages/                      THIN wrappers only (AR at /, EN under /en/)
    ├─ styles/                     tokens.css (identical to WaysZ's) · base.css
-   └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · AboutPage · ContactPage ·
-                                  ConsultationPage · NotFoundPage · MotionLab · home/ (one file per Home section) ·
-                                  visa-services/ (one file per Visa Services section)
+   └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · AssessmentPage ·
+                                  ConsultationPage · AboutPage · ContactPage · PrivacyPage · TermsPage · NotFoundPage ·
+                                  MotionLab · home/ (one file per Home section) · visa-services/ (one file per Visa Services section)
 ```
 
 ## Pages & languages
@@ -157,33 +171,36 @@ wayszViza/
   `<ConsultationPage lang="en" />`.
 - **No hard-coded UI text in components.** UI strings: `src/i18n/ar.json` + `en.json` (identical keys).
   Use `const t = useTranslations(lang)`. Page-specific long copy may live in the view as `{ ar, en }`.
+- The brief gives the English copy. Where it doesn't, write a faithful, natural translation of the Arabic and list
+  doubtful terms in the PR description.
 - Links: `localizePath('/visa-services/', lang)`. Language switch: `switchLangPath(Astro.url.pathname, to)`.
 - URLs end with `/` (`trailingSlash: 'always'`). Slugs are English for both languages.
 
 ## Content model — one template, many pages
 
-- `src/content/visas/<slug>.json` — the file name is the slug. `kind`: `category` (the five visa types of §2.2) or
-  `service` (the four services of §1.2–1.5 / §2.1); `order` = order inside its kind. Shape in `src/content.config.ts`: the nine elements of
-  brief part 04 §3 (name · description · audience «لمن تناسب؟» · help «كيف نساعد؟» · documents + note · notGuaranteed
-  «ما لا نضمنه» · faq · cta). §3.9, the legal notice, is FIXED text in i18n (`legal`) — never in a file.
+- `src/content/visas/<slug>.json` — the file name is the slug. `kind`: `category` (the nine visa types, brief v3 §2)
+  or `service` (the nine services, §3); `order` = order inside its kind. Categories also carry a `group`:
+  `visit` · `study` · `work` · `residence` (the four groups of §2).
+- Shape in `src/content.config.ts` (brief v3 §6), in both languages:
+  - required: name · description · audience «لمن تناسب؟» · help «كيف نساعد؟» · documents + documentsNote · faq · cta
+  - optional: types «أنواع شائعة» · destinations «وجهات نعمل عليها» (country names) · benefits «مزايا شائعة»
 - `src/pages/visa-services/[slug].astro` and `src/pages/en/visa-services/[slug].astro` generate every visa page
   through `src/views/VisaDetailPage.astro`. NEVER hand-write a page per visa.
 - The Visa Services page (`/visa-services/`, static, wins over `[slug]`) and the header submenu «خدمات التأشيرات» list
-  both groups from the collection («أنواع التأشيرات» = categories · «خدماتنا» = services), each linking to its page.
-- Copy of a visa page beyond the brief: ideas from research, written in our own words; never promise a visa, an
-  approval, an appointment or a processing time; no fees, prices, country names or country-specific rules as facts
-  (documents are "usually requested / may be requested"); every page keeps «ما لا نضمنه» and the fixed legal notice.
+  both groups from the collection («أنواع التأشيرات» by group · «خدماتنا»), each linking to its page.
+- Destinations: the lists are in brief v3 §1.6b and §7b. A country name links to the consultation form with the
+  country (and the category) prefilled. Separate pages per country are a later phase (§17).
 
 ## Media (real footage, photos, Lottie)
 
 - Read the **waysz-media** skill before adding ANY image, video, sequence or Lottie file.
-- Source freely (photos, videos, 3D models, textures, animations) — from clearly free-licensed sources only: Pexels, Unsplash, Pixabay, Mixkit (Free License clips only), LottieFiles
+- Source freely (photos, videos, 3D models, textures, animations) — from clearly free-licensed sources: Pexels, Unsplash, Pixabay, Mixkit (Free License clips only), LottieFiles
   (free animations), Poly Haven (CC0 HDRIs/textures/models), Kenney (CC0), NASA imagery (public domain),
   Sketchfab models only if CC0 or CC-BY (credit CC-BY). Download into `media-inbox/` first, then optimize.
-  Every shipped file gets a row in `docs/media-credits.md`. No file without a known source.
+  Every shipped file gets a row in `docs/media-credits.md`.
 - Never ship raw downloads: optimize first (recipes in waysz-media). Raw files stay in `media-inbox/`.
-- No airline liveries/logos, no visible brands, no identifiable faces in hero roles or implying endorsement,
-  no recognizable national passport / flag / country name, nothing showing people in a bad light.
+- Destination imagery (cities, landmarks, landscapes of the countries we serve) is welcome. Avoid third-party logos
+  and brand marks (airlines, companies) in hero media.
 - Every video has a poster image; every image has width/height and meaningful `alt` (empty `alt=""` if decorative).
 
 ## RTL rules (critical)
@@ -244,21 +261,27 @@ wayszViza/
   full-screen still behind the text (like the video posters), so the text is the largest paint.
 - No `<ClientRouter />`: page transitions are native CSS view transitions (already in base.css).
 
-## Forms (no backend)
+## Forms
 
-- Contract in `src/lib/forms.ts`. Messages from the brief part 05 (`t.form`, with the WaysZ Visa success message).
-  Show `t.form.consent` under every form. The consultation form (brief part 04 §4.1–4.7) always shows the §4.8
-  warning: never send a passport or sensitive documents through the form.
+- Contract in `src/lib/forms.ts`. Fields and copy: brief v3 §12 (consultation) and part 05 (messages, `t.form`).
+  Show `t.form.consent` under every form.
+- The consultation form reads `?type=`, `?service=` and `?destination=` to prefill itself (links from visa pages,
+  destinations and the assessment tool).
+- The assessment tool (`/assessment/`, brief v3 §11) runs fully in the browser and sends nothing; its result opens
+  the consultation form prefilled.
 - Destination NOT decided. `TODO(endpoint)` — do not choose a provider without the team.
 
 ## Client data
 
-- Phone, WhatsApp, address, hours, emails live ONLY in `src/lib/site.ts`. Never invent them.
+- Phone, WhatsApp, address, branches, hours, emails, social links live ONLY in `src/lib/site.ts`. The client is
+  starting a new entity: use the data he sends; until then, clear placeholders marked `TODO(client)`. The old
+  site's contact data is not used.
 
-## Deploy (Namecheap — Stellar Plus, cPanel)
+## Deploy
 
-- `npm run build` → upload the CONTENTS of `dist/` into `public_html/` of waysz-visa.com. `.htaccess` is included.
-- `vercel.json` only serves preview builds (every page `noindex`).
+- Now: preview builds on Vercel (`vercel.json`, every page `noindex`) for the client's review.
+- Final (after the client's approval): Namecheap — Stellar Plus, cPanel. `npm run build` → upload the CONTENTS of
+  `dist/` into `public_html/` of waysz-visa.com. `.htaccess` is included.
 
 ## Definition of Done (every page / section)
 
@@ -283,7 +306,7 @@ wayszViza/
 - One branch per task: `feat/home-hero`, `feat/visa-services-page`, … Small PRs, one review, then merge.
 - Shared files (`src/styles`, `src/motion`, `src/components`, `src/i18n`, layouts, `CLAUDE.md`, skills)
   have one owner at a time — announce in the group before editing.
-- Before building a section: read its brief section, its storyboard row in waysz-motion `reference.md`,
+- Before building a section: read its section in brief v3, its storyboard row in waysz-motion `reference.md`,
   and the matching Motion Lab example. Replace the section's `<TodoSection>`.
 
 ## Finishing a task (every session)
