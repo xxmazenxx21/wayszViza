@@ -312,8 +312,11 @@ wayszViza/
 ## Finishing a task (every session)
 
 - Never end your turn while a background job, shell or agent you started is still running: wait for it.
-- End a task ONLY when everything is done: all checks run, all changes committed AND pushed, the working tree clean.
-- Start the final message with the line `FINISHED — pushed <commit hash> to <branch>`, then the report.
+- **Never run `git commit` or `git push`.** The developer reviews, commits and pushes himself. Leave all changes
+  in the working tree (you may run `git status` / `git diff` to check them).
+- End a task ONLY when everything is done: all checks run and every change saved.
+- Start the final message with the line `FINISHED — changes ready (not committed)`, then the report, and end the
+  report with one suggested commit message.
 - If something cannot be finished, start the final message with `NOT FINISHED —` and say exactly what is left.
 - Time-box polishing: if a performance or visual target is still not met after two honest attempts, stop, keep what works, report it in one line and finish. Never ask the developer questions mid-task; decide sensibly and list decisions in the report.
 
