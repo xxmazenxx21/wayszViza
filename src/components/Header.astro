@@ -121,7 +121,23 @@ const isCurrent = (href: string) =>
     document.documentElement.classList.toggle('menu-open', open);
     if (open) lenis?.stop(); else lenis?.start();
   };
-  toggle.addEventListener('click', () => setOpen(header.dataset.open !== 'true'));
+  toggle.addEventListener('click', () => {
+    const open = header.dataset.open !== 'true';
+    setOpen(open);
+    // keyboard: the menu comes before the toggle in the DOM — move focus into it, keep Tab inside while it is open
+    if (open) window.setTimeout(() => items()[0]?.focus({ preventScroll: true }), 60);
+  });
+  const nav = header.querySelector<HTMLElement>('#site-nav')!;
+  const items = () => [...nav.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter((el) => el.getClientRects().length > 0);
+  header.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || header.dataset.open !== 'true') return;
+    const ring = [toggle, ...items()];
+    const at = ring.indexOf(document.activeElement as HTMLElement);
+    if (at < 0) return;
+    const next = (at + (e.shiftKey ? -1 : 1) + ring.length) % ring.length;
+    e.preventDefault();
+    ring[next].focus();
+  });
 
   // «خدمات التأشيرات» submenu. Wide screens: CSS opens it on hover / focus (like WaysZ); data-sub-open = opened
   // with the caret or the arrows; data-sub-hold = closed with Esc or the caret while the pointer / focus is still on it.
@@ -157,7 +173,12 @@ const isCurrent = (href: string) =>
     }
   });
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || header.dataset.open !== 'true') return;
+    const inside = nav.contains(document.activeElement);
+    setOpen(false);
+    if (inside) toggle.focus();                  // back to the button that opened the menu
+  });
 </script>
 
 <style>

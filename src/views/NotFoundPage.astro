@@ -1,5 +1,10 @@
 ---
-/** 404 (brief v3 §19.5): heading, text and four links — Home · Visa services · Find your visa · Request a consultation. */
+/**
+ * 404 (brief v3 §19.5): heading, text and the four links — Home · Visa services · Find your visa · Request a consultation.
+ * A light, slightly playful moment: the dashed road runs on to its pin, but the paper plane took a wrong turn, looped
+ * the loop and now hovers off the road, a little lost. Inline SVG drawn with CSS only (the wrong turn draws itself,
+ * the plane bobs, the pin breathes); it mirrors in RTL so the road follows the reading direction. noindex.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
@@ -13,18 +18,74 @@ const links = [
   { href: localizePath('/assessment/', lang), label: t.nav.findVisa },
   { href: localizePath('/consultation/', lang), label: t.cta.request, accent: true },
 ];
+const road = 'M10 176 C 110 176, 170 172, 250 156 S 390 104, 492 108';
+const wrong = 'M250 156 C 292 170, 330 214, 296 222 C 258 230, 250 176, 300 166 C 346 158, 372 196, 418 204';
 ---
-<BaseLayout lang={lang} title={t.pages.notFound.title} description={t.pages.notFound.description} noindex>
-  <section class="container section stack" style="padding-top: 180px; min-height: 70vh">
-    <h1>{t.pages.notFound.heading}</h1>
-    <p class="lead">{t.pages.notFound.text}</p>
-    <ul class="nf-links" role="list">
-      {links.map((l) => <li><a class:list={['btn', l.accent ? 'btn--accent' : 'btn--ghost']} href={l.href}>{l.label}</a></li>)}
-    </ul>
-    {lang === 'ar' && <p lang="en" dir="ltr"><a href="/en/">{en.pages.notFound.back} (English)</a></p>}
+<BaseLayout lang={lang} title={t.pages.notFound.title} description={t.pages.notFound.description} noindex headerOverlay>
+  <section class="nf theme-dark" aria-labelledby="nf-title">
+    <div class="nf__glow" aria-hidden="true"></div>
+    <div class="container nf__in">
+      <svg class="nf__art" viewBox="0 0 520 250" aria-hidden="true">
+        <path class="nf__road" d={road} />
+        <g class="nf__pin" transform="translate(492 108)">
+          <circle class="nf__pulse" cy="-19" r="14" />
+          <path d="M0 0c-7-9-11-14-11-19a11 11 0 0 1 22 0c0 5-4 10-11 19z" />
+          <circle class="nf__pin-dot" cy="-19" r="4" />
+        </g>
+        <path class="nf__wrong" d={wrong} pathLength="1" />
+        <g transform="translate(424 206) rotate(14)">
+          <g class="nf__plane">
+            <path d="M14 0 -10 -9l3 9-3 9z" />
+            <path class="nf__fold" d="M14 0-7 0" />
+          </g>
+        </g>
+      </svg>
+
+      <h1 class="nf__title" id="nf-title" data-split="words">{t.pages.notFound.heading}</h1>
+      <p class="nf__text">{t.pages.notFound.text}</p>
+      <ul class="nf__links" role="list">
+        {links.map((l) => <li><a class:list={['btn', l.accent ? 'btn--accent' : 'nf__link']} href={l.href} data-magnetic={l.accent ? '' : undefined}>{l.label}</a></li>)}
+      </ul>
+      {lang === 'ar' && <p class="nf__en" lang="en" dir="ltr"><a href="/en/">{en.pages.notFound.back} (English)</a></p>}
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .nf-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .nf { position: relative; overflow: clip; min-height: 100svh; display: grid; align-items: center; padding-block: clamp(7rem, 6rem + 4vw, 9rem) var(--space-9); }
+  .nf__glow {
+    position: absolute; inset: -30% auto auto 50%; width: 90vmax; height: 90vmax; translate: -50% 0; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent);
+  }
+  .nf__in { position: relative; display: grid; justify-items: center; text-align: center; }
+  .nf__art { width: min(100%, 34rem); height: auto; overflow: visible; margin-block-end: var(--space-6); }
+  :global([dir='rtl']) .nf__art { scale: -1 1; }
+  .nf__road { fill: none; stroke: color-mix(in srgb, var(--color-ink) 38%, transparent); stroke-width: 2.4; stroke-dasharray: 10 9; stroke-linecap: round; }
+  .nf__wrong {
+    fill: none; stroke: var(--color-accent); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+    animation: nf-draw 2.2s 0.3s var(--ease-in-out) forwards;
+  }
+  .nf__pin path { fill: color-mix(in srgb, var(--color-ink) 55%, transparent); }
+  .nf__pin-dot { fill: var(--color-bg); }
+  .nf__pulse { fill: none; stroke: color-mix(in srgb, var(--color-ink) 30%, transparent); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: nf-pulse 2.8s 1s ease-out infinite; opacity: 0; }
+  .nf__plane { fill: var(--color-accent); opacity: 0; transform-box: fill-box; transform-origin: center; animation: nf-plane-in 0.6s 2.3s var(--ease-out) forwards, nf-bob 3.6s 2.9s ease-in-out infinite; }
+  .nf__fold { fill: none; stroke: color-mix(in srgb, var(--color-bg) 55%, transparent); stroke-width: 1.2; }
+  @keyframes nf-draw { to { stroke-dashoffset: 0; } }
+  @keyframes nf-plane-in { from { opacity: 0; translate: -10px 4px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes nf-bob { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 2px -6px; rotate: -8deg; } }
+  @keyframes nf-pulse { 0% { opacity: 0.8; scale: 0.6; } 100% { opacity: 0; scale: 1.8; } }
+
+  .nf__title { max-width: 20ch; font-size: clamp(1.9rem, 1.2rem + 2.8vw, 3.4rem); line-height: 1.3; }
+  :global([dir='rtl']) .nf__title { line-height: 1.5; }
+  .nf__text { margin-block-start: var(--space-4); max-width: 46ch; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+  .nf__links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-block-start: var(--space-7); }
+  .nf__link {
+    border-color: color-mix(in srgb, var(--color-ink) 30%, transparent); color: var(--color-ink);
+  }
+  .nf__link:hover { border-color: var(--color-ink); background: color-mix(in srgb, var(--color-ink) 8%, transparent); }
+  .nf__en { margin-block-start: var(--space-6); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  @media (max-width: 639px) {
+    .nf__links { display: grid; width: 100%; max-width: 22rem; }
+    .nf__links .btn { width: 100%; }
+  }
 </style>

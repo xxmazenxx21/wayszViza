@@ -123,6 +123,7 @@ for (const { name, url, device } of runs) {
       lenis: html.classList.contains('lenis'),
       cursor: html.classList.contains('has-cursor'),
       reduceQuery: matchMedia('(prefers-reduced-motion: reduce)').matches,
+      stage: !!document.querySelector('.stage-host'),
       saveData: navigator.connection?.saveData ?? null,
       scrub: document.querySelectorAll('.is-scrub').length,
       split: document.querySelectorAll('[data-split] div, .w, .hero__word').length,
@@ -137,7 +138,8 @@ for (const { name, url, device } of runs) {
   if (state.tier !== 'full') problems.push(`tier ${state.tier}`);
   if (!state.js || !state.ready) problems.push(`motion not ready (js ${state.js}, ready ${state.ready})`);
   if (!state.lenis) problems.push('Lenis off');
-  if (!drew) problems.push('WebGL canvas never drew');
+  // pages built without a 3D layer (e.g. the consultation sheet: DOM + GSAP only) have no stage host — nothing to draw
+  if (state.stage && !drew) problems.push('WebGL canvas never drew');
   if (!state.scrub && !state.split) problems.push('no scroll scene ran');
   if (!device.isMobile && !state.cursor) problems.push('plane cursor off');
   errors.forEach((e) => problems.push(`console: ${e}`));

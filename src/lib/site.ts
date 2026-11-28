@@ -13,6 +13,7 @@ export const site = {
 
   email: 'info@waysz-visa.com',           // TODO(client): confirm the public email of the new entity
   phone: '+20 2 0000 0000',               // TODO(client): the real phone number
+  hotline: '',                            // TODO(client): hotline (brief v3 §14 «إن وُجد») — empty = not shown
   whatsapp: '201000000000',               // TODO(client): WhatsApp number, digits only with country code
   address: { ar: 'القاهرة، مصر', en: 'Cairo, Egypt' } as Localized,                    // TODO(client)
   hours: { ar: 'السبت إلى الخميس، 10 ص – 6 م', en: 'Saturday to Thursday, 10 am – 6 pm' } as Localized, // TODO(client)
@@ -26,6 +27,13 @@ export const site = {
       hours: { ar: 'السبت إلى الخميس، 10 ص – 6 م', en: 'Saturday to Thursday, 10 am – 6 pm' },
     },
   ] as Branch[],
+
+  // Privacy policy + terms (brief v3 §19.6 · §19.7): the placeholders [اسم الكيان] · [التاريخ] · [الدولة] — [البريد] = email
+  legal: {
+    entity: { ar: 'شركة WaysZ للخدمات الاستشارية', en: 'WaysZ Consulting Services' } as Localized, // TODO(client): legal name of the new entity
+    updated: '2026-11-28',                                                                         // TODO(client): date of the approved texts (YYYY-MM-DD)
+    country: { ar: 'جمهورية مصر العربية', en: 'the Arab Republic of Egypt' } as Localized,         // TODO(client): governing law (brief v3 §19.7 ❓)
+  },
 
   // TODO(client): the real social links ('#' = placeholder). Order = display order.
   social: {

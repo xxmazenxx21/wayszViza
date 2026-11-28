@@ -117,6 +117,13 @@ const id = `ar-${kind}`;
     background: var(--color-accent); color: var(--color-bg); font-size: 2rem; font-weight: var(--weight-extrabold); line-height: 1;
   }
   .ar__label { font-size: var(--text-xl); font-weight: var(--weight-bold); }
+  /* the heading and the gate sign sit straight on the footage (the bright concourse ceiling): a soft navy halo behind
+     each keeps them AA (≥ 3:1 large text / 4.5:1) without darkening the film */
+  .ar__title, .ar__sign { position: relative; isolation: isolate; justify-self: start; width: fit-content; }   /* the halo hugs the text */
+  .ar__title::before, .ar__sign::before {
+    content: ''; position: absolute; z-index: -1; inset: -0.8em -1.2em; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-bg) 88%, transparent) 55%, color-mix(in srgb, var(--color-bg) 60%, transparent) 78%, transparent);
+  }
 
   .ar__ticks { display: none; }
 

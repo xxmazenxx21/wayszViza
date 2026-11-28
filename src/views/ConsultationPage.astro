@@ -1,13 +1,28 @@
 ---
 /**
- * Consultation (brief part 01 «ثانيًا» §4 · copy: part 04 §4). Plain markup for now (no design yet).
- * The form follows the contract in src/lib/forms.ts (messages: t.form, brief part 05).
- * Destination: TODO(endpoint) in forms.ts — no provider chosen.
+ * «طلب الاستشارة» (brief v3 §12 · title + intro: v2 ✅). An application sheet in the paper world of Home: one sheet of
+ * premium paper with an airmail edge, two blank sheets under it, on the navy night. Every field of the §12 table in its
+ * order (grouped on the sheet: your details · your trip · how we reach you), then the §4.8 warning (always visible),
+ * the privacy line and the submit button with the paper plane.
+ *
+ * Contract: src/lib/forms.ts (validation, messages t.form, sending — TODO(endpoint) there, simulated until
+ * PUBLIC_FORM_ENDPOINT is set). Prefill from the URL (fields with data-param, validated by forms.ts):
+ *   ?type=<category slug | unsure> · ?service=<slug>[,<slug>…] · ?destination=<ISO> · ?refused=yes|no · ?travelers=<1–99>
+ * and from the assessment tool (?from=assessment, read by the script below with src/lib/assessment.ts):
+ *   ?purpose= (→ 4.4 text) · ?when= (→ 4.5 month) · ?cbi= · ?support= · ?party= (→ the summary in 4.7) + the note.
+ * Scenes: paper-sheet (the sheet settles, the heading rises) · form-flight (the plane flies off on success, a shake on
+ * error). DOM + GSAP only, no WebGL. No JS: a plain form (it cannot send without JS — TODO(endpoint)).
+ * TODO(client): «الفرع المفضل» is added when the branches arrive (brief v3 §12 ❓).
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import countries from '../data/countries.json';
+import { regions } from '../data/destinations';
+import { site } from '../lib/site';
+import { assessmentCopy } from '../data/assessment';
 import { countries as namedCountries } from '../lib/countries';
-import { useTranslations, type Lang } from '../i18n';
+import { visaGroups } from '../content.config';
+import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -17,14 +32,21 @@ const copy = {
   ar: {
     title: 'اطلب استشارتك',
     lead: 'أخبرنا بتفاصيل سفرك، وسيتواصل معك أحد مستشارينا لتحديد الخطوات المناسبة لحالتك.',
+    sheet: 'طلب استشارة',
+    parts: ['بياناتك', 'رحلتك', 'كيف نتواصل معك'],
     name: 'الاسم بالكامل', namePh: 'اكتب اسمك كما في جواز السفر',
     phone: 'رقم الهاتف', phonePh: '01xxxxxxxxx',   // brief: «مثال: 01xxxxxxxxx» — the Arabic word scrambles inside the LTR input
-    country: 'الدولة المقصودة', countryPh: 'اختر الدولة التي تخطط للسفر إليها',
-    visaType: 'نوع التأشيرة',
-    visaTypes: ['دراسة', 'أعمال ومؤتمرات', 'هجرة وإقامة', 'عائلية', 'زيارة قصيرة', 'لست متأكدًا'],
+    email: 'البريد الإلكتروني', emailPh: 'name@example.com',
+    residence: 'بلد الإقامة الحالي', residenceHint: 'اختر الدولة التي تقيم فيها الآن', residencePh: 'اختر الدولة',
+    country: 'الدولة المقصودة', countryPh: 'اختر الدولة التي تخطط للسفر إليها', allCountries: 'كل الدول',
+    visaType: 'نوع التأشيرة', visaTypePh: 'اختر نوع التأشيرة', unsure: 'لست متأكدًا',
+    services: 'الخدمات التي تحتاجها', servicesHint: 'اختر ما تحتاجه، أو اترك الاختيار لمستشارك.',
     purpose: 'الغرض من السفر', purposePh: 'مثال: دراسة جامعية، حضور مؤتمر، عمل، زيارة أقارب...',
+    refused: 'هل سبق رفض طلب تأشيرة لك؟', refusedHint: 'نساعدك في الحالتين؛ معرفة ذلك تساعدنا على تجهيز استشارتك.',
+    yes: 'نعم', no: 'لا',
+    travelers: 'عدد المسافرين',
     date: 'موعد السفر المتوقع', dateHint: 'اختر الشهر المتوقع للسفر',
-    contact: 'وسيلة التواصل', contacts: ['مكالمة هاتفية', 'واتساب', 'بريد إلكتروني'],
+    contact: 'وسيلة التواصل المفضلة', contacts: ['مكالمة هاتفية', 'واتساب', 'بريد إلكتروني'],
     message: 'وصف الاستفسار', messagePh: 'اكتب باختصار وضعك وما تحتاج المساعدة فيه، وهل سبق رفض طلب لك',
     send: 'إرسال طلب الاستشارة',
     warnLabel: 'تنبيه:',
@@ -33,12 +55,19 @@ const copy = {
   en: {
     title: 'Request your consultation',
     lead: 'Tell us about your trip, and one of our consultants will contact you to set the right next steps for your case.',
+    sheet: 'Consultation request',
+    parts: ['Your details', 'Your trip', 'How we reach you'],
     name: 'Full name', namePh: 'Write your name as it appears in your passport',
     phone: 'Phone number', phonePh: 'e.g. 01xxxxxxxxx',
-    country: 'Destination country', countryPh: 'Choose the country you plan to travel to',
-    visaType: 'Visa type',
-    visaTypes: ['Study', 'Business & conferences', 'Immigration & residence', 'Family', 'Short visit', 'Not sure'],
+    email: 'Email', emailPh: 'name@example.com',
+    residence: 'Country of residence', residenceHint: 'Choose the country you live in now', residencePh: 'Choose a country',
+    country: 'Destination country', countryPh: 'Choose the country you plan to travel to', allCountries: 'All countries',
+    visaType: 'Visa type', visaTypePh: 'Choose a visa type', unsure: 'I’m not sure',
+    services: 'Services you need', servicesHint: 'Pick what you need, or leave the choice to your consultant.',
     purpose: 'Purpose of travel', purposePh: 'e.g. university studies, attending a conference, work, visiting relatives…',
+    refused: 'Have you been refused a visa before?', refusedHint: 'We help either way; knowing this helps us prepare your consultation.',
+    yes: 'Yes', no: 'No',
+    travelers: 'Number of travelers',
     date: 'Expected travel date', dateHint: 'Choose the month you expect to travel',
     contact: 'Preferred contact method', contacts: ['Phone call', 'WhatsApp', 'Email'],
     message: 'Your inquiry', messagePh: 'Briefly describe your situation, what you need help with, and whether an application of yours has been refused before',
@@ -48,101 +77,484 @@ const copy = {
   },
 }[lang];
 
-// §4.2 «قائمة»: the brief gives no list — every country of src/data/countries.json (ISO 3166-1), named by the
-// browser-independent Intl data at build time (src/lib/countries.ts), sorted in the page's language.
-const destinations = namedCountries(countries.map(([id]) => String(id)), lang, true).map((c) => ({ id: c.code, name: c.name }));
+// 4.1b every country · 4.2 the destinations we work with (brief v3 §1.6b) first, then every country — ISO codes named
+// by src/lib/countries.ts, sorted in the page's language. src/data/countries.json is the globe's selectable list: it
+// leaves out Egypt (the origin of every route) — residence adds it back (most visitors live there).
+const all = namedCountries(countries.map(([id]) => String(id)), lang, true);
+const residences = namedCountries([...countries.map(([id]) => String(id)), 'EG'], lang, true);
+const ours = namedCountries(regions.flatMap((r) => r.countries), lang, true);
+
+// 4.3 the nine categories by their four groups · 4.3b the nine services — names from the visa pages
+const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
+const groups = visaGroups.map((g) => ({
+  label: t.nav.groups[g],
+  items: visas.filter((e) => e.data.kind === 'category' && e.data.group === g).map((e) => ({ id: e.id, name: e.data[lang].name })),
+}));
+const services = visas.filter((e) => e.data.kind === 'service').map((e) => ({ id: e.id, name: e.data[lang].name }));
+
 const contactValues = ['phone', 'whatsapp', 'email'];
+const check = 'M5 12.5l4.2 4L19 7';
+// what the script needs to write the summary of the tool's answers (4.7) in the page's language
+const prefillCopy = { ...assessmentCopy(lang), summary: t.form.summary };
 ---
-<BaseLayout lang={lang} title={t.pages.consultation.title} description={t.pages.consultation.description}>
-  <section class="consult container stack">
-    <h1>{copy.title}</h1>
-    <p class="lead">{copy.lead}</p>
+<BaseLayout lang={lang} title={t.pages.consultation.title} description={t.pages.consultation.description} headerOverlay>
+  <section class="consult theme-dark" data-scene="paper-sheet form-flight" aria-labelledby="consult-title">
+    <div class="consult__glow" aria-hidden="true"></div>
+    <div class="container">
+      <header class="consult__head">
+        <h1 class="consult__title" id="consult-title">{copy.title}</h1>
+        <p class="consult__lead">{copy.lead}</p>
+      </header>
 
-    <!-- §4.1 consultation form -->
-    <form class="form stack" data-form="consultation" data-messages={JSON.stringify(t.form)} novalidate>
-      <div class="field">
-        <label for="c-name">{copy.name}</label>
-        <input id="c-name" name="name" required autocomplete="name" placeholder={copy.namePh} aria-describedby="c-name-error" />
-        <p id="c-name-error" class="field__error" aria-live="polite"></p>
-      </div>
-      <div class="field">
-        <label for="c-phone">{copy.phone}</label>
-        <input id="c-phone" name="phone" type="tel" required dir="ltr" autocomplete="tel" pattern="[0-9+\s\-]{8,}" placeholder={copy.phonePh} aria-describedby="c-phone-error" />
-        <p id="c-phone-error" class="field__error" aria-live="polite"></p>
-      </div>
-      <!-- §4.2 -->
-      <div class="field">
-        <label for="c-country">{copy.country}</label>
-        <select id="c-country" name="country" required aria-describedby="c-country-error">
-          <option value="">{copy.countryPh}</option>
-          {destinations.map((d) => <option value={d.id}>{d.name}</option>)}
-        </select>
-        <p id="c-country-error" class="field__error" aria-live="polite"></p>
-      </div>
-      <!-- §4.3 -->
-      <div class="field">
-        <label for="c-visa">{copy.visaType}</label>
-        <select id="c-visa" name="visaType" required aria-describedby="c-visa-error">
-          <option value="">—</option>
-          {copy.visaTypes.map((v) => <option>{v}</option>)}
-        </select>
-        <p id="c-visa-error" class="field__error" aria-live="polite"></p>
-      </div>
-      <!-- §4.4 -->
-      <div class="field">
-        <label for="c-purpose">{copy.purpose}</label>
-        <input id="c-purpose" name="purpose" required placeholder={copy.purposePh} aria-describedby="c-purpose-error" />
-        <p id="c-purpose-error" class="field__error" aria-live="polite"></p>
-      </div>
-      <!-- §4.5 (optional) -->
-      <div class="field">
-        <label for="c-date">{copy.date}</label>
-        <input id="c-date" name="travelDate" type="month" dir="ltr" aria-describedby="c-date-hint" />
-        <p id="c-date-hint" class="field__hint">{copy.dateHint}</p>
-      </div>
-      <!-- §4.6 — the error of the group is announced under the first radio's id -->
-      <fieldset class="field">
-        <legend>{copy.contact}</legend>
-        {copy.contacts.map((label, i) => (
-          <label class="choice">
-            <input type="radio" name="contactMethod" value={contactValues[i]} required
-                   id={i === 0 ? 'c-contact' : `c-contact-${contactValues[i]}`}
-                   aria-describedby={i === 0 ? 'c-contact-error' : undefined} />
-            {" "}{label}
-          </label>
-        ))}
-        <p id="c-contact-error" class="field__error" aria-live="polite"></p>
-      </fieldset>
-      <!-- §4.7 (optional) -->
-      <div class="field">
-        <label for="c-message">{copy.message}</label>
-        <textarea id="c-message" name="message" rows="5" placeholder={copy.messagePh}></textarea>
-      </div>
+      <div class="consult__desk">
+        <div class="consult__under consult__under--2" aria-hidden="true"></div>
+        <div class="consult__under consult__under--1" aria-hidden="true"></div>
 
-      <!-- §4.8 do not send passports or sensitive documents -->
-      <p class="warn" role="note"><strong>{copy.warnLabel}</strong>{" "}{copy.warn}</p>
+        <div class="sheet theme-light">
+          <p class="sheet__head" aria-hidden="true">
+            <span>{copy.sheet}</span>
+            <span class="sheet__brand">{site.name}</span>
+          </p>
 
-      <div>
-        <button class="btn btn--accent" type="submit">{copy.send}</button>
+          <!-- from the assessment tool: a small note, dismissible (shown by the script) -->
+          <div class="sheet__note" data-note hidden>
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19zM14 7l3 3" /></svg>
+            <p>{t.form.prefilled}</p>
+            <button type="button" class="sheet__close" data-note-close aria-label={t.form.dismiss}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+            </button>
+          </div>
+
+          <form class="sheet__form" data-form="consultation" data-messages={JSON.stringify(t.form)}
+                data-prefill-copy={JSON.stringify(prefillCopy)} novalidate>
+
+            <div class="part" role="group" aria-labelledby="part-you">
+              <h2 class="part__title" id="part-you">{copy.parts[0]}</h2>
+              <div class="part__grid">
+                <div class="field field--wide">
+                  <label for="c-name">{copy.name}</label>
+                  <input id="c-name" name="name" required autocomplete="name" placeholder={copy.namePh} aria-describedby="c-name-error" />
+                  <p id="c-name-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="c-phone">{copy.phone}</label>
+                  <input id="c-phone" name="phone" type="tel" required dir="ltr" autocomplete="tel" inputmode="tel" pattern="[0-9+\s\-]{8,}" placeholder={copy.phonePh} aria-describedby="c-phone-error" />
+                  <p id="c-phone-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="c-email">{copy.email} <span class="field__opt">({t.form.optional})</span></label>
+                  <input id="c-email" name="email" type="email" dir="ltr" autocomplete="email" placeholder={copy.emailPh} aria-describedby="c-email-error" />
+                  <p id="c-email-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <!-- 4.1b -->
+                <div class="field field--wide">
+                  <label for="c-residence">{copy.residence}</label>
+                  <select id="c-residence" name="residence" required data-msg="residence" autocomplete="country" aria-describedby="c-residence-hint c-residence-error">
+                    <option value="">{copy.residencePh}</option>
+                    {residences.map((c) => <option value={c.code}>{c.name}</option>)}
+                  </select>
+                  <p id="c-residence-hint" class="field__hint">{copy.residenceHint}</p>
+                  <p id="c-residence-error" class="field__error" aria-live="polite"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="part" role="group" aria-labelledby="part-trip">
+              <h2 class="part__title" id="part-trip">{copy.parts[1]}</h2>
+              <div class="part__grid">
+                <!-- 4.2 -->
+                <div class="field">
+                  <label for="c-destination">{copy.country}</label>
+                  <select id="c-destination" name="destination" required data-msg="destination" data-param="destination" aria-describedby="c-destination-hint c-destination-error">
+                    <option value="">{copy.residencePh}</option>
+                    <optgroup label={t.visa.destinations}>
+                      {ours.map((c) => <option value={c.code}>{c.name}</option>)}
+                    </optgroup>
+                    <optgroup label={copy.allCountries}>
+                      {all.map((c) => <option value={c.code}>{c.name}</option>)}
+                    </optgroup>
+                  </select>
+                  <p id="c-destination-hint" class="field__hint">{copy.countryPh}</p>
+                  <p id="c-destination-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <!-- 4.3 -->
+                <div class="field">
+                  <label for="c-visa">{copy.visaType}</label>
+                  <select id="c-visa" name="visaType" required data-param="type" aria-describedby="c-visa-error">
+                    <option value="">{copy.visaTypePh}</option>
+                    {groups.map((g) => (
+                      <optgroup label={g.label}>
+                        {g.items.map((v) => <option value={v.id}>{v.name}</option>)}
+                      </optgroup>
+                    ))}
+                    <option value="unsure">{copy.unsure}</option>
+                  </select>
+                  <p id="c-visa-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <!-- 4.3b -->
+                <fieldset class="field field--wide">
+                  <legend>{copy.services} <span class="field__opt">({t.form.optional})</span></legend>
+                  <p id="c-services-hint" class="field__hint">{copy.servicesHint}</p>
+                  <div class="chips chips--rows">
+                    {services.map((s, i) => (
+                      <label class="chip chip--row">
+                        <input type="checkbox" name="services" value={s.id} data-param="service" id={i === 0 ? 'c-services' : undefined}
+                               aria-describedby={i === 0 ? 'c-services-hint' : undefined} />
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={check} /></svg>
+                        <span>{s.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <!-- 4.4 -->
+                <div class="field field--wide">
+                  <label for="c-purpose">{copy.purpose}</label>
+                  <input id="c-purpose" name="purpose" required maxlength="200" placeholder={copy.purposePh} aria-describedby="c-purpose-error" />
+                  <p id="c-purpose-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <!-- 4.4b -->
+                <fieldset class="field field--wide">
+                  <legend>{copy.refused} <span class="field__opt">({t.form.optional})</span></legend>
+                  <div class="chips">
+                    {[['yes', copy.yes], ['no', copy.no]].map(([value, label], i) => (
+                      <label class="chip">
+                        <input type="radio" name="refused" value={value} data-param="refused" id={i === 0 ? 'c-refused' : `c-refused-${value}`}
+                               aria-describedby="c-refused-hint" />
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={check} /></svg>
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <p id="c-refused-hint" class="field__hint">{copy.refusedHint}</p>
+                </fieldset>
+                <!-- 4.4c -->
+                <div class="field">
+                  <label for="c-travelers">{copy.travelers} <span class="field__opt">({t.form.optional})</span></label>
+                  <input id="c-travelers" name="travelers" type="number" inputmode="numeric" min="1" max="99" step="1" value="1"
+                         data-param="travelers" data-msg="travelers" aria-describedby="c-travelers-error" />
+                  <p id="c-travelers-error" class="field__error" aria-live="polite"></p>
+                </div>
+                <!-- 4.5 -->
+                <div class="field">
+                  <label for="c-date">{copy.date} <span class="field__opt">({t.form.optional})</span></label>
+                  <input id="c-date" name="travelDate" type="month" dir="ltr" aria-describedby="c-date-hint" />
+                  <p id="c-date-hint" class="field__hint">{copy.dateHint}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="part" role="group" aria-labelledby="part-reach">
+              <h2 class="part__title" id="part-reach">{copy.parts[2]}</h2>
+              <div class="part__grid">
+                <!-- 4.6 — the error of the group is announced under the first radio's id -->
+                <fieldset class="field field--wide">
+                  <legend>{copy.contact}</legend>
+                  <div class="chips">
+                    {copy.contacts.map((label, i) => (
+                      <label class="chip">
+                        <input type="radio" name="contactMethod" value={contactValues[i]} required
+                               id={i === 0 ? 'c-contact' : `c-contact-${contactValues[i]}`}
+                               aria-describedby="c-contact-error" />
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={check} /></svg>
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <p id="c-contact-error" class="field__error" aria-live="polite"></p>
+                </fieldset>
+                <!-- 4.7 -->
+                <div class="field field--wide">
+                  <label for="c-message">{copy.message} <span class="field__opt">({t.form.optional})</span></label>
+                  <textarea id="c-message" name="message" rows="6" placeholder={copy.messagePh}></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4.8 do not send passports or sensitive documents (static, always visible) -->
+            <p class="warn" role="note">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3 2.5 20h19zM12 10v4.5M12 17.2v.1" /></svg>
+              <span><strong>{copy.warnLabel}</strong>{" "}{copy.warn}</span>
+            </p>
+
+            <div class="sheet__foot">
+              <div class="sheet__send">
+                <button class="btn btn--accent sheet__btn" type="submit" data-magnetic>{copy.send}</button>
+                <span class="form__plane" aria-hidden="true">
+                  <svg class="icon-dir" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+                </span>
+              </div>
+              <p class="sheet__privacy">{t.form.privacy}{" "}<a href={localizePath('/privacy/', lang)}>{t.form.privacyLink}</a></p>
+              <p class="form__status" data-form-status role="status"></p>
+              <p class="form__consent">{t.form.consent}</p>
+            </div>
+          </form>
+
+          <!-- the success state (shown by the script after the plane has left) -->
+          <div class="sheet__sent" data-sent hidden tabindex="-1" aria-labelledby="sent-title">
+            <svg class="sheet__tick" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+              <circle cx="32" cy="32" r="29" /><path d="M20 33l8 8 16-17" />
+            </svg>
+            <h2 class="sheet__sent-title" id="sent-title">{t.form.sentTitle}</h2>
+            <p class="sheet__sent-text">{t.form.success}</p>
+            <div class="sheet__sent-actions">
+              <button type="button" class="btn btn--accent" data-again>{t.form.again}</button>
+              <a class="btn btn--ghost" href={localizePath('/', lang)}>{t.pages.notFound.back}</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="form__status" data-form-status role="status"></p>
-      <p class="form__consent">{t.form.consent}</p>
-    </form>
+    </div>
   </section>
 </BaseLayout>
 
-<style>
-  .consult { padding-block: 160px var(--section-y); }
-  .form { max-width: 40rem; }
-  .field { display: grid; gap: var(--space-2); border: 0; padding: 0; margin: 0; }
-  .field input:not([type='radio']), .field select, .field textarea {
-    width: 100%; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-sm);
-    background: var(--color-surface);
+<script>
+  /**
+   * The consultation page only: the answers of the assessment tool (?from=assessment) → 4.4 purpose, 4.5 month, the
+   * summary in 4.7 and the note; and the success state. The data-param fields are already filled by forms.ts.
+   */
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { answersFrom } from '../lib/assessment';
+  import type { AssessmentCopy } from '../data/assessment';
+  import { lenis } from '../motion/smooth-scroll';
+
+  const form = document.querySelector<HTMLFormElement>('form[data-form="consultation"]');
+  const sheet = form?.closest<HTMLElement>('.sheet');
+  if (form && sheet) {
+    const copy = JSON.parse(form.dataset.prefillCopy || '{}') as AssessmentCopy & { summary: string };
+    const field = <T extends HTMLElement>(name: string) => form.elements.namedItem(name) as T | null;
+    const mark = (el: Element | null) => el?.closest('.field')?.setAttribute('data-prefilled', '');
+
+    const fromTool = () => {
+      const params = new URLSearchParams(location.search);
+      if (params.get('from') !== 'assessment') return;
+      const a = answersFrom(params);
+      if (!a.purpose) return;
+
+      // 4.4 — the purpose of Q1, in the visitor's words
+      const purpose = field<HTMLInputElement>('purpose');
+      if (purpose && !purpose.value) { purpose.value = copy.choices.purpose[a.purpose]; mark(purpose); }
+
+      // 4.5 — «خلال شهر» → next month · «خلال 1–3 أشهر» → in two months (editable)
+      const date = field<HTMLInputElement>('travelDate');
+      const ahead = a.when === 'month' ? 1 : a.when === 'quarter' ? 2 : 0;
+      if (date && ahead && !date.value) {
+        const d = new Date();
+        d.setDate(1);
+        d.setMonth(d.getMonth() + ahead);
+        date.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        mark(date);
+      }
+
+      // 4.7 — a short, editable summary of the answers
+      const message = field<HTMLTextAreaElement>('message');
+      if (message && !message.value) {
+        const dest = field<HTMLSelectElement>('destination');
+        const destName = dest?.value ? dest.selectedOptions[0].text : copy.noDestination;   // set by forms.ts when valid
+        const lines: [string, string | undefined][] = [
+          [copy.questions.purpose, copy.choices.purpose[a.purpose]],
+          [copy.questions.cbi, a.purpose === 'cbi' && a.cbi ? copy.choices.cbi[a.cbi] : undefined],
+          [copy.questions.destination, destName],
+          [copy.support[a.purpose], a.support && copy.choices.support[a.support]],
+          [copy.questions.refused, a.refused && copy.choices.refused[a.refused]],
+          [copy.questions.when, a.when && copy.choices.when[a.when]],
+          [copy.questions.party, a.party && copy.choices.party[a.party]],
+        ];
+        message.value = [copy.summary, ...lines.filter(([, v]) => v).map(([q, v]) => `- ${q} ${v}`)].join('\n');
+        mark(message);
+      }
+
+      const note = sheet.querySelector<HTMLElement>('[data-note]');
+      if (note) {
+        note.hidden = false;
+        note.querySelector('[data-note-close]')?.addEventListener('click', () => {
+          note.hidden = true;
+          field<HTMLInputElement>('name')?.focus();
+          ScrollTrigger.refresh();
+        });
+      }
+    };
+    if ('ready' in form.dataset) fromTool();
+    else form.addEventListener('waysz:form-prefill', fromTool, { once: true });
+
+    // success: the plane leaves (form-flight), then the sheet turns into its success state
+    const sent = sheet.querySelector<HTMLElement>('[data-sent]')!;
+    const note = sheet.querySelector<HTMLElement>('[data-note]');
+    const show = (done: boolean) => {
+      form.hidden = done;
+      sent.hidden = !done;
+      if (note && done) note.hidden = true;
+      ScrollTrigger.refresh();
+      const target = done ? sent : field<HTMLInputElement>('name');
+      target?.focus({ preventScroll: true });
+      if (lenis) lenis.scrollTo(sheet, { offset: -110, duration: 0.9 });
+      else sheet.scrollIntoView({ block: 'start' });
+    };
+    form.addEventListener('waysz:form-success', () => setTimeout(() => show(true), 900));
+    sent.querySelector('[data-again]')?.addEventListener('click', () => {
+      const status = form.querySelector<HTMLElement>('[data-form-status]');
+      if (status) { status.textContent = ''; delete status.dataset.state; }
+      show(false);
+    });
   }
-  .choice { display: flex; align-items: center; gap: var(--space-2); }
-  .field__error { color: var(--color-error); font-size: var(--text-sm); }
-  .field__hint, .form__consent { color: var(--color-ink-muted); font-size: var(--text-sm); }
+</script>
+
+<style>
+  .consult { position: relative; overflow: clip; padding-block: clamp(7.5rem, 6rem + 5vw, 10rem) var(--section-y); }
+  .consult__glow {
+    position: absolute; inset: -20% -30% auto auto; width: 80vmax; height: 80vmax; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent);
+  }
+  :global([dir='rtl']) .consult__glow { inset: -20% auto auto -30%; }
+  .consult__head { position: relative; max-width: 44rem; margin-inline: auto; text-align: center; }
+  .consult__title { font-size: clamp(2.2rem, 1.4rem + 3.4vw, 4rem); line-height: 1.2; }
+  :global([dir='rtl']) .consult__title { line-height: 1.4; }
+  .consult__lead { margin-block-start: var(--space-4); font-size: var(--text-lg); line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 86%, transparent); }
+
+  /* the desk: the sheet and two blank sheets under it */
+  .consult__desk { position: relative; max-width: 54rem; margin: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) auto 0; }
+  .consult__under { position: absolute; inset: 0; border-radius: var(--radius-lg); background: color-mix(in srgb, var(--color-surface) 70%, var(--color-ink)); opacity: 0.3; }
+  .consult__under--1 { rotate: 1.4deg; translate: 0 10px; }
+  .consult__under--2 { rotate: -1.8deg; translate: 0 20px; opacity: 0.16; }
+
+  .sheet {
+    position: relative; border-radius: var(--radius-lg); overflow: clip;
+    padding: clamp(1.25rem, 0.5rem + 3.5vw, 3.5rem);
+    padding-block-start: clamp(2rem, 1.2rem + 3vw, 3.75rem);
+    background:
+      radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--color-bg-alt) 55%, transparent), transparent 60%),
+      var(--color-surface);
+    color: var(--color-ink);
+    box-shadow: 0 40px 90px -30px color-mix(in srgb, black 85%, transparent);
+  }
+  /* the airmail edge */
+  .sheet::before {
+    content: ''; position: absolute; inset: 0 0 auto; height: 7px;
+    background: repeating-linear-gradient(135deg,
+      var(--color-accent-strong) 0 14px, transparent 14px 22px, var(--color-brand) 22px 36px, transparent 36px 44px);
+  }
+  .sheet__head {
+    display: flex; justify-content: space-between; gap: var(--space-4); padding-block-end: var(--space-4);
+    border-block-end: 1px dashed var(--color-border); color: var(--color-ink-muted); font-size: var(--text-sm);
+  }
+  .sheet__brand { font-weight: var(--weight-bold); color: var(--color-accent-ink); }
+
+  .sheet__note {
+    display: flex; align-items: center; gap: var(--space-3); margin-block-start: var(--space-5);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+    border-radius: var(--radius-md); background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent); font-size: var(--text-sm); line-height: 1.7;
+  }
+  :global([dir='rtl']) .sheet__note { padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2); }
+  .sheet__note[hidden] { display: none; }
+  .sheet__note p { flex: 1; }
+  .sheet__note > svg { flex: none; fill: none; stroke: var(--color-accent-ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .sheet__close {
+    flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: var(--radius-pill);
+    background: transparent; color: var(--color-ink); cursor: pointer;
+  }
+  .sheet__close:hover { background: color-mix(in srgb, var(--color-ink) 8%, transparent); }
+  .sheet__close svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+  /* the parts of the sheet */
+  .sheet__form { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3rem); margin-block-start: var(--space-6); }
+  .sheet__form[hidden] { display: none; }
+  .part__title {
+    display: flex; align-items: center; gap: var(--space-4); margin-block-end: var(--space-5);
+    font-size: var(--text-lg); font-weight: var(--weight-bold);
+  }
+  .part__title::after {
+    content: ''; flex: 1; height: 1px; background: var(--color-border);
+    transform: scaleX(var(--rule, 1)); transform-origin: 0 50%;   /* paper-sheet draws it from the reading side */
+  }
+  :global([dir='rtl']) .part__title::after { transform-origin: 100% 50%; }
+  .part__grid { display: grid; gap: var(--space-5); }
+  @media (min-width: 640px) {
+    .part__grid { grid-template-columns: 1fr 1fr; gap: var(--space-5) var(--space-5); }
+    .field--wide { grid-column: 1 / -1; }
+  }
+
+  .field { display: grid; gap: var(--space-2); align-content: start; min-width: 0; border: 0; padding: 0; margin: 0; }
+  .field > label, .field > legend { font-weight: var(--weight-bold); font-size: var(--text-sm); line-height: 1.6; padding: 0; }
+  .field > legend { margin-block-end: var(--space-2); }
+  .field__opt { font-weight: var(--weight-regular); color: var(--color-ink-muted); }
+  /* a field filled from the URL: a small sky-blue dot before its label */
+  .field[data-prefilled] > label::before, .field[data-prefilled] > legend::before {
+    content: ''; display: inline-block; width: 7px; height: 7px; margin-inline-end: var(--space-2); border-radius: 50%;
+    background: var(--color-accent); vertical-align: middle;
+  }
+  .field input:not([type='radio'], [type='checkbox']), .field select, .field textarea {
+    width: 100%; min-height: 52px; padding: var(--space-3) var(--space-4);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent); border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-bg-alt) 45%, var(--color-surface)); color: var(--color-ink);
+    font: inherit; font-size: var(--text-base); line-height: 1.6;
+    transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .field textarea { resize: vertical; min-height: 9rem; }
+  .field input::placeholder, .field textarea::placeholder { color: color-mix(in srgb, var(--color-ink-muted) 85%, transparent); }
+  .field input:hover, .field select:hover, .field textarea:hover { border-color: color-mix(in srgb, var(--color-ink) 32%, transparent); }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+    outline: none; border-color: var(--color-accent-strong); background: var(--color-surface);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 35%, transparent);
+  }
+  .field [aria-invalid='true'] { border-color: var(--color-error) !important; }
+  .field__error { color: var(--color-error); font-size: var(--text-sm); font-weight: var(--weight-bold); }
+  .field__error:empty { display: none; }
+  .field__hint { color: var(--color-ink-muted); font-size: var(--text-sm); line-height: 1.7; }
+  /* the month input keeps the page's reading side */
+  :global([dir='rtl']) .field input[type='month'] { text-align: end; }
+
+  /* chips: real radios / checkboxes, the whole chip is the hit area */
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .chips--rows { display: grid; gap: var(--space-3); }
+  @media (min-width: 640px) { .chips--rows { grid-template-columns: 1fr 1fr; } }
+  .chip {
+    position: relative; display: inline-flex; align-items: center; gap: var(--space-3); min-height: 52px;
+    padding: var(--space-2) var(--space-5); border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+    border-radius: var(--radius-pill); background: color-mix(in srgb, var(--color-bg-alt) 45%, var(--color-surface));
+    font-size: var(--text-sm); line-height: 1.5; cursor: pointer; user-select: none;
+    transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .chip--row { border-radius: var(--radius-md); padding-inline: var(--space-4); }
+  .chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  .chip svg { flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .chip svg { width: 18px; height: 18px; padding: 2px; border-radius: 6px; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-ink) 30%, transparent); color: transparent; }
+  .chip:has(input[type='radio']) svg { border-radius: 50%; }
+  @media (hover: hover) { .chip:hover { border-color: color-mix(in srgb, var(--color-ink) 34%, transparent); } }
+  .chip:has(input:checked) { background: var(--color-accent-strong); border-color: var(--color-accent-strong); color: var(--color-on-accent); }
+  .chip:has(input:checked) svg { color: currentColor; box-shadow: inset 0 0 0 1.5px currentColor; }
+  .chip:has(input:focus-visible) { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+  .chip:has(input[aria-invalid='true']) { border-color: var(--color-error); }
+
+  .warn {
+    display: flex; gap: var(--space-3); align-items: flex-start; padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md); border-inline-start: 4px solid var(--color-error);
+    background: color-mix(in srgb, var(--color-error) 7%, var(--color-surface)); font-size: var(--text-sm); line-height: 1.8;
+  }
+  .warn svg { flex: none; margin-block-start: 2px; fill: none; stroke: var(--color-error); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .sheet__foot { display: grid; gap: var(--space-3); }
+  .sheet__send { display: flex; align-items: center; gap: var(--space-4); }
+  .sheet__btn { min-height: 56px; padding-inline: var(--space-7); font-size: var(--text-base); white-space: normal; text-align: center; }
+  @media (max-width: 639px) { .sheet__btn { flex: 1; padding-inline: var(--space-5); } }
+  .form__plane { display: inline-block; width: 30px; flex: none; color: var(--color-accent-ink); }
+  .form__plane svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+  .sheet__privacy, .form__consent { color: var(--color-ink-muted); font-size: var(--text-sm); line-height: 1.7; }
+  .sheet__privacy a { color: var(--color-link); font-weight: var(--weight-bold); }
+  .form__consent { font-size: var(--text-xs); }
+  .form__status:empty { display: none; }
+  .form__status { font-weight: var(--weight-bold); }
   .form__status[data-state='success'] { color: var(--color-success); }
   .form__status[data-state='error'] { color: var(--color-error); }
-  .warn { padding: var(--space-4); border-inline-start: 4px solid var(--color-error); background: var(--color-surface); }
+
+  /* success */
+  .sheet__sent { display: grid; justify-items: center; gap: var(--space-4); padding-block: var(--space-8) var(--space-6); text-align: center; outline: none; }
+  .sheet__sent[hidden] { display: none; }
+  .sheet__sent:not([hidden]) { animation: sheet-sent 0.9s var(--ease-out) both; }
+  .sheet__tick { fill: none; stroke: var(--color-accent-strong); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sheet__tick path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: sheet-tick 0.7s 0.35s var(--ease-out) forwards; }
+  .sheet__sent-title { font-size: var(--text-2xl); }
+  .sheet__sent-text { max-width: 44ch; font-size: var(--text-lg); line-height: 1.8; color: var(--color-ink-muted); }
+  .sheet__sent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-block-start: var(--space-3); }
+  @keyframes sheet-sent { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes sheet-tick { to { stroke-dashoffset: 0; } }
 </style>

@@ -1,0 +1,94 @@
+---
+/**
+ * The reading layout of the two legal pages (Privacy §19.6 · Terms §19.7). A calm document: the title and «آخر تحديث»
+ * on a navy band, then the numbered sections at a comfortable line length; the table of contents sits sticky beside the
+ * text on wide screens and is a collapsed <details> above it on phones. Motion: the title rises by words, the document
+ * fades in once (globals data-split / data-reveal). In a section's text, {email} becomes the site's email as a link.
+ */
+import { site } from '../../lib/site';
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  sections: readonly (readonly [string, string])[];
+}
+const { lang, title, sections } = Astro.props;
+const t = useTranslations(lang);
+
+// «آخر تحديث» from site.legal.updated (TODO(client)), written in the page's language with Latin digits
+const date = new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-nu-latn' : 'en-GB', { dateStyle: 'long', timeZone: 'UTC' })
+  .format(new Date(`${site.legal.updated}T00:00:00Z`));
+const id = (i: number) => `section-${i + 1}`;
+---
+<header class="ldoc__head theme-dark">
+  <div class="container ldoc__head-in">
+    <h1 class="ldoc__title" data-split="words">{title}</h1>
+    <p class="ldoc__date">{t.legal.updated} <time datetime={site.legal.updated}>{date}</time></p>
+  </div>
+</header>
+
+<div class="container ldoc">
+  <!-- phones: collapsed above the text · wide screens: sticky beside it -->
+  <details class="ldoc__toc ldoc__toc--narrow">
+    <summary>{t.legal.contents}<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg></summary>
+    <ol role="list">{sections.map(([h], i) => <li><a href={`#${id(i)}`}><span>{i + 1}.</span>{" "}{h}</a></li>)}</ol>
+  </details>
+  <nav class="ldoc__toc ldoc__toc--wide" aria-label={t.legal.contents}>
+    <p class="ldoc__toc-title">{t.legal.contents}</p>
+    <ol role="list">{sections.map(([h], i) => <li><a href={`#${id(i)}`}><span>{i + 1}.</span>{" "}{h}</a></li>)}</ol>
+  </nav>
+
+  <article class="ldoc__body" data-reveal="fade">
+    {sections.map(([h, p], i) => (
+      <section class="ldoc__section" id={id(i)} aria-labelledby={`${id(i)}-h`}>
+        <h2 id={`${id(i)}-h`}><span class="ldoc__num">{i + 1}.</span>{" "}{h}</h2>
+        <p>{p.split('{email}').map((part, k) => <>{k > 0 && <a href={`mailto:${site.email}`} dir="ltr"><bdi>{site.email}</bdi></a>}{part}</>)}</p>
+      </section>
+    ))}
+  </article>
+</div>
+
+<style>
+  .ldoc__head { padding-block: clamp(8rem, 6.5rem + 5vw, 11rem) clamp(2.5rem, 2rem + 2vw, 4rem); background: var(--color-bg); }
+  .ldoc__title { font-size: clamp(2.2rem, 1.4rem + 3.2vw, 3.8rem); line-height: 1.25; }
+  :global([dir='rtl']) .ldoc__title { line-height: 1.4; }
+  .ldoc__date { margin-block-start: var(--space-4); color: var(--color-ink-muted); font-size: var(--text-sm); }
+
+  .ldoc { display: grid; gap: var(--space-6); padding-block: clamp(2.5rem, 2rem + 3vw, 4.5rem) var(--section-y); }
+  .ldoc__body { max-width: 68ch; }
+  .ldoc__section { padding-block: var(--space-5); border-block-end: 1px solid var(--color-border); scroll-margin-top: 6.5rem; }
+  .ldoc__section:first-child { padding-block-start: 0; }
+  .ldoc__section:last-child { border-block-end: 0; }
+  .ldoc__section h2 { font-size: var(--text-lg); line-height: 1.6; }
+  .ldoc__num { color: var(--color-accent-ink); }
+  .ldoc__section p { margin-block-start: var(--space-3); font-size: var(--text-base); line-height: 1.95; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+  .ldoc__section a { color: var(--color-link); font-weight: var(--weight-bold); }
+
+  .ldoc__toc ol { display: grid; gap: var(--space-1); }
+  .ldoc__toc a {
+    display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); text-decoration: none;
+    color: var(--color-ink-muted); font-size: var(--text-sm); line-height: 1.6;
+    transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+  }
+  .ldoc__toc a span { color: var(--color-accent-ink); }
+  .ldoc__toc a:hover { color: var(--color-ink); background: var(--color-bg-alt); }
+
+  .ldoc__toc--narrow { border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+  .ldoc__toc--narrow summary {
+    display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding-inline: var(--space-4);
+    font-weight: var(--weight-bold); cursor: pointer; list-style: none;
+  }
+  .ldoc__toc--narrow summary::-webkit-details-marker { display: none; }
+  .ldoc__toc--narrow summary svg { flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: rotate var(--dur-fast) var(--ease-out); }
+  .ldoc__toc--narrow[open] summary svg { rotate: 180deg; }
+  .ldoc__toc--narrow ol { padding: 0 var(--space-2) var(--space-3); }
+  .ldoc__toc--wide { display: none; }
+
+  @media (min-width: 1024px) {
+    .ldoc { grid-template-columns: 16rem minmax(0, 1fr); gap: clamp(3rem, 2rem + 3vw, 6rem); align-items: start; }
+    .ldoc__toc--narrow { display: none; }
+    .ldoc__toc--wide { display: block; position: sticky; top: 7rem; padding-inline-end: var(--space-5); border-inline-end: 1px solid var(--color-border); }
+    .ldoc__toc-title { margin-block-end: var(--space-3); padding-inline: var(--space-3); font-weight: var(--weight-bold); font-size: var(--text-sm); }
+  }
+</style>

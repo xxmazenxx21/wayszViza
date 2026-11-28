@@ -24,7 +24,7 @@ import {
   AdditiveBlending, BackSide, BufferAttribute, BufferGeometry, CanvasTexture, CatmullRomCurve3, DoubleSide,
   InstancedBufferAttribute, InstancedBufferGeometry, LinearFilter, LinearMipmapLinearFilter, LineSegments, Matrix4, Mesh, MeshBasicMaterial,
   NormalBlending, PerspectiveCamera, PlaneGeometry, Points, PointsMaterial, Group, Quaternion, Scene, ShaderMaterial,
-  ShapeUtils, SphereGeometry, TextureLoader, TubeGeometry, Vector2, Vector3, type Texture,
+  ShapeUtils, SphereGeometry, TextureLoader, TubeGeometry, Vector2, Vector3, WebGLRenderTarget, type Object3D, type Texture,
 } from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type { Act } from '../stage';
@@ -533,6 +533,27 @@ export async function createAtlasAct(host: HTMLElement, borders: Borders, config
     scene,
     camera,
     ready: () => ready,
+    // Everything the GPU needs is uploaded while the stage prepares the act (on the reading pause that builds it), never
+    // on the first frame the canvas enters this host mid-scroll: the two textures (earth map + land mask, with their
+    // mipmaps), then — once the shaders are compiled — one draw into a 1×1 target, which uploads every geometry buffer.
+    // The stage renders the act only after this resolves. Shared world: the second host finds it all uploaded.
+    async prepare(renderer) {
+      renderer.initTexture(world.land);
+      await world.loaded;
+      await breathe();
+      if (world.map) renderer.initTexture(world.map);
+      await renderer.compileAsync(scene, camera);
+      await breathe();
+      const target = new WebGLRenderTarget(1, 1, { depthBuffer: false });
+      const culled: Object3D[] = [];
+      scene.traverse((o) => { if (o.frustumCulled) { o.frustumCulled = false; culled.push(o); } });
+      const before = renderer.getRenderTarget();
+      renderer.setRenderTarget(target);
+      renderer.render(scene, camera);
+      renderer.setRenderTarget(before);
+      culled.forEach((o) => { o.frustumCulled = true; });
+      target.dispose();
+    },
     update(t, deltaMs) {
       const dt = Math.min(deltaMs, 50) / 1000;
       const still = !!atlas.poster;

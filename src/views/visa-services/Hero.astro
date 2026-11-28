@@ -38,15 +38,16 @@ const copy = {
   :global(.js) .thero__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; min-height: 34rem; }
   :global(.js) .thero__content { padding-block-end: calc(100lvh - 100svh + var(--space-8)); }
 
-  /* a local, soft gradient behind the text only (the footage stays natural) */
+  /* a local gradient behind the text only (the footage stays natural on the free side). Strong enough for AA over the
+     brightest frames (the poster's sky and roofs): lead ≥ 4.5:1, title ≥ 3:1 — poster, css tier and the WebGL film. */
   .thero__scrim {
     position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 80%, transparent) 0%, color-mix(in srgb, var(--color-bg) 42%, transparent) 30%, transparent 52%);
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 72%, transparent) 38%, color-mix(in srgb, var(--color-bg) 52%, transparent) 56%, transparent 80%);
   }
   @media (min-width: 1024px) {
     .thero__sticky { align-items: center; }
-    .thero__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 72%, transparent) 0%, color-mix(in srgb, var(--color-bg) 34%, transparent) 30%, transparent 50%); }
-    :global([dir='rtl']) .thero__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 72%, transparent) 0%, color-mix(in srgb, var(--color-bg) 34%, transparent) 30%, transparent 50%); }
+    .thero__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 66%, transparent) 38%, color-mix(in srgb, var(--color-bg) 44%, transparent) 54%, transparent 74%); }
+    :global([dir='rtl']) .thero__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 66%, transparent) 38%, color-mix(in srgb, var(--color-bg) 44%, transparent) 54%, transparent 74%); }
   }
 
   .thero__content { position: relative; z-index: 2; padding-block: calc(76px + var(--space-7)) var(--space-8); }

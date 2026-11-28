@@ -1,11 +1,13 @@
 ---
 /**
- * Contact Us (brief v3 §14, §19.4). Skeleton (no design yet): every block is a <TodoSection> carrying its copy.
- * Contact data, branches and social links come ONLY from src/lib/site.ts (TODO(client): placeholders until the client
- * sends the new entity's data); an empty value is not rendered. Visa requests go to /consultation/ — no form here.
+ * Contact Us (brief v3 §14, §19.4) — every element of §19.4 in its order: title · intro · contact items (phone ·
+ * hotline if any · WhatsApp · email · address · working hours) · «فروعنا» (a card per branch: name, address,
+ * «افتح الخريطة», hours) · «تابعنا» · the three quick buttons (part 05, magnetic) · the consultation card · the
+ * «اعرف تأشيرتك» card. No form here: visa requests go to /consultation/.
+ * Data: ONLY src/lib/site.ts (TODO(client) there: placeholders until the client sends the new entity's data); an empty
+ * value is not rendered. Motion: calm — the title rises by words, each block enters once (globals), CSS hovers.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TodoSection from '../components/TodoSection.astro';
 import { site, telHref, waHref, type SocialNetwork } from '../lib/site';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
@@ -17,8 +19,10 @@ const copy = {
   ar: {
     title: 'تواصل معنا',
     lead: 'يسعدنا تواصلك. أخبرنا باستفسارك، وسيتواصل معك فريق WaysZ Visa في أقرب وقت ممكن.',
-    phone: 'الهاتف', whatsapp: 'واتساب', email: 'البريد الإلكتروني', address: 'العنوان', hours: 'مواعيد العمل',
+    details: 'بيانات التواصل',
+    phone: 'الهاتف', hotline: 'الخط الساخن', whatsapp: 'واتساب', email: 'البريد الإلكتروني', address: 'العنوان', hours: 'مواعيد العمل',
     branches: 'فروعنا', map: 'افتح الخريطة',
+    quick: 'تواصل سريع',
     cardTitle: 'لديك طلب تأشيرة؟',
     cardText: 'لطلبات التأشيرة، املأ نموذج طلب الاستشارة بتفاصيل سفرك، وسيتواصل معك أحد مستشارينا لتحديد الخطوات المناسبة لحالتك.',
     toolTitle: 'لست متأكدًا من نوع تأشيرتك؟',
@@ -27,8 +31,10 @@ const copy = {
   en: {
     title: 'Contact us',
     lead: 'We’re glad to hear from you. Tell us your question, and the WaysZ Visa team will contact you as soon as possible.',
-    phone: 'Phone', whatsapp: 'WhatsApp', email: 'Email', address: 'Address', hours: 'Working hours',
+    details: 'Contact details',
+    phone: 'Phone', hotline: 'Hotline', whatsapp: 'WhatsApp', email: 'Email', address: 'Address', hours: 'Working hours',
     branches: 'Our branches', map: 'Open map',
+    quick: 'Quick contact',
     cardTitle: 'Have a visa request?',
     cardText: 'Fill in the consultation request form with your trip details, and one of our consultants will contact you to set the right next steps.',
     toolTitle: 'Not sure which visa you need?',
@@ -36,86 +42,213 @@ const copy = {
   },
 }[lang];
 
-// phone · WhatsApp · email (links, LTR) · address · working hours — rendered only when site.ts has a value
-const phone: string = site.phone, email: string = site.email, whatsapp: string = site.whatsapp;
+// our own line icons (24 × 24, stroke)
+const icons = {
+  phone: 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2',
+  hotline: 'M4 13a8 8 0 0 1 16 0M4 13v4a2 2 0 0 0 2 2h1v-6H4M20 13v4a2 2 0 0 1-2 2h-1v-6h3',
+  whatsapp: 'M4 20l1.3-4A8 8 0 1 1 8 18.7zM9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.6-2-1-1 .9a4 4 0 0 1-1.8-1.8l.9-1-1-2z',
+  email: 'M3 6h18v12H3zM3 7l9 6 9-6',
+  address: 'M12 21c-4-5-7-8.5-7-12a7 7 0 0 1 14 0c0 3.5-3 7-7 12zM12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5',
+  hours: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18M12 7v5l3 2',
+};
+
+// phone · hotline · WhatsApp · email (links, LTR) · address · working hours — rendered only when site.ts has a value
+const phone: string = site.phone, hotline: string = site.hotline, email: string = site.email, whatsapp: string = site.whatsapp;
 const items = [
-  { label: copy.phone, value: phone, href: telHref(phone), ltr: true },
-  { label: copy.whatsapp, value: whatsapp && `+${whatsapp}`, href: waHref(whatsapp, t.whatsapp.message), ltr: true },
-  { label: copy.email, value: email, href: `mailto:${email}`, ltr: true },
-  { label: copy.address, value: site.address[lang] as string },
-  { label: copy.hours, value: site.hours[lang] as string },
-].filter((i) => i.value);
+  { key: 'phone', label: copy.phone, value: phone, href: telHref(phone), ltr: true },
+  { key: 'hotline', label: copy.hotline, value: hotline, href: telHref(hotline), ltr: true },
+  { key: 'whatsapp', label: copy.whatsapp, value: whatsapp && `+${whatsapp}`, href: waHref(whatsapp, t.whatsapp.message), ltr: true, external: true },
+  { key: 'email', label: copy.email, value: email, href: `mailto:${email}`, ltr: true },
+  { key: 'address', label: copy.address, value: site.address[lang] as string },
+  { key: 'hours', label: copy.hours, value: site.hours[lang] as string },
+].filter((i) => i.value) as { key: keyof typeof icons; label: string; value: string; href?: string; ltr?: boolean; external?: boolean }[];
+
 // part 05: «اتصل بنا» — «راسلنا على واتساب» — «أرسل بريدًا إلكترونيًا»
 const buttons = [
-  { label: t.cta.call, value: phone, href: telHref(phone), cls: 'btn--accent' },
-  { label: t.cta.whatsapp, value: whatsapp, href: waHref(whatsapp, t.whatsapp.message), cls: 'btn--dark' },
-  { label: t.cta.email, value: email, href: `mailto:${email}`, cls: 'btn--ghost' },
+  { label: t.cta.call, value: phone, href: telHref(phone), cls: 'btn--accent', icon: icons.phone },
+  { label: t.cta.whatsapp, value: whatsapp, href: waHref(whatsapp, t.whatsapp.message), cls: 'contact__btn--wa', icon: icons.whatsapp, external: true },
+  { label: t.cta.email, value: email, href: `mailto:${email}`, cls: 'contact__btn--line', icon: icons.email },
 ].filter((b) => b.value);
 const social = (Object.entries(site.social) as [SocialNetwork, string][]).filter(([, href]) => href);
+const branches = site.branches.filter((b) => b.name[lang]);
+const arrow = 'M5 12h14m-6-6 6 6-6 6';
 ---
-<BaseLayout lang={lang} title={t.pages.contact.title} description={t.pages.contact.description}>
-  <header class="intro container stack">
-    <h1>{copy.title}</h1>
-    <p class="lead">{copy.lead}</p>
+<BaseLayout lang={lang} title={t.pages.contact.title} description={t.pages.contact.description} headerOverlay>
+  <header class="contact__hero theme-dark">
+    <div class="contact__glow" aria-hidden="true"></div>
+    <div class="container contact__hero-in">
+      <h1 class="contact__title" data-split="words">{copy.title}</h1>
+      <p class="contact__lead">{copy.lead}</p>
+    </div>
   </header>
 
-  <TodoSection ref="19.4" title={`${copy.phone} · ${copy.whatsapp} · ${copy.email} · ${copy.address} · ${copy.hours}`}>
-    {items.length > 0 && (
-      <dl class="items">
+  <!-- contact items -->
+  {items.length > 0 && (
+    <section class="contact__block container" aria-labelledby="contact-details">
+      <h2 class="visually-hidden" id="contact-details">{copy.details}</h2>
+      <ul class="contact__items" role="list" data-reveal="up">
         {items.map((i) => (
-          <div><dt>{i.label}</dt><dd>{i.href
-            ? <a href={i.href} dir={i.ltr ? 'ltr' : undefined} rel="noopener"><bdi>{i.value}</bdi></a>
-            : i.value}</dd></div>
+          <li class="citem">
+            <span class="citem__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d={icons[i.key]} /></svg></span>
+            <span class="citem__label">{i.label}</span>
+            {i.href
+              ? <a class="citem__value citem__value--link" href={i.href} dir={i.ltr ? 'ltr' : undefined} rel={i.external ? 'noopener' : undefined} target={i.external ? '_blank' : undefined}><bdi>{i.value}</bdi></a>
+              : <span class="citem__value">{i.value}</span>}
+          </li>
         ))}
-      </dl>
-    )}
-  </TodoSection>
+      </ul>
+    </section>
+  )}
 
-  <TodoSection ref="19.4" title={copy.branches}>
-    <h2>{copy.branches}</h2>
-    <ul class="branches" role="list">
-      {site.branches.map((b) => (
-        <li class="stack">
-          <h3>{b.name[lang]}</h3>
-          <p>{b.address[lang]}</p>
-          <p>{b.hours[lang]}</p>
-          <p><a href={b.mapUrl} rel="noopener">{copy.map}</a></p>
-        </li>
-      ))}
-    </ul>
-  </TodoSection>
+  <!-- «فروعنا» -->
+  {branches.length > 0 && (
+    <section class="contact__block container" aria-labelledby="contact-branches">
+      <h2 class="contact__h2" id="contact-branches" data-split="words">{copy.branches}</h2>
+      <ul class="contact__branches" role="list" data-reveal="up">
+        {branches.map((b) => (
+          <li class="branch theme-light">
+            <h3 class="branch__name">{b.name[lang]}</h3>
+            {b.address[lang] && <p class="branch__row"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={icons.address} /></svg><span>{b.address[lang]}</span></p>}
+            {b.hours[lang] && <p class="branch__row"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={icons.hours} /></svg><span>{b.hours[lang]}</span></p>}
+            {b.mapUrl && (
+              <a class="link-arrow branch__map" href={b.mapUrl} target="_blank" rel="noopener">
+                {copy.map}<span class="visually-hidden">{" "}— {b.name[lang]}</span>
+                <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={arrow} /></svg>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  <TodoSection ref="19.4" title={t.footer.social}>
-    <h2>{t.footer.social}</h2>
-    <ul class="social" role="list">
-      {social.map(([net, href]) => <li><a href={href} rel="noopener">{t.social[net]}</a></li>)}
-    </ul>
-  </TodoSection>
+  <!-- «تابعنا» + the quick buttons -->
+  {(social.length > 0 || buttons.length > 0) && (
+    <section class="contact__block container contact__reach" aria-labelledby={social.length ? 'contact-social' : undefined} aria-label={social.length ? undefined : copy.quick} data-reveal="up">
+      {social.length > 0 && (
+        <div class="contact__social">
+          <h2 class="contact__h3" id="contact-social">{t.footer.social}</h2>
+          <ul role="list">
+            {social.map(([net, href]) => <li><a href={href} rel="noopener">{t.social[net]}</a></li>)}
+          </ul>
+        </div>
+      )}
+      {buttons.length > 0 && (
+        <p class="contact__buttons">
+          {buttons.map((b) => (
+            <a class:list={['btn', b.cls]} href={b.href} rel={b.external ? 'noopener' : undefined} target={b.external ? '_blank' : undefined} data-magnetic>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={b.icon} /></svg>
+              {b.label}
+            </a>
+          ))}
+        </p>
+      )}
+    </section>
+  )}
 
-  <TodoSection ref="19.4" title={buttons.map((b) => b.label).join(' · ')}>
-    {buttons.length > 0 && (
-      <p class="actions">
-        {buttons.map((b) => <a class:list={['btn', b.cls]} href={b.href} rel="noopener" data-magnetic>{b.label}</a>)}
-      </p>
-    )}
-  </TodoSection>
-
-  <TodoSection ref="19.4" title={copy.cardTitle}>
-    <h2>{copy.cardTitle}</h2>
-    <p>{copy.cardText}</p>
-    <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.request}</a></p>
-  </TodoSection>
-
-  <TodoSection ref="19.4" title={copy.toolTitle}>
-    <h2>{copy.toolTitle}</h2>
-    <p>{copy.toolText}</p>
-    <p><a class="btn btn--ghost" href={localizePath('/assessment/', lang)}>{t.nav.findVisa}</a></p>
-  </TodoSection>
+  <!-- the consultation card · the «اعرف تأشيرتك» card -->
+  <section class="contact__cards theme-dark" aria-label={`${copy.cardTitle} · ${copy.toolTitle}`}>
+    <div class="container contact__cards-in">
+      <article class="ccard ccard--main theme-light" data-reveal="up">
+        <h2 class="ccard__title">{copy.cardTitle}</h2>
+        <p class="ccard__text">{copy.cardText}</p>
+        <a class="btn btn--accent ccard__btn" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.request}</a>
+      </article>
+      <article class="ccard ccard--tool" data-reveal="up">
+        <h2 class="ccard__title">{copy.toolTitle}</h2>
+        <p class="ccard__text">{copy.toolText}</p>
+        <a class="link-arrow ccard__link" href={localizePath('/assessment/', lang)}>
+          {t.nav.findVisa}
+          <svg class="icon-dir" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={arrow} /></svg>
+        </a>
+      </article>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .intro { padding-block: 160px var(--space-6); }
-  .items { display: grid; gap: var(--space-3); }
-  .branches, .social { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-5); }
-  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+  .contact__hero { position: relative; overflow: clip; padding-block: clamp(8rem, 6.5rem + 5vw, 11rem) clamp(3rem, 2rem + 3vw, 5rem); background: var(--color-bg); }
+  .contact__glow {
+    position: absolute; inset: -40% -20% auto auto; width: 70vmax; height: 70vmax; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent);
+  }
+  :global([dir='rtl']) .contact__glow { inset: -40% auto auto -20%; }
+  .contact__hero-in { position: relative; }
+  .contact__title { font-size: clamp(2.4rem, 1.4rem + 4vw, 4.6rem); line-height: 1.2; }
+  :global([dir='rtl']) .contact__title { line-height: 1.4; }
+  .contact__lead { margin-block-start: var(--space-4); max-width: 48ch; font-size: var(--text-lg); line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 86%, transparent); }
+
+  .contact__block { padding-block-start: clamp(2.5rem, 2rem + 3vw, 4.5rem); }
+  .contact__h2 { font-size: var(--text-2xl); margin-block-end: var(--space-5); }
+  .contact__h3 { font-size: var(--text-lg); margin-block-end: var(--space-3); }
+
+  /* contact items: paper tags */
+  .contact__items { display: grid; gap: var(--space-3); }
+  @media (min-width: 640px) { .contact__items { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .contact__items { grid-template-columns: repeat(3, 1fr); } }
+  .citem {
+    display: grid; grid-template-columns: auto 1fr; grid-template-areas: 'icon label' 'icon value'; column-gap: var(--space-4); row-gap: 2px;
+    align-items: center; padding: var(--space-5); border-radius: var(--radius-md); background: var(--color-surface);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);
+  }
+  .citem__icon {
+    grid-area: icon; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface)); color: var(--color-accent-ink);
+  }
+  .citem__icon svg, .branch__row svg, .contact__buttons svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .citem__label { grid-area: label; font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .citem__value { grid-area: value; font-weight: var(--weight-bold); line-height: 1.6; overflow-wrap: anywhere; }
+  .citem__value--link { color: var(--color-ink); text-decoration: none; justify-self: start; }
+  .citem__value--link:hover { color: var(--color-accent-ink); text-decoration: underline; }
+
+  /* branches */
+  .contact__branches { display: grid; gap: var(--space-4); }
+  @media (min-width: 640px) { .contact__branches { grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); } }
+  .branch {
+    position: relative; display: grid; gap: var(--space-3); align-content: start; padding: var(--space-6);
+    border-radius: var(--radius-lg); background: var(--color-surface); color: var(--color-ink); box-shadow: var(--shadow-md);
+    overflow: clip;
+  }
+  .branch::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: var(--color-accent-strong); }
+  .branch__name { font-size: var(--text-xl); }
+  .branch__row { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--color-ink-muted); line-height: 1.7; }
+  .branch__row svg { margin-block-start: 3px; color: var(--color-accent-ink); }
+  .branch__map { margin-block-start: var(--space-2); color: var(--color-link); font-size: var(--text-sm); }
+  .branch__map svg, .ccard__link svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* social + quick buttons */
+  .contact__reach { display: grid; gap: var(--space-6); }
+  @media (min-width: 1024px) { .contact__reach { grid-template-columns: auto 1fr; align-items: end; } }
+  .contact__social ul { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .contact__social a {
+    display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-4); border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border); text-decoration: none; font-size: var(--text-sm);
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .contact__social a:hover { border-color: var(--color-accent-strong); color: var(--color-accent-ink); }
+  .contact__buttons { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  @media (min-width: 1024px) { .contact__buttons { justify-content: flex-end; } }
+  .contact__buttons .btn { min-height: 52px; gap: var(--space-2); }
+  .contact__btn--wa { background: var(--color-brand); color: var(--color-on-brand); }
+  .contact__btn--wa:hover { background: color-mix(in srgb, var(--color-brand) 85%, var(--color-accent)); }
+  .contact__btn--line { border-color: currentColor; color: var(--color-ink); }
+  .contact__btn--line:hover { background: var(--color-ink); color: var(--color-bg); }
+  @media (max-width: 639px) { .contact__buttons { display: grid; } }
+
+  /* the two cards */
+  .contact__cards { margin-block-start: clamp(3rem, 2rem + 4vw, 6rem); padding-block: clamp(3rem, 2rem + 4vw, 6rem); background: var(--color-bg); }
+  .contact__cards-in { display: grid; gap: var(--space-5); }
+  @media (min-width: 1024px) { .contact__cards-in { grid-template-columns: 1.4fr 1fr; align-items: stretch; } }
+  .ccard { position: relative; display: grid; gap: var(--space-4); align-content: start; padding: clamp(1.5rem, 1rem + 2.5vw, 3rem); border-radius: var(--radius-lg); overflow: clip; }
+  .ccard--main { background: var(--color-surface); color: var(--color-ink); box-shadow: 0 34px 70px -28px color-mix(in srgb, black 80%, transparent); }
+  /* the airmail edge of the paper world */
+  .ccard--main::before {
+    content: ''; position: absolute; inset: 0 0 auto; height: 7px;
+    background: repeating-linear-gradient(135deg, var(--color-accent-strong) 0 14px, transparent 14px 22px, var(--color-brand) 22px 36px, transparent 36px 44px);
+  }
+  .ccard--tool { border: 1px dashed color-mix(in srgb, var(--color-accent) 50%, transparent); background: color-mix(in srgb, var(--color-accent) 6%, transparent); }
+  .ccard__title { font-size: var(--text-xl); line-height: 1.45; }
+  .ccard__text { line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+  .ccard__btn { justify-self: start; min-height: 54px; white-space: normal; text-align: center; }
+  .ccard__link { justify-self: start; color: var(--color-link); }
 </style>

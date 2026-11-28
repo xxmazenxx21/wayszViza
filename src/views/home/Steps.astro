@@ -5,24 +5,16 @@
  * through the four steps and the thread is drawn over it with the scroll; each step lights when the thread
  * reaches it. The SVG is decorative and mirrors in RTL (the thread follows the reading direction). No JS: drawn.
  */
+import { helpSteps } from '../../data/steps';
 import type { Lang } from '../../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+// the four steps live in src/data/steps.ts (shared with About «كيف نعمل»)
 const copy = {
-  ar: { title: 'خطوات بسيطة نحو ملف جاهز', steps: [
-    ['أرسل طلبك', 'الدولة ونوع التأشيرة وموعد سفرك المتوقع.'],
-    ['جلسة الاستشارة', 'نناقش وضعك ونحدد المسار والمتطلبات.'],
-    ['قائمة مستنداتك', 'قائمة مخصصة بالمستندات والمعلومات المطلوبة.'],
-    ['مراجعة وإرشاد', 'نراجع ملفك ونرشدك في الطلب والموعد.'],
-  ] },
-  en: { title: 'Simple steps to a ready file', steps: [
-    ['Send your request', 'The country, the visa type and your expected travel date.'],
-    ['The consultation session', 'We discuss your situation and set the path and the requirements.'],
-    ['Your document checklist', 'A tailored list of the documents and information required.'],
-    ['Review and guidance', 'We review your file and guide you through your application and appointment.'],
-  ] },
-}[lang];
+  title: { ar: 'خطوات بسيطة نحو ملف جاهز', en: 'Simple steps to a ready file' }[lang],
+  steps: helpSteps[lang],
+};
 // one gentle stitch line through four stops (wide screens: across · small screens: down)
 // wide: through the start of each of the four columns (where the step numbers sit on the line), then out
 const wide = 'M21 60 C 110 12, 190 108, 277 60 S 450 12, 534 60 S 700 108, 790 60 S 940 20, 995 54';

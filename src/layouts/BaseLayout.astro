@@ -3,6 +3,13 @@
 import '@fontsource/almarai/400.css';
 import '@fontsource/almarai/700.css';
 import '@fontsource/almarai/800.css';
+// the two Almarai files every first screen uses (body 400 + headings 800) in the page's script, preloaded so the text
+// rarely paints in a fallback font first (a later swap reflows bottom-aligned heroes = layout shift). Same files the CSS
+// above loads — no extra bytes, only earlier.
+import arabic400 from '@fontsource/almarai/files/almarai-arabic-400-normal.woff2?url';
+import arabic800 from '@fontsource/almarai/files/almarai-arabic-800-normal.woff2?url';
+import latin400 from '@fontsource/almarai/files/almarai-latin-400-normal.woff2?url';
+import latin800 from '@fontsource/almarai/files/almarai-latin-800-normal.woff2?url';
 import '../styles/tokens.css';
 import '../styles/base.css';
 
@@ -48,7 +55,15 @@ const enUrl = new URL(switchLangPath(path, 'en'), Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'ar' ? 'ar_EG' : 'en_US'} />
+    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={site.name} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0B1626" /><!-- = --midnight-900 (a meta tag cannot read a CSS token) -->
+    {(lang === 'ar' ? [arabic400, arabic800] : [latin400, latin800]).map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 

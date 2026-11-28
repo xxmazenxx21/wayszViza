@@ -68,11 +68,14 @@ export function createAirportAct(host: HTMLElement, mode: 'journey' | 'finale', 
   const xTo = gsap.quickTo(pointer, 'x', { duration: 1.4, ease: 'power3.out' });
   const yTo = gsap.quickTo(pointer, 'y', { duration: 1.4, ease: 'power3.out' });
 
-  /** upload the video's current frame (a GPU copy in the browser) */
+  /** upload the video's current frame (a GPU copy in the browser) — only once it has one (HAVE_CURRENT_DATA): before
+   *  that the upload is empty (Firefox: "uploading zeros"); the caller retries on the next tick */
   const upload = (t: Texture, video: HTMLVideoElement, size: Vector2) => {
+    if (video.readyState < 2) return false;
     t.image = video;
     t.needsUpdate = true;
     size.set(video.videoWidth || 16, video.videoHeight || 9);
+    return true;
   };
 
   return {
@@ -85,12 +88,10 @@ export function createAirportAct(host: HTMLElement, mode: 'journey' | 'finale', 
       uniforms.uTime.value = time;
       if (desktop && mode === 'finale') { xTo(airport.pointer.x); yTo(airport.pointer.y); }
       if (state.a && (state.aId !== shownA || state.a !== videoA)) {
-        upload(tA, state.a, uniforms.uASize.value);
-        shownA = state.aId; videoA = state.a;
+        if (upload(tA, state.a, uniforms.uASize.value)) { shownA = state.aId; videoA = state.a; }
       }
       if (state.b && state.mix > 0 && (state.bId !== shownB || state.b !== videoB)) {
-        upload(tB, state.b, uniforms.uBSize.value);
-        shownB = state.bId; videoB = state.b;
+        if (upload(tB, state.b, uniforms.uBSize.value)) { shownB = state.bId; videoB = state.b; }
       }
       uniforms.uAMatch.value.set(...(MATCH[state.aChapter] ?? MATCH[0]));
       uniforms.uBMatch.value.set(...(MATCH[state.bChapter] ?? MATCH[0]));

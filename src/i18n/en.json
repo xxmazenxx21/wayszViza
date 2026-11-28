@@ -84,7 +84,39 @@
     "success": "Your consultation request has been received. One of our consultants will contact you through the method you chose.",
     "error": "The message couldn't be sent. Please try again or reach us on WhatsApp.",
     "sending": "Sending…",
-    "consent": "By sending this form you agree that we may contact you about your request. Please don't send documents or sensitive personal data through this form."
+    "consent": "By sending this form you agree that we may contact you about your request. Please don't send documents or sensitive personal data through this form.",
+    "destination": "Please choose your destination country",
+    "prefilled": "We filled in some fields from your answers in “Find your visa”. Check them and change anything you like.",
+    "dismiss": "Dismiss this note",
+    "summary": "My answers in “Find your visa”:",
+    "privacy": "We use your data only to contact you about your request.",
+    "privacyLink": "Read our privacy policy",
+    "sentTitle": "Your request is in",
+    "again": "Send another request",
+    "optional": "Optional",
+    "travelers": "Please enter the number of travelers, from 1 to 99"
+  },
+  "assessment": {
+    "start": "Start",
+    "prev": "Previous question",
+    "restart": "Start over",
+    "step": "Question {n} of {total}",
+    "cover": "Short questions, one tap per answer, and an instant result.",
+    "private": "Your answers go nowhere; the result simply opens your consultation request, already filled in.",
+    "skip": "I know what I need: request a consultation",
+    "result": "Based on your answers, this may suit you:",
+    "destinations": "Destinations for this category",
+    "chosen": "your preferred destination",
+    "services": "Suggested services",
+    "alternative": "An alternative worth a look",
+    "about": "Learn about",
+    "line": "This is an initial suggestion based on your answers; we’ll map out the details with you in your consultation.",
+    "continue": "Continue to your consultation request",
+    "static": "Not sure which visa suits you? Browse the visa types, or request a consultation and we’ll find the right path with you."
+  },
+  "legal": {
+    "updated": "Last updated:",
+    "contents": "On this page"
   },
   "pages": {
     "home": {

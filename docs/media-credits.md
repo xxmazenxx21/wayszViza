@@ -69,6 +69,7 @@ Every clip was checked on a contact sheet before use (waysz-media §2). Skipped:
 | https://www.pexels.com/video/manchester-airport-terminal-sunrise-view-31256081/ · …-31256900/ · …/cork-airport-entrance-scenic-view-in-daylight-31255514/ · …/passengers-with-luggage-at-airport-terminal-entrance-30040092/ | airport names / a giant ad screen / readable shop and terminal branding |
 | https://www.pexels.com/video/aiport-terminal-at-night-11271114/ | a readable airline livery |
 | https://www.pexels.com/video/suvarnabhumi-airport-terminal-interior-view-34758151/ | fine, but a static window view: not needed |
+| public/og-image.jpg                                         | our own composition: the atlas finale still (`public/media/img/atlas-finale.webp`, our render) + the temp logo + the Home title (brief v3 §19.3) | WaysZ Visa            | —                      | 2026-11-28 | 1200×630 social preview (og:image), rendered with Playwright from a local HTML page; JPEG q84, 55 KB |
 
 Pexels and Pixabay pages answer scripted requests with HTTP 403; the Pexels pages were read with a normal page reader and
 the files downloaded from the Pexels file CDN links printed on those pages.

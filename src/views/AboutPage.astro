@@ -1,12 +1,19 @@
 ---
 /**
- * About Us. Skeleton: every section is a <TodoSection> carrying its copy (no design yet).
- * Sources: intro = brief part 04 intro · relation = part 03 (WaysZ) §4.4, the text written about WaysZ Visa ·
- * why = part 04 §1.1 (verbatim lead), points written for this page · how = part 04 §1.6 · CTA = part 04 §1.8 / §1.9.
+ * About Us (brief v3 §13), in the brief's order: title + intro · رؤيتنا · رسالتنا · قيمنا (5) · كيف نعمل (the four help
+ * steps of Home §1.6 — src/data/steps.ts) · WaysZ و WaysZ Visa (v2 §4.4, one paragraph + link to site.mainSite) ·
+ * الأرقام والشهادات (src/data/about.ts — TODO(client) placeholders, hidden with showStats = false) · «ابدأ استشارتك».
+ * The paper world of Home, calm: the values are five paper sheets that settle onto the desk (scene about-sheets), the
+ * WaysZ ↔ WaysZ Visa link is a short route line that draws from WaysZ to WaysZ Visa (data-draw) with the plane landing
+ * at WaysZ Visa, the counters count up once (scene about-stats). Headings rise by words, one reveal per section. No WebGL.
+ * No JS: everything shown in its final state.
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TodoSection from '../components/TodoSection.astro';
 import { site } from '../lib/site';
+import { helpSteps } from '../data/steps';
+import { regions } from '../data/destinations';
+import { certificates, counters, showStats } from '../data/about';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -16,87 +23,307 @@ const t = useTranslations(lang);
 const copy = {
   ar: {
     title: 'من نحن',
-    intro: 'موقع متخصص في استشارات التأشيرات والإرشاد في إجراءاتها، لكل من يسافر للعمل أو الدراسة أو الزيارة أو الإقامة.',
-    introMore: 'نرافقك من أول سؤال عن نوع التأشيرة المناسب حتى يوم موعدك، بخطوات واضحة.',
-    relationTitle: 'العلاقة بين WaysZ و WaysZ Visa',
-    relation: 'WaysZ Visa منصة متخصصة تابعة لـ WaysZ، تركز بالكامل على استشارات التأشيرات والإرشاد في إجراءاتها. وبينما يعرض الموقع الرئيسي خدماتنا المتنوعة، تقدم WaysZ Visa تجربة مخصصة لمن يخطط للسفر أو الدراسة أو الهجرة، وتستفيد من خبرات فريق WaysZ في الترجمة المعتمدة واستشارات السفارات والاستشارات القانونية؛ كما تدعم المشاركين الدوليين في المعارض والمؤتمرات التي ننظمها.',
-    whyTitle: 'لماذا WaysZ Visa؟',
-    whyLead: 'كثيرًا ما يُرفض طلب التأشيرة بسبب نقص مستند، أو خطأ في تعبئة الطلب، أو عدم وضوح غرض السفر. في WaysZ Visa نساعدك على فهم المتطلبات وتجنب هذه الأخطاء، لتتقدم ملفًا مكتملًا ومنظمًا يعكس وضعك بوضوح. قرار منح التأشيرة يعود للسفارة وحدها، ودورنا أن تتقدم وأنت أكثر استعدادًا.',
-    why: [
-      ['وضوح من البداية', 'نشرح لك نوع التأشيرة المناسب ومتطلباته وخطواته بلغة بسيطة، قبل أن تبدأ التجهيز.'],
-      ['ملف مخصص لحالتك', 'قائمة مستندات تناسب وضعك وغرض سفرك، لا قائمة عامة تُعطى للجميع.'],
-      ['خبرات WaysZ إلى جانبك', 'ترجمة معتمدة واستشارات السفارات والاستشارات القانونية عبر فريق WaysZ عند الحاجة.'],
+    intro: 'WaysZ Visa منصة متخصصة في استشارات التأشيرات والإرشاد في إجراءاتها، وجزء من WaysZ. نرافق كل من يخطط للسفر بغرض السياحة أو الدراسة أو العمل أو الإقامة أو الاستثمار، من فهم المتطلبات حتى الاستعداد ليوم الموعد، بخطة تناسب حالته وبوضوح كامل في كل خطوة.',
+    visionTitle: 'رؤيتنا',
+    vision: 'عالم يعبر فيه كل مسافر الحدود بثقة، ويرى فيها فرصة لا عائقًا، ويبدأ رحلته وهو يعرف طريقه.',
+    missionTitle: 'رسالتنا',
+    mission: 'أن نكون شريكًا موثوقًا يجعل إجراءات التأشيرة أوضح وأسهل، ونبني مع عملائنا علاقة طويلة قائمة على الثقة لا على معاملة واحدة.',
+    valuesTitle: 'قيمنا',
+    values: [
+      ['الشفافية', 'نوضح لك كل خطوة وكل تكلفة من البداية.'],
+      ['الدقة', 'كل مستند وكل تاريخ في ملفك يُراجَع بعناية.'],
+      ['الخصوصية', 'بياناتك ومستنداتك أمانة.'],
+      ['مواكبة التحديثات', 'نتابع تغيّر المتطلبات والسياسات باستمرار.'],
+      ['الاحترافية', 'تعامل محترم وواضح في كل تواصل.'],
     ],
     howTitle: 'كيف نعمل',
-    how: [
-      ['أرسل طلبك', 'الدولة ونوع التأشيرة وموعد سفرك المتوقع.'],
-      ['جلسة الاستشارة', 'نناقش وضعك ونحدد المسار والمتطلبات.'],
-      ['قائمة مستنداتك', 'قائمة مخصصة بالمستندات والمعلومات المطلوبة.'],
-      ['مراجعة وإرشاد', 'نراجع ملفك ونرشدك في الطلب والموعد.'],
-    ],
+    relationTitle: 'WaysZ و WaysZ Visa',
+    relation: 'WaysZ Visa منصة متخصصة تابعة لـ WaysZ، تركز بالكامل على استشارات التأشيرات والإرشاد في إجراءاتها. وبينما يعرض الموقع الرئيسي خدماتنا المتنوعة، تقدم WaysZ Visa تجربة مخصصة لمن يخطط للسفر أو الدراسة أو الهجرة، وتستفيد من خبرات فريق WaysZ في الترجمة المعتمدة واستشارات السفارات والاستشارات القانونية؛ كما تدعم المشاركين الدوليين في المعارض والمؤتمرات التي ننظمها.',
+    statsTitle: 'الأرقام والشهادات',
+    destinations: 'وجهة نعمل عليها',
+    types: 'أنواع تأشيرات في مكان واحد',
+    certsTitle: 'الشهادات والتراخيص',
     ctaTitle: 'جاهز لبدء رحلتك؟',
     ctaText: 'ابدأ استشارتك الآن، ودعنا نساعدك على التقديم وأنت أكثر استعدادًا.',
   },
   en: {
     title: 'About us',
-    intro: 'A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.',
-    introMore: 'We walk with you from your first question about the right visa to the day of your appointment, with clear steps.',
-    relationTitle: 'WaysZ and WaysZ Visa',
-    relation: 'WaysZ Visa is a specialized platform of WaysZ that focuses entirely on visa consultations and guidance through visa procedures. While the main website presents our wide range of services, WaysZ Visa offers a dedicated experience for anyone planning to travel, study or immigrate, drawing on the WaysZ team’s experience in certified translation, embassy consultations and legal advice. It also supports the international participants in the exhibitions and conferences we organize.',
-    whyTitle: 'Why WaysZ Visa?',
-    whyLead: 'Visa applications are often refused because of a missing document, a mistake in the application form, or an unclear purpose of travel. At WaysZ Visa we help you understand the requirements and avoid these mistakes, so you apply with a complete, organized file that shows your situation clearly. The decision to grant a visa belongs to the embassy alone; our role is to make sure you apply better prepared.',
-    why: [
-      ['Clarity from the start', 'We explain the right visa type, its requirements and its steps in plain language, before you start preparing.'],
-      ['A file built for your case', 'A document checklist that fits your situation and the purpose of your trip, not a generic list handed to everyone.'],
-      ['WaysZ experience at your side', 'Certified translation, embassy consultations and legal advice through the WaysZ team, when you need them.'],
+    intro: 'WaysZ Visa is a platform specialized in visa consultation and guidance through visa procedures, and part of WaysZ. We support anyone planning to travel for tourism, study, work, residence or investment, from understanding the requirements to getting ready for appointment day, with a plan that fits their case and full clarity at every step.',
+    visionTitle: 'Our vision',
+    vision: 'A world where every traveler crosses borders with confidence, sees opportunity in them rather than obstacles, and starts the journey knowing the way.',
+    missionTitle: 'Our mission',
+    mission: 'To be a trusted partner who makes visa procedures clearer and easier, and to build long relationships with our clients based on trust, not a single transaction.',
+    valuesTitle: 'Our values',
+    values: [
+      ['Transparency', 'We explain every step and every cost from the start.'],
+      ['Accuracy', 'Every document and date in your file is checked with care.'],
+      ['Privacy', 'Your data and documents are held in trust.'],
+      ['Staying current', 'We keep track of changing requirements and policies.'],
+      ['Professionalism', 'Respectful, clear communication every time.'],
     ],
     howTitle: 'How we work',
-    how: [
-      ['Send your request', 'The country, the visa type and your expected travel date.'],
-      ['The consultation session', 'We discuss your situation and set the path and the requirements.'],
-      ['Your document checklist', 'A tailored list of the documents and information required.'],
-      ['Review and guidance', 'We review your file and guide you through the application and the appointment.'],
-    ],
+    relationTitle: 'WaysZ and WaysZ Visa',
+    relation: 'WaysZ Visa is a specialized platform of WaysZ that focuses entirely on visa consultations and guidance through visa procedures. While the main website presents our wide range of services, WaysZ Visa offers a dedicated experience for anyone planning to travel, study or immigrate, drawing on the WaysZ team’s experience in certified translation, embassy consultations and legal advice. It also supports the international participants in the exhibitions and conferences we organize.',
+    statsTitle: 'Numbers and certificates',
+    destinations: 'destinations we work with',
+    types: 'visa types in one place',
+    certsTitle: 'Certificates and licenses',
     ctaTitle: 'Ready to start your journey?',
     ctaText: 'Start your consultation now, and let us help you apply better prepared.',
   },
 }[lang];
+
+// our own line icons for the five values: an open eye · a target with a tick · a lock · two turning arrows · a tie
+const valueIcons = [
+  'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6',
+  'M12 21a9 9 0 1 1 9-9M12 16a4 4 0 1 1 4-4M14 20l2 2 5-5',
+  'M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5zM12 15v2.5',
+  'M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9M18.5 3v4.5H14M5.5 21v-4.5H10',
+  'M9.5 3h5l-1 3 2.5 10-4 5-4-5 2.5-10z',
+];
+
+// «الأرقام والشهادات»: the client's numbers (TODO(client) in src/data/about.ts) + two real ones
+const visas = await getCollection('visas');
+const stats = [
+  ...counters.map((c) => ({ value: c.value, suffix: c.suffix ?? '', label: c.label[lang] })),
+  { value: regions.reduce((n, r) => n + r.countries.length, 0), suffix: '', label: copy.destinations },
+  { value: visas.filter((e) => e.data.kind === 'category').length, suffix: '', label: copy.types },
+];
+const fmt = (n: number) => new Intl.NumberFormat('en-US').format(n);
+const arrow = 'M5 12h14m-6-6 6 6-6 6';
+const route = 'M4 34 C 70 4, 150 4, 216 34';
 ---
-<BaseLayout lang={lang} title={t.pages.about.title} description={t.pages.about.description}>
-  <header class="intro container stack">
-    <h1>{copy.title}</h1>
-    <p class="lead">{copy.intro}</p>
-    <p>{copy.introMore}</p>
+<BaseLayout lang={lang} title={t.pages.about.title} description={t.pages.about.description} headerOverlay>
+  <!-- title + intro -->
+  <header class="about__hero theme-dark">
+    <div class="about__glow" aria-hidden="true"></div>
+    <div class="container about__hero-in">
+      <h1 class="about__title" data-split="words">{copy.title}</h1>
+      <p class="about__intro">{copy.intro}</p>
+    </div>
   </header>
 
-  <TodoSection ref="about.1" title="العلاقة بين WaysZ و WaysZ Visa — brief part 03 §4.4">
-    <h2>{copy.relationTitle}</h2>
-    <p>{copy.relation}</p>
-    <p><a href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></p>
-  </TodoSection>
+  <!-- رؤيتنا · رسالتنا -->
+  <section class="about__vm container" aria-label={`${copy.visionTitle} · ${copy.missionTitle}`}>
+    <div class="vm" data-reveal="up">
+      <div class="vm__item">
+        <h2 class="vm__label">{copy.visionTitle}</h2>
+        <p class="vm__text">{copy.vision}</p>
+      </div>
+      <div class="vm__item">
+        <h2 class="vm__label">{copy.missionTitle}</h2>
+        <p class="vm__text">{copy.mission}</p>
+      </div>
+    </div>
+  </section>
 
-  <TodoSection ref="about.2" title="لماذا WaysZ Visa؟ — part 04 §1.1">
-    <h2>{copy.whyTitle}</h2>
-    <p>{copy.whyLead}</p>
-    <ul role="list">{copy.why.map(([h, p]) => <li><h3>{h}</h3><p>{p}</p></li>)}</ul>
-  </TodoSection>
+  <!-- قيمنا: five paper sheets that settle -->
+  <section class="about__values section" aria-labelledby="about-values">
+    <div class="container">
+      <h2 class="about__h2" id="about-values" data-split="words">{copy.valuesTitle}</h2>
+      <ul class="values" role="list" data-scene="about-sheets">
+        {copy.values.map(([title, text], i) => (
+          <li class="value theme-light">
+            <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d={valueIcons[i]} /></svg></span>
+            <h3 class="value__title">{title}</h3>
+            <p class="value__text">{text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
-  <TodoSection ref="about.3" title="كيف نعمل — part 04 §1.6">
-    <h2>{copy.howTitle}</h2>
-    <ol role="list">{copy.how.map(([h, p]) => <li><h3>{h}</h3><p>{p}</p></li>)}</ol>
-  </TodoSection>
+  <!-- كيف نعمل: the four help steps of Home §1.6 -->
+  <section class="about__how theme-dark section" aria-labelledby="about-how">
+    <div class="container">
+      <h2 class="about__h2" id="about-how" data-split="words">{copy.howTitle}</h2>
+      <ol class="how" role="list" data-reveal="up">
+        {helpSteps[lang].map(([title, text], i) => (
+          <li class="how__step">
+            <span class="how__num" aria-hidden="true">{i + 1}</span>
+            <h3 class="how__title">{title}</h3>
+            <p class="how__text">{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 
-  <TodoSection ref="about.4" title="CTA — part 04 §1.8 + رابط WaysZ">
-    <h2>{copy.ctaTitle}</h2>
-    <p>{copy.ctaText}</p>
-    <p class="actions">
-      <a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.start}</a>
-      <a class="btn btn--ghost" href={site.mainSite} rel="noopener">{t.cta.visitMain}</a>
-    </p>
-  </TodoSection>
+  <!-- WaysZ و WaysZ Visa: a short route from WaysZ to WaysZ Visa -->
+  <section class="about__rel section container" aria-labelledby="about-rel">
+    <div class="rel">
+      <div class="rel__route" aria-hidden="true">
+        <span class="rel__node rel__node--main" data-brand="main"><span class="rel__dot"></span>WaysZ</span>
+        <svg class="rel__line" viewBox="0 0 220 40" preserveAspectRatio="none"><path class="rel__road" d={route} /><path class="rel__path" d={route} data-draw /></svg>
+        <svg class="rel__plane icon-dir" viewBox="0 0 24 24" width="22" height="22"><path d="M22 12 3 4l3.5 8L3 20z" /></svg>
+        <span class="rel__node rel__node--visa"><span class="rel__dot"></span>{site.name}</span>
+      </div>
+      <div class="rel__copy" data-reveal="up">
+        <h2 class="about__h2" id="about-rel">{copy.relationTitle}</h2>
+        <p class="rel__text">{copy.relation}</p>
+        <a class="link-arrow rel__link" href={site.mainSite} rel="noopener">
+          {t.cta.visitMain}
+          <svg class="icon-dir" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d={arrow} /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- الأرقام والشهادات (TODO(client): src/data/about.ts) -->
+  {showStats && (
+    <section class="about__stats section" aria-labelledby="about-stats">
+      <div class="container">
+        <h2 class="about__h2" id="about-stats" data-split="words">{copy.statsTitle}</h2>
+        <ul class="stats" role="list" data-scene="about-stats">
+          {stats.map((s) => (
+            <li class="stat">
+              <span class="stat__num" dir="ltr">{lang === 'ar' && s.suffix}<span class="stat__value" data-value={s.value}>{fmt(s.value)}</span>{lang === 'en' && s.suffix}</span>
+              <span class="stat__label">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+        <h3 class="about__h3">{copy.certsTitle}</h3>
+        <ul class="certs" role="list" data-reveal="up">
+          {certificates.map((c) => (
+            <li class="cert">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12M8.5 13.8 7 21l5-2.5 5 2.5-1.5-7.2M9.5 9l2 2 3.5-3.5" /></svg>
+              <div>
+                <p class="cert__title">{c.title[lang]}</p>
+                <p class="cert__text">{c.text[lang]}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- «ابدأ استشارتك» -->
+  <section class="about__cta theme-dark" aria-labelledby="about-cta">
+    <div class="about__glow about__glow--cta" aria-hidden="true"></div>
+    <div class="container about__cta-in" data-reveal="up">
+      <h2 class="about__cta-title" id="about-cta">{copy.ctaTitle}</h2>
+      <p class="about__cta-text">{copy.ctaText}</p>
+      <a class="btn btn--accent about__cta-btn" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.start}</a>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .intro { padding-block: 160px var(--space-6); }
-  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+  .about__hero { position: relative; overflow: clip; padding-block: clamp(8rem, 6.5rem + 6vw, 12rem) clamp(4rem, 3rem + 4vw, 7rem); background: var(--color-bg); }
+  .about__glow {
+    position: absolute; inset: -40% -20% auto auto; width: 75vmax; height: 75vmax; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent);
+  }
+  :global([dir='rtl']) .about__glow { inset: -40% auto auto -20%; }
+  .about__hero-in { position: relative; }
+  .about__title { font-size: clamp(2.6rem, 1.4rem + 5vw, 5.4rem); line-height: 1.15; }
+  :global([dir='rtl']) .about__title { line-height: 1.4; }
+  .about__intro { margin-block-start: var(--space-5); max-width: 56ch; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem); line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 88%, transparent); }
+
+  .about__h2 { font-size: clamp(1.9rem, 1.3rem + 2.2vw, 3rem); line-height: 1.3; }
+  :global([dir='rtl']) .about__h2 { line-height: 1.5; }
+  .about__h3 { margin-block: var(--space-8) var(--space-4); font-size: var(--text-xl); }
+
+  /* vision · mission: two large statements on a paper sheet lifted over the hero's edge */
+  .about__vm { position: relative; margin-block-start: calc(-1 * clamp(2rem, 1.5rem + 2vw, 3.5rem)); }
+  .vm {
+    display: grid; gap: var(--space-7); padding: clamp(1.75rem, 1rem + 3vw, 3.5rem); border-radius: var(--radius-lg);
+    background: var(--color-surface); box-shadow: var(--shadow-lg);
+  }
+  @media (min-width: 1024px) { .vm { grid-template-columns: 1fr 1fr; gap: var(--space-8); } }
+  .vm__item { display: grid; gap: var(--space-3); align-content: start; }
+  .vm__item + .vm__item { padding-block-start: var(--space-7); border-block-start: 1px dashed var(--color-border); }
+  @media (min-width: 1024px) {
+    .vm__item + .vm__item { padding-block-start: 0; padding-inline-start: var(--space-8); border-block-start: 0; border-inline-start: 1px dashed var(--color-border); }
+  }
+  .vm__label { font-size: var(--text-base); color: var(--color-accent-ink); }
+  .vm__text { font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem); font-weight: var(--weight-bold); line-height: 1.65; }
+
+  /* values: paper sheets — they arrive tilted (about-sheets): clip the section so a corner never adds a horizontal scroll */
+  .about__values { overflow-x: clip; }
+  .values { display: grid; gap: var(--space-4); margin-block-start: var(--space-7); perspective: 1200px; }
+  @media (min-width: 640px) { .values { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .values { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1280px) { .values { grid-template-columns: repeat(5, 1fr); } }
+  .value {
+    position: relative; display: grid; gap: var(--space-3); align-content: start; padding: var(--space-6) var(--space-5) var(--space-7);
+    border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink);
+    box-shadow: 0 1px 0 var(--color-border), 0 18px 40px -22px color-mix(in srgb, var(--color-brand) 45%, transparent);
+  }
+  /* the folded corner of a sheet */
+  .value::after {
+    content: ''; position: absolute; inset-block-end: 0; inset-inline-end: 0; width: 26px; height: 26px;
+    background: linear-gradient(135deg, var(--color-bg-alt) 50%, var(--color-bg) 50%); border-start-start-radius: 6px;
+  }
+  :global([dir='rtl']) .value::after { background: linear-gradient(225deg, var(--color-bg-alt) 50%, var(--color-bg) 50%); }
+  .value__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface)); color: var(--color-accent-ink); }
+  .value__icon svg, .cert svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .value__title { font-size: var(--text-lg); }
+  .value__text { color: var(--color-ink-muted); line-height: 1.8; }
+
+  /* how we work */
+  .about__how { background: var(--color-bg); }
+  .how { display: grid; gap: var(--space-6); margin-block-start: var(--space-7); counter-reset: none; }
+  @media (min-width: 640px) { .how { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .how { grid-template-columns: repeat(4, 1fr); gap: var(--space-5); } }
+  .how__step { position: relative; display: grid; gap: var(--space-2); align-content: start; padding-block-start: var(--space-7); }
+  /* the stitch line through the four numbers */
+  .how__step::before {
+    content: ''; position: absolute; inset-block-start: 22px; inset-inline: 0; border-block-start: 2px dashed color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+  .how__num {
+    position: absolute; inset-block-start: 0; inset-inline-start: 0; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--color-accent-strong); color: var(--color-on-accent); font-weight: var(--weight-bold); box-shadow: 0 0 0 6px var(--color-bg);
+  }
+  .how__title { margin-block-start: var(--space-4); font-size: var(--text-lg); }
+  .how__text { color: color-mix(in srgb, var(--color-ink) 78%, transparent); line-height: 1.8; }
+
+  /* WaysZ ↔ WaysZ Visa */
+  .rel { display: grid; gap: var(--space-7); align-items: center; }
+  @media (min-width: 1024px) { .rel { grid-template-columns: 1fr 1.2fr; gap: var(--space-9); } }
+  .rel__route {
+    display: flex; align-items: center; gap: var(--space-2); min-width: 0; padding: clamp(2rem, 1.2rem + 3vw, 4rem) clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    border-radius: var(--radius-lg); background:
+      radial-gradient(120% 90% at 50% 120%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 60%), var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+  .rel__node {
+    flex: none; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-pill); background: var(--color-bg); border: 1px solid var(--color-border);
+    font-weight: var(--weight-bold); font-size: clamp(0.85rem, 0.75rem + 0.4vw, 1.05rem); white-space: nowrap;
+  }
+  .rel__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); }
+  .rel__line { flex: 1; min-width: 3rem; height: 2.5rem; overflow: visible; }
+  .rel__road { fill: none; stroke: color-mix(in srgb, var(--color-ink) 22%, transparent); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .rel__path { fill: none; stroke: var(--color-accent-strong); stroke-width: 2.5; stroke-linecap: round; }   /* no non-scaling stroke: DrawSVG measures the path in its own units */
+  .rel__plane { flex: none; margin-inline-start: calc(-1 * var(--space-2)); fill: var(--color-accent-strong); }
+  .rel__copy { display: grid; gap: var(--space-4); justify-items: start; }
+  .rel__text { font-size: var(--text-lg); line-height: 1.9; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+  .rel__link { color: var(--color-link); }
+  .rel__link svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* numbers and certificates */
+  .about__stats { background: var(--color-bg-alt); }
+  .stats { display: grid; gap: var(--space-4); margin-block-start: var(--space-7); }
+  @media (min-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+  .stat { display: grid; gap: var(--space-2); padding: var(--space-6); border-radius: var(--radius-md); background: var(--color-surface); border-block-start: 3px solid var(--color-accent-strong); }
+  .stat__num { justify-self: start; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.4rem); font-weight: var(--weight-bold); line-height: 1.1; color: var(--color-accent-ink); font-variant-numeric: tabular-nums; }
+  .stat__label { color: var(--color-ink-muted); line-height: 1.6; }
+  .certs { display: grid; gap: var(--space-3); }
+  @media (min-width: 1024px) { .certs { grid-template-columns: repeat(3, 1fr); } }
+  .cert { display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-5); border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface); }
+  .cert svg { flex: none; color: var(--color-accent-ink); }
+  .cert__title { font-weight: var(--weight-bold); }
+  .cert__text { margin-block-start: var(--space-1); color: var(--color-ink-muted); font-size: var(--text-sm); line-height: 1.7; }
+
+  /* CTA */
+  .about__cta { position: relative; overflow: clip; padding-block: clamp(4.5rem, 3rem + 6vw, 9rem); background: var(--color-bg); text-align: center; }
+  .about__glow--cta { inset: auto auto -50% 50%; translate: -50% 0; }
+  :global([dir='rtl']) .about__glow--cta { inset: auto auto -50% 50%; }
+  .about__cta-in { position: relative; display: grid; justify-items: center; gap: var(--space-4); }
+  .about__cta-title { font-size: clamp(2rem, 1.3rem + 2.8vw, 3.6rem); line-height: 1.3; }
+  .about__cta-text { max-width: 44ch; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+  .about__cta-btn { margin-block-start: var(--space-3); min-height: 56px; padding-inline: var(--space-7); font-size: var(--text-base); }
 </style>

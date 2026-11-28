@@ -42,7 +42,7 @@ const copy = {
   .tcta__still, .tcta__canvas, .tcta__window, .tcta__stage, .tcta__scrim { position: absolute; inset: 0; }
   .tcta__still img { width: 100%; height: 100%; object-fit: cover; }   /* never mirrored */
   .tcta__canvas { width: 100%; height: 100%; display: none; }
-  .tcta:global(.is-scrub) .tcta__canvas { display: block; }
+  .tcta:global(.is-scrub.is-painted) .tcta__canvas { display: block; }   /* opaque 2D copy: only once it has a frame */
   .tcta:global(.is-painted) .tcta__still { visibility: hidden; }
   /* the window of the css tier / no JS (the WebGL finale draws its own mullions, with parallax) */
   .tcta__window {
@@ -66,10 +66,11 @@ const copy = {
   .tcta__stage { z-index: 1; }
   .tcta__sticky:has(.tcta__stage.is-drawing) :is(.tcta__still, .tcta__canvas, .tcta__window) { visibility: hidden; }
   html:not(.js) .tcta__stage { display: none; }
-  .tcta__scrim { z-index: 1; pointer-events: none; background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 80%, transparent) 0%, color-mix(in srgb, var(--color-bg) 38%, transparent) 32%, transparent 54%); }
+  /* AA over the brightest sunset frames (title ≥ 3:1, lead ≥ 4.5:1) — the plane's side stays natural */
+  .tcta__scrim { z-index: 1; pointer-events: none; background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 72%, transparent) 38%, color-mix(in srgb, var(--color-bg) 52%, transparent) 56%, transparent 80%); }
   @media (min-width: 1024px) {
-    .tcta__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 70%, transparent) 0%, color-mix(in srgb, var(--color-bg) 30%, transparent) 30%, transparent 48%); }
-    :global([dir='rtl']) .tcta__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 70%, transparent) 0%, color-mix(in srgb, var(--color-bg) 30%, transparent) 30%, transparent 48%); }
+    .tcta__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 66%, transparent) 38%, color-mix(in srgb, var(--color-bg) 44%, transparent) 54%, transparent 74%); }
+    :global([dir='rtl']) .tcta__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 66%, transparent) 38%, color-mix(in srgb, var(--color-bg) 44%, transparent) 54%, transparent 74%); }
   }
   .tcta__in { position: relative; z-index: 2; padding-block: var(--section-y) calc(var(--space-8) + 100lvh - 100svh); }
   @media (min-width: 1024px) { .tcta__sticky { align-items: center; } }

@@ -16,10 +16,9 @@ export function detectTier(): Tier {
     if (forced === 'full' || forced === 'css') return forced;
   }
   try {
-    const gl = document.createElement('canvas').getContext('webgl2');
-    if (!gl) return 'css';
-    gl.getExtension('WEBGL_lose_context')?.loseContext();   // free the probe context right away
-    return 'full';
+    // the probe canvas is never attached: it is garbage-collected with its context. No loseContext() here — Firefox
+    // reports that as "WebGL context was lost" in the console on every page (alarming, and not the stage's context).
+    return document.createElement('canvas').getContext('webgl2') ? 'full' : 'css';
   } catch {
     return 'css';
   }
