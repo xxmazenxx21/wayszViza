@@ -4,6 +4,7 @@
   "ar": {
     "name": "مراجعة الرفض وإعادة التقديم",
     "description": "رُفض طلبك؟ الرفض لا يعني دائمًا نهاية الطريق؛ كثيرًا ما يعود لنقص في مستند، أو عدم اتساق في البيانات، أو عدم وضوح غرض السفر. نراجع معك خطاب الرفض وملفك السابق، ونحدد نقاط الضعف، ونساعدك على بناء ملف أقوى قبل إعادة التقديم.",
+    "short": "نقرأ أسباب الرفض معك، ونبني ملفًا أقوى للتقديم التالي.",
     "audience": [
       "من رُفض طلب تأشيرته مؤخرًا ويريد فهم الأسباب.",
       "من يخطط لإعادة التقديم على نفس الوجهة أو وجهة أخرى.",
@@ -36,6 +37,7 @@
   "en": {
     "name": "Refusal Review & Reapplication",
     "description": "Was your application refused? A refusal isn’t always the end of the road; it often comes down to a missing document, inconsistent details or an unclear travel purpose. We review the refusal letter and your previous file with you, pinpoint the weak points and help you build a stronger file before you reapply.",
+    "short": "We read the refusal reasons with you and build a stronger file for your next application.",
     "audience": [
       "Anyone recently refused who wants to understand why.",
       "Those planning to reapply to the same or another destination.",

@@ -1,7 +1,7 @@
 /**
  * Visa Services — FAQ (views/visa-services/Faq.astro), next to the `accordion` scene that opens and closes the rows.
- * Closed answers are made `inert` here (with JS only: without it every answer is open). No canvas here (the terminal
- * host has scrolled away). Once in view: the heading rises by words and the rows arrive one after another.
+ * Closed answers are made `inert` here (with JS only: without it every answer is open). Calm: no footage here (the film
+ * has dimmed into the page navy). Once in view: the heading rises by words and the rows arrive one after another.
  */
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';

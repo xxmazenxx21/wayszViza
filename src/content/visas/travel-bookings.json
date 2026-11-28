@@ -4,6 +4,7 @@
   "ar": {
     "name": "حجوزات السفر وتأمين السفر للملف",
     "description": "كثير من الجهات تطلب ما يثبت خط سير رحلتك وإقامتك وتأمينك الطبي خلال السفر. نرتب لك حجوزات طيران وفندق وتأمين سفر تناسب متطلبات ملفك ومدة رحلتك، لتكون كل مستنداتك متسقة مع بعضها.",
+    "short": "حجوزات طيران وفندق وتأمين سفر تناسب متطلبات ملفك.",
     "audience": [
       "المتقدمون لتأشيرات السياحة والزيارة والأعمال.",
       "من يحتاج حجوزات مرنة قبل صدور التأشيرة.",
@@ -34,6 +35,7 @@
   "en": {
     "name": "Travel Bookings & Insurance for Your File",
     "description": "Many authorities ask for proof of your itinerary, your accommodation and your travel medical insurance. We arrange flight, hotel and travel insurance bookings that suit your file’s requirements and the length of your trip, so all your documents line up.",
+    "short": "Flight, hotel and travel insurance arranged to suit your file’s requirements.",
     "audience": [
       "Applicants for tourist, visit and business visas.",
       "Travelers who need flexible bookings before their visa is issued.",

@@ -122,8 +122,8 @@ that act rendered in OUR palette (sky accent on Visa — never reuse a WaysZ sti
 dev poster switches (`?globe=poster`, `?scales=poster`, `?gala=curtain|hall`, `?sky=…`); WaysZ's render scripts
 (`scripts/render-*-still.mjs` in the WaysZ repo) show how to screenshot them. Re-render whenever the palette or the
 act changes, convert to WebP (quality 80). The Home paper world has its own: `node scripts/render-paper-still.mjs`
-(dev server running; writes `public/media/img/paper-*.webp`). The Visa Services airport of light: `node scripts/render-terminal-still.mjs`
-(writes `public/media/img/terminal-*.webp`).
+(dev server running; writes `public/media/img/paper-*.webp`). The Visa Services page uses real footage instead: its
+posters are frame 1 of each chapter video (`public/media/video/airport-*-poster*.webp`).
 
 **Environment light for 3D** — a Poly Haven HDRI (CC0), 1k download, scaled small (reflections on rough metal need
 no detail): `ffmpeg -i in_1k.hdr -vf "scale=256:128:flags=area" public/media/img/NAME.hdr` (≈ 70 KB, still HDR).

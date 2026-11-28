@@ -27,9 +27,10 @@ requests) — open the link once and replace the note with the contributor's nam
 | public/media/img/paper-hero.webp · paper-hero-m.webp        | our own render of the closed booklet (act `paper`, `scripts/render-paper-still.mjs`, `?paper=hero`) | WaysZ Visa | — | 2026-11-21 | css tier / no JS of the Home hero: 1100×1100 beside the text on wide screens (14 KB), 780×1688 full screen on phones (8 KB) |
 | public/media/img/paper-help.webp                            | our own render of the §1.1 spread, the three problems fixed (`?paper=help`)          | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.1: 1400×1000 (34 KB) |
 | public/media/img/paper-s1 · s2 · s3 · s4 (.webp)            | our own renders of the four service dioramas (`?paper=s1…s4`)                        | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.2–1.5: 1200×900 each (26–29 KB), loaded lazily |
-| public/media/img/terminal-hero.webp · terminal-hero-m.webp  | our own render of the floating terminal (act `terminal`, `scripts/render-terminal-still.mjs`, `?terminal=hero`) | WaysZ Visa | — | 2026-11-22 | css tier / no JS of the Visa Services hero: 1600×1000 full screen behind the text (29 KB), 780×1688 on phones (12 KB) |
-| public/media/img/terminal-s1…s4 · g1…g5 · info (.webp)       | our own renders of the four counters, the five gates and the information desk (`?terminal=s1…s4 · g1…g5 · info`) | WaysZ Visa | — | 2026-11-22 | css tier / no JS of Visa Services §2.1 · §2.2 · «لست متأكدًا…»: 1000×1000 each (18–29 KB), loaded lazily |
-| public/media/img/terminal-finale.webp                        | our own render of the end window and the runway (`?terminal=finale`)                  | WaysZ Visa            | —                      | 2026-11-22 | css tier / no JS of Visa Services §2.4: 1000×1000 (13 KB), loaded lazily |
+| public/media/video/airport-approach.mp4 · -hd.mp4 · -m.mp4 · -poster(-hd/-m).webp | https://www.pexels.com/video/aerial-view-of-modern-airport-terminal-at-dusk-33185166/ | K (@kelly) | Pexels License | 2026-11-28 | Visa Services hero «رحلة في المطار»: a drone approach over a terminal at dusk, 2560×1440 source. First 10 s, 20 fps; a light contrast / saturation match only, no crop on desktop; phones: an 816×1440 portrait crop at native resolution. Checked 1:1: no readable logo, word or face (aircraft and vehicles too small to read). |
+| public/media/video/airport-corridor.mp4 · -hd.mp4 · -m.mp4 · -poster(-hd/-m).webp | https://www.pexels.com/video/heathrow-14-27584208/ | Martyn Day | Pexels License | 2026-11-28 | Visa Services §2.1: a travelator corridor lit in blue, 2560×1440 source. 0.3–10.8 s, 20 fps, a very light temporal denoise (low-light sensor noise), no blur, no tint. Travellers are passers-by seen mostly from behind or at a distance (no hero roles); no ads or logos in frame. Phones: portrait crop on the vanishing point. |
+| public/media/video/airport-gates.mp4 · -hd.mp4 · -m.mp4 · -poster(-hd/-m).webp | https://www.pexels.com/video/modern-interior-of-bangkok-suvarnabhumi-airport-34758164/ | Emrul Kausar Emon | Pexels License | 2026-11-28 | Visa Services §2.2: the moving walkway through a glass concourse, 2560×1440 source. Starts at 2.5 s (skips a close face). LOCAL blurs only, tracked per frame: the gate sign with the airport operator's logo, four advertising screens, two small brand / direction signs and a safety sticker on the glass; the rest of the frame is untouched. A slight exposure match. |
+| public/media/video/airport-takeoff.mp4 · -hd.mp4 · -m.mp4 · -poster(-hd/-m).webp | https://www.pexels.com/video/airplane-takeoff-at-sunset-from-busy-airport-41195794/ | Rafael Minguet Delgado | Pexels License | 2026-11-28 | Visa Services §2.4: a plane rolls and lifts off at sunset, 2560×1440 source. 21.4–31.4 s. LOCAL blur only, tracked per frame: a parked / taxiing plane whose airline name is readable. The departing plane is head-on and backlit (no livery readable). Natural colours (a 4 % saturation match). The window mullions are drawn by our shader / CSS. |
 | public/media/img/paper-finale.webp                          | our own render of the closed booklet with its ribbon (`?paper=finale`)               | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.8: 1100×1100 (16 KB), loaded lazily |
 | public/media/img/atlas-<slug>.webp · atlas-<slug>-m.webp (9 categories) | our own renders of the night globe with each category's destinations and routes (act `atlas`, `scripts/render-atlas-still.mjs`, `?atlas=hero`) | WaysZ Visa | — | 2026-11-28 | css tier / no JS of the visa detail hero (and behind the destinations list): 2400×1000 panorama (globe in the middle) + 780×1688 phone |
 | public/media/img/atlas-network.webp · atlas-network-m.webp | our own render of the «network» globe of the service pages (`?atlas=hero` on a service page) | WaysZ Visa | — | 2026-11-28 | css tier / no JS of the nine service pages |
@@ -38,8 +39,36 @@ requests) — open the link once and replace the note with the contributor's nam
 Astro generates the responsive WebP files of `src/assets/media/*` at build time (`dist/_astro/`).
 
 The first four rows are files the kept WaysZ toolkit uses (rows copied from the WaysZ credits log). The paper world of
-the Home page (act `paper`) is drawn at runtime from our own vector drawings: it ships no image, model or texture file. The same holds for the airport of light of the Visa Services page (act `terminal`):
-primitives built in code, sprite shapes drawn by the shader, no texture at all. The route map of the visa detail
+the Home page (act `paper`) is drawn at runtime from our own vector drawings: it ships no image, model or texture file. The route map of the visa detail
 template (act `atlas`) reuses the two files of the first rows (the night Earth and the Natural Earth borders): no new
 download.
 Unsplash now answers scripted downloads with a browser check, so new photos came from Pexels (direct CDN files).
+
+## Checked and NOT shipped (Visa Services «رحلة في المطار», 2026-11-28)
+
+Every clip was checked on a contact sheet before use (waysz-media §2). Skipped:
+
+| Source | Why |
+| ------ | --- |
+| https://mixkit.co/free-stock-video/people-walking-down-an-airport-corridor-in-fast-motion-4008/ (Free License) | readable direction signs (gate letter, "Pont Aeri"), heavy posterised filter in the source |
+| https://mixkit.co/free-stock-video/airplane-arriving-at-air-terminal-4095/ (Free License) | a bank logo on the jet bridge and an airline livery |
+| https://mixkit.co/free-stock-video/plane-arriving-to-an-airport-terminal-4367/ (Free License) | an all-over airline livery, flat daylight |
+| https://mixkit.co/free-stock-video/airplane-taking-off-2626/ · …/airplane-in-flight-seen-near-a-road-2631/ (Free License) | no usable airport in frame |
+| Most other Mixkit airport clips | "Restricted License" — not allowed; Mixkit then answered scripted page reads with a browser check, so no more pages were read |
+| https://www.pexels.com/video/modern-airport-terminal-with-busy-travelers-40793649/ | readable gate signs, advertising screens, faces |
+| https://www.pexels.com/video/video-of-people-going-inside-the-airport-4241615/ | an airport brand on the doors and readable "Airline check in" signs |
+| https://www.pexels.com/video/spacious-suvarnabhumi-airport-interior-4k-34758162/ | a bank logo and gate signs, static camera |
+| https://www.pexels.com/video/a-sunset-view-of-an-airport-terminal-with-an-airplane-16590077/ | an airline tail logo |
+| https://www.pexels.com/video/a-view-of-an-airport-from-inside-a-glass-building-27683669/ | fine, but daylight and not needed (the finale window is drawn by the shader) |
+| https://www.pexels.com/video/night-traffic-outside-modern-airport-terminal-41172602/ (shipped in the first version) | replaced: at full resolution, readable number plates, car badges and a lit hotel-name tower in the lower third — too many to blur locally |
+| https://www.pexels.com/video/modern-airport-check-in-area-with-travelers-41128393/ (shipped in the first version) | replaced: airline, ground-handler and shop logos all over the frame (the first version blurred the whole frame — no longer allowed) |
+| https://mixkit.co/free-stock-video/rolling-corridor-at-an-airport-4642/ (shipped in the first version) | replaced: soft (shot out of focus) and 1080p only |
+| https://www.pexels.com/video/airplane-takeoff-at-sunset-with-scenic-mountains-32487761/ (shipped in the first version) | replaced: portrait 1440 wide (a desktop crop would be upscaled) and an airline tail logo in its first seconds |
+| https://www.pexels.com/video/commercial-airplane-taking-off-at-sunset-36275653/ | readable airline tail logo |
+| https://www.pexels.com/video/walking-in-corridor-of-airport-terminal-13949726/ | advertising everywhere on the travelator walls and screens |
+| https://www.pexels.com/video/manchester-airport-terminal-sunrise-view-31256081/ · …-31256900/ · …/cork-airport-entrance-scenic-view-in-daylight-31255514/ · …/passengers-with-luggage-at-airport-terminal-entrance-30040092/ | airport names / a giant ad screen / readable shop and terminal branding |
+| https://www.pexels.com/video/aiport-terminal-at-night-11271114/ | a readable airline livery |
+| https://www.pexels.com/video/suvarnabhumi-airport-terminal-interior-view-34758151/ | fine, but a static window view: not needed |
+
+Pexels and Pixabay pages answer scripted requests with HTTP 403; the Pexels pages were read with a normal page reader and
+the files downloaded from the Pexels file CDN links printed on those pages.

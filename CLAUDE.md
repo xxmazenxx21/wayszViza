@@ -49,7 +49,8 @@ motion system and 3D stage. The main site is `site.mainSite`; here it is only a 
 - The **css fallback** (posters / stills instead of the canvas) exists ONLY when WebGL2 is unavailable or the
   context is lost. Even then every GSAP / ScrollTrigger animation, Lenis, the cursor and all scroll scenes run.
 - Smoothness is protected ONLY by the stage's **dynamic render scale** (`src/motion/stage/stage.ts`: canvas pixel
-  ratio between `min(devicePixelRatio, 1.5)` and 0.75, lowered only when that measurably speeds frames up).
+  ratio between `min(devicePixelRatio, 1.5)` and 0.75, lowered only when that measurably speeds frames up). Footage
+  acts set their own bounds (`ratio`): the Visa Services videos draw at the device pixel ratio (cap 2), never below 1.
   Never by drawing less, never by falling back to css.
 - Allowed differences are input and size, not quality: pointer-only effects (cursor, depth, magnetic, spotlight)
   need a mouse; responsive image / video / sequence sizes per screen width are the same look at the right size.
@@ -68,8 +69,8 @@ to create your own animations, shaders and 3D, whenever it makes the site more i
 first. External files come from a source with a clear free license (the list in "Media") and get a row in
 `docs/media-credits.md`.
 The pages' motion storyboard lives in the waysz-motion skill (`reference.md`, one row per section). The Home concept
-(«رحلة الورق», a pop-up book of paper) is in `docs/home-creative-treatment.md`; the Visa Services concept («مطار الضوء»,
-an airport drawn in light) is in `docs/visa-services-creative-treatment.md`.
+(«رحلة الورق», a pop-up book of paper) is in `docs/home-creative-treatment.md`; the Visa Services concept («رحلة في المطار»,
+a walk through a real airport, filmed) is in `docs/visa-services-creative-treatment.md`.
 
 - full-screen background video, scroll-scrubbed image sequences (video → frames on a canvas),
   media that expands to full screen, sticky full-bleed media cards, huge staged typography,
@@ -128,11 +129,11 @@ wayszViza/
 ├─ .claude/skills/waysz-motion/   SKILL.md (motion rules + API) · reference.md (scenes + page storyboard)
 ├─ .claude/skills/waysz-media/    SKILL.md (sources, licenses, ffmpeg recipes, budgets, credits)
 ├─ docs/brief/                    WaysZ-Visa-Brief-v3.md (CURRENT brief) · WaysZ-Website-Brief-v2.pdf (original)
-├─ docs/visa-services-creative-treatment.md  Visa Services concept «مطار الضوء» + storyboard + budgets
+├─ docs/visa-services-creative-treatment.md  Visa Services concept «رحلة في المطار» + storyboard + budgets
 ├─ docs/home-creative-treatment.md  Home concept «رحلة الورق» + storyboard + budgets
 ├─ docs/visa-detail-creative-treatment.md  Visa detail template «خريطة الرحلة» + storyboard + budgets
 ├─ scripts/                       Playwright QA: qa-shots · qa-policy · qa-weight · qa-fps (+ qa-browser: shared launch)
-│                                 data build: build-borders (globe borders of the explore / atlas acts) · render-paper-still (Home stills) · render-terminal-still (Visa Services stills) · render-atlas-still (visa detail stills)
+│                                 data build: build-borders (globe borders of the explore / atlas acts) · render-paper-still (Home stills) · render-atlas-still (visa detail stills)
 ├─ docs/media-credits.md          one row per media file we ship (source, author, license)
 ├─ media-inbox/                   RAW downloads before optimizing — gitignored, never shipped
 ├─ public/
@@ -156,7 +157,7 @@ wayszViza/
    ├─ motion/                     index.ts · config.ts · smooth-scroll.ts · globals/ · scenes/ (the whole WaysZ toolkit:
    │  │                           unused scenes are lazy chunks and cost nothing)
    │  ├─ code-glyphs.ts           decorative code blocks: split into characters, measure where each one sits
-   │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (paper — the Visa Home · terminal — Visa Services · atlas — the visa detail template · flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
+   │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (paper — the Visa Home · airport — Visa Services (real footage) · atlas — the visa detail template · flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
    ├─ pages/                      THIN wrappers only (AR at /, EN under /en/)
    ├─ styles/                     tokens.css (identical to WaysZ's) · base.css
    └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · AssessmentPage ·

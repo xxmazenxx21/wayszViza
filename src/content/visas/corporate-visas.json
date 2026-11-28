@@ -4,6 +4,7 @@
   "ar": {
     "name": "تأشيرات الشركات والوفود",
     "description": "تسافر فرق عملك لاجتماعات أو مشروعات أو معارض ومؤتمرات بالخارج؟ ننسق ملفات تأشيرات موظفيك أو وفدك في مكان واحد: قوائم مستندات موحدة، ومتابعة لكل مسافر، وتواصل واحد مع مسؤول السفر لديك.",
+    "short": "تنسيق ملفات تأشيرات فرق العمل والوفود في مكان واحد.",
     "audience": [
       "الشركات التي يسافر موظفوها بانتظام.",
       "الجهات المشاركة بوفود في المعارض والمؤتمرات الدولية.",
@@ -36,6 +37,7 @@
   "en": {
     "name": "Corporate & Delegation Visas",
     "description": "Does your team travel abroad for meetings, projects, exhibitions or conferences? We coordinate visa files for your staff or delegation in one place: unified document lists, follow-up for each traveler and a single point of contact with your travel coordinator.",
+    "short": "Visa files for teams and delegations, coordinated in one place.",
     "audience": [
       "Companies whose staff travel regularly.",
       "Organizations sending delegations to international exhibitions and conferences.",

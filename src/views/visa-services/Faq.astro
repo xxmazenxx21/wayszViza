@@ -3,7 +3,8 @@
  * Visa Services — a short FAQ before §2.4 (brief v3 §19.2): questions 1–3 as before (our own words, about choosing
  * the right visa type and what happens in a consultation; ideas from boundless.com, atlys.com, visahq.com, y-axis.com,
  * oravisa.com and official guidance — no text taken) · 4 (answer edited) and 5 (new) word for word from §19.2.
- * Scenes: accordion (open / close) + terminal-faq (closed answers `inert`, rows arrive once). No canvas. No JS: all open.
+ * Scenes: accordion (open / close) + airport-faq (closed answers `inert`, rows arrive once). Calm: no footage (the film
+ * has dimmed into the page navy above). No JS: all open.
  */
 import { useTranslations, type Lang } from '../../i18n';
 
@@ -27,7 +28,7 @@ const items = {
   ],
 }[lang];
 ---
-<section class="tfaq section theme-dark" data-scene="accordion terminal-faq" data-waypoint aria-labelledby="tfaq-title">
+<section class="tfaq section theme-dark" data-scene="accordion airport-faq" data-waypoint aria-labelledby="tfaq-title">
   <div class="container tfaq__in">
     <h2 class="tfaq__title" id="tfaq-title">{t.visa.faq}</h2>
     <div class="tfaq__list">

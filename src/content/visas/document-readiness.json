@@ -4,6 +4,7 @@
   "ar": {
     "name": "جاهزية المستندات",
     "description": "قائمة مستندات مخصصة لحالتك، ومراجعة ما جهزته، وتنبيهك إلى أي نواقص أو تعارض في البيانات قبل التقديم؛ فنقص مستند واحد قد يؤخر طلبك أو يضعفه.",
+    "short": "قائمة مستندات مخصصة ومراجعة ملفك قبل التقديم.",
     "audience": [
       "من حدد نوع تأشيرته ويريد قائمة مستندات واضحة لحالته.",
       "من جهّز ملفه ويريد مراجعته قبل موعد التقديم.",
@@ -36,6 +37,7 @@
   "en": {
     "name": "Document Readiness",
     "description": "A document checklist tailored to your case, a review of what you have prepared, and alerts about anything missing or inconsistent before you apply — because a single missing document can delay or weaken your application.",
+    "short": "A tailored document checklist and a review of your file before you apply.",
     "audience": [
       "People who know their visa type and want a clear document checklist for their case.",
       "People who have prepared their file and want it reviewed before the application appointment.",

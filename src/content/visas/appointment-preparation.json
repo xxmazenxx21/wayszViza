@@ -4,6 +4,7 @@
   "ar": {
     "name": "الاستعداد للموعد والمقابلة",
     "description": "نجهزك لموعد التقديم أو المقابلة: ما الذي تحضره معك، وكيف ترتب مستنداتك، وكيف تجيب عن الأسئلة المتوقعة بوضوح وصدق.",
+    "short": "تجهيزك لموعد التقديم أو المقابلة بثقة.",
     "audience": [
       "من لديه موعد تقديم أو مقابلة ويريد أن يذهب مستعدًا.",
       "من يشعر بالقلق من أسئلة المقابلة.",
@@ -38,6 +39,7 @@
   "en": {
     "name": "Appointment & Interview Preparation",
     "description": "We prepare you for your application appointment or interview: what to bring, how to organize your documents, and how to answer the expected questions clearly and honestly.",
+    "short": "Getting you ready for your application appointment or interview with confidence.",
     "audience": [
       "People with an application appointment or interview who want to arrive prepared.",
       "People who feel anxious about interview questions.",

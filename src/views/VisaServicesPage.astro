@@ -1,22 +1,23 @@
 ---
 /**
- * Visa Services — «مطار الضوء» / "Terminal of Light" (docs/visa-services-creative-treatment.md).
- * Copy: brief part 04 «2 صفحة خدمات التأشيرات», every element in its order, word for word (Arabic is the source; English
- * is a faithful translation; the categories keep the brief's English names): title + intro · §2.1 the four services ·
- * §2.2–2.3 the five categories with «تناسب:» · «لست متأكدًا من نوع تأشيرتك؟» · §2.4. Addition: a 4-question FAQ (our
- * own words). Every service and category links to its detail page (src/content/visas/<slug>.json, one template).
+ * Visa Services — «رحلة في المطار» / "Through the Terminal" (docs/visa-services-creative-treatment.md).
+ * Copy and order (brief v3 §5): title + intro (v2) · §2.1 the nine services (§3 order: the four core first, then the
+ * five new) · §2.2 + §2.3 the nine categories in their four groups (§2, §16 labels) with the §7 line and «تناسب:» ·
+ * «لست متأكدًا من نوع تأشيرتك؟» → /assessment/ · FAQ (§19.2) · §2.4 (v2). Names and lines come from
+ * src/content/visas/*.json (`name`, `short`, `summary`); every card links to its detail page (one template).
  *
- * ONE stage host (`.term__stage`, CSS sticky) behind hero → §2.1 → §2.2 → the information desk: the act `terminal`
- * (scene terminal-thread) draws the airport of light there; the sections scroll over it. §2.4 has its own host for the
- * finale (scene terminal-cta). css tier / no JS: our own stills of the terminal (render-terminal-still.mjs).
+ * ONE film layer (`.tt__film`, CSS sticky) behind hero → §2.1 → §2.2: real footage scrubbed by the scroll (scene
+ * airport-thread, act `airport` in the stage host; a 2D canvas on the css tier) at full quality. The sections scroll
+ * over it; every word is DOM, on a local scrim or an opaque card. §2.4 has its own host (the takeoff, scene airport-cta). No JS: the first frame of each
+ * chapter as a still behind its section.
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from './visa-services/Hero.astro';
-import Rests, { type RestItem } from './visa-services/Rests.astro';
-import Info from './visa-services/Info.astro';
+import Rests, { type RestCard, type RestSign } from './visa-services/Rests.astro';
 import Faq from './visa-services/Faq.astro';
 import Cta from './visa-services/Cta.astro';
+import { visaGroups } from '../content.config';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -24,58 +25,49 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const other: Lang = lang === 'ar' ? 'en' : 'ar';
 const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
-const byId = Object.fromEntries(visas.map((v) => [v.id, v.data]));
 const href = (slug: string) => localizePath(`/visa-services/${slug}/`, lang);
+const alt = (d: (typeof visas)[number]['data']) => ({ text: d[other].name, lang: other });
 
-// TODO(step 4): show all 9 services (brief v3 §5 2.1) — the counters of the `terminal` act were built for these 4.
-// §2.1 — the brief's short description of each service (names from the collection: the same as the brief's)
-const services: RestItem[] = [
-  { slug: 'visa-consultation', ar: 'تحديد نوع التأشيرة المناسب لغرض سفرك وشرح متطلباته.', en: 'Identifying the right visa type for the purpose of your trip and explaining its requirements.' },
-  { slug: 'document-readiness', ar: 'قائمة مستندات مخصصة ومراجعة ملفك قبل التقديم.', en: 'A tailored document checklist and a review of your file before you apply.' },
-  { slug: 'application-guidance', ar: 'شرح خانات النموذج وتجنب الأخطاء الشائعة.', en: 'Explaining the fields of the form and avoiding common mistakes.' },
-  { slug: 'appointment-preparation', ar: 'تجهيزك لموعد التقديم أو المقابلة بثقة.', en: 'Getting you ready for your application appointment or interview with confidence.' },
-].map((s, i) => {
-  const d = byId[s.slug];
-  return { name: d[lang].name, alt: { text: d[other].name, lang: other }, text: s[lang], href: href(s.slug), still: `/media/img/terminal-s${i + 1}.webp` };
-});
+// §2.1 — the nine services in the order of §3 (the four core ones are 1–4)
+const services: RestCard[] = visas.filter((v) => v.data.kind === 'service').map((v) => ({
+  name: v.data[lang].name, alt: alt(v.data), text: v.data[lang].short ?? '', href: href(v.id),
+}));
 
-// TODO(step 4): show all 9 categories in their 4 groups (brief v3 §5 2.2, §7) — the `terminal` act has 5 gates.
-// §2.2 + §2.3 — the five categories: Arabic name + the brief's English name, description, «تناسب:»
-const categories: RestItem[] = [
-  { slug: 'student-visa', en: 'Student Visa',
-    text: { ar: 'للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.', en: 'For enrolling in universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.' },
-    fit: { ar: 'الطلاب المقبولين أو المتقدمين لبرامج دراسية.', en: 'Students who have been accepted to, or are applying for, study programs.' } },
-  { slug: 'business-visa', en: 'Business Visa',
-    text: { ar: 'لحضور الاجتماعات والمعارض والمؤتمرات الدولية أو زيارة الشركاء. نرشدك في خطابات الدعوة ومستندات جهة العمل.', en: 'For attending meetings and international exhibitions and conferences, or visiting partners. We guide you on invitation letters and your employer’s documents.' },
-    fit: { ar: 'رجال الأعمال والعارضين والمشاركين في المؤتمرات.', en: 'Business people, exhibitors and conference participants.' } },
-  { slug: 'immigration-residence-visa', en: 'Immigration & Residence Visa',
-    text: { ar: 'للإقامة الطويلة أو العمل أو الهجرة إلى دولة أخرى. نساعدك على فهم البرامج المتاحة وشروطها وتجهيز ملفك.', en: 'For a long stay, work or immigration to another country. We help you understand the available programs and their conditions, and prepare your file.' },
-    fit: { ar: 'الراغبين في الإقامة أو العمل أو الاستقرار بالخارج.', en: 'People who want to live, work or settle abroad.' } },
-  { slug: 'family-visa', en: 'Family Visa',
-    text: { ar: 'لزيارة الأقارب أو الالتحاق بأفراد الأسرة المقيمين بالخارج. نرشدك في إثبات صلة القرابة وتجهيز مستندات الداعي.', en: 'For visiting relatives or joining family members who live abroad. We guide you on proving your relationship and preparing the inviting person’s documents.' },
-    fit: { ar: 'من لديهم أقارب من الدرجة الأولى أو أزواج بالخارج.', en: 'People with first-degree relatives or a spouse abroad.' } },
-  { slug: 'tourist-visa', en: 'Tourist Visa',
-    text: { ar: 'للزيارات القصيرة. نساعدك على توضيح غرض الزيارة، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة.', en: 'For short visits. We help you explain the purpose of your visit and organize your financial documents and proof of your ties to home.' },
-    fit: { ar: 'المسافرين في زيارات قصيرة المدة.', en: 'Travelers on short visits.' } },
-].map((c, i) => {
-  const ar = byId[c.slug].ar.name;
-  return {
-    tag: `${lang === 'ar' ? 'البوابة' : 'Gate'} ${i + 1}`,
-    name: lang === 'ar' ? ar : c.en,
-    alt: lang === 'ar' ? { text: c.en, lang: 'en' as Lang } : { text: ar, lang: 'ar' as Lang },
-    text: c.text[lang], fit: c.fit[lang], href: href(c.slug), still: `/media/img/terminal-g${i + 1}.webp`,
-  };
+// §2.2 + §2.3 — the nine categories at their gates: zone A–D = the four groups of §2 (gate codes are DOM, never footage)
+const LETTERS = ['A', 'B', 'C', 'D'];
+const signs: RestSign[] = visaGroups.map((g, z) => ({ zone: z, letter: LETTERS[z], label: t.nav.groups[g] }));
+const perZone = [0, 0, 0, 0];
+const categories: RestCard[] = visas.flatMap((v) => {
+  if (v.data.kind !== 'category') return [];
+  const z = visaGroups.indexOf(v.data.group);
+  const d = v.data[lang];
+  return [{
+    zone: z, gate: `${LETTERS[z]}${++perZone[z]}`, group: t.nav.groups[v.data.group],
+    name: d.name, alt: alt(v.data), text: d.summary?.text ?? '', fit: d.summary?.fit, href: href(v.id),
+  }];
 });
-const labels = { ar: { services: t.nav.services, categories: 'فئات التأشيرات' }, en: { services: t.nav.services, categories: 'Visa categories' } }[lang];
+// the last card (brief v3 §5 2.2): the assessment tool «اعرف تأشيرتك»
+const unsure = {
+  ar: { name: 'لست متأكدًا من نوع تأشيرتك؟', text: 'أجب عن أسئلة قصيرة في أقل من دقيقة، ونرشح لك نوع التأشيرة الأقرب لحالتك.' },
+  en: { name: 'Not sure which visa you need?', text: 'Answer a few short questions in under a minute and we’ll suggest the visa type closest to your situation.' },
+}[lang];
+categories.push({ name: unsure.name, text: unsure.text, href: localizePath('/assessment/', lang), link: t.nav.findVisa, unsure: true });
 ---
 <BaseLayout lang={lang} title={t.pages.visaServices.title} description={t.pages.visaServices.description} headerOverlay>
-  <div class="term theme-dark">
-    <div class="term__stage stage-host" data-scene="terminal-thread" aria-hidden="true"></div>
-    <div class="term__body">
+  <div class="tt theme-dark">
+    <div class="tt__film" aria-hidden="true">
+      <picture class="tt__still">
+        <source media="(max-width: 1023px)" srcset="/media/video/airport-approach-poster-m.webp" width="816" height="1440" />
+        <img src="/media/video/airport-approach-poster.webp" srcset="/media/video/airport-approach-poster.webp 1920w, /media/video/airport-approach-poster-hd.webp 2560w" sizes="100vw" alt="" width="1920" height="1080" decoding="async" fetchpriority="high" />
+      </picture>
+      <canvas class="tt__canvas"></canvas>
+      <div class="tt__stage stage-host" data-scene="airport-thread"></div>
+      <div class="tt__veil"></div>
+    </div>
+    <div class="tt__body">
       <Hero lang={lang} />
-      <Rests lang={lang} kind="counter" label={labels.services} items={services} />
-      <Rests lang={lang} kind="gate" label={labels.categories} items={categories} />
-      <Info lang={lang} />
+      <Rests lang={lang} kind="services" title={t.nav.services} cards={services} still="corridor" />
+      <Rests lang={lang} kind="gates" title={t.nav.categories} cards={categories} signs={signs} still="gates" />
     </div>
   </div>
   <Faq lang={lang} />
@@ -83,18 +75,26 @@ const labels = { ar: { services: t.nav.services, categories: 'فئات التأ�
 </BaseLayout>
 
 <style is:global>
-  /* One stage host for hero → the information desk: it sticks to the screen while the sections scroll over it. */
-  .term { position: relative; background: var(--color-bg); }
-  .term__stage { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; }
-  .term__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
-  /* without JS there is no canvas: the sections simply follow each other with their stills */
-  html:not(.js) .term__stage { display: none; }
-  html:not(.js) .term__body { margin-block-start: 0; }
-  /* our stills of the terminal (css tier, no JS) step aside while the canvas paints */
-  .term-still { transition: opacity 0.9s var(--ease-out); }
-  .term__stage.is-drawing ~ .term__body .term-still,
-  :root .term__stage.is-drawing ~ .term__body .rest.is-active .term-still,   /* beats the panels' own .is-active rule */
-  .tcta__stage.is-drawing ~ .term-still { opacity: 0; }
-  /* dev: re-rendering the stills (scripts/render-terminal-still.mjs) */
-  .is-poster .term__body, .is-poster .tcta__in, .is-poster .tcta .term-still { visibility: hidden; }
+  /* The film: one sticky screen behind hero → §2.2; the sections scroll over it. */
+  .tt { position: relative; background: var(--color-bg); }
+  .tt__film { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; overflow: hidden; background: var(--color-bg); }
+  .tt__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
+  .tt__still, .tt__canvas, .tt__veil { position: absolute; inset: 0; }
+  .tt__still img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }   /* never mirrored */
+  .tt__canvas { width: 100%; height: 100%; display: none; }
+  .tt.is-film .tt__canvas { display: block; }
+  .tt__film.is-painted .tt__still { visibility: hidden; }
+  .tt__stage { z-index: 1; }
+  /* the WebGL stage draws the film (its own grade, cuts, vignette and grain): our 2D copy steps aside */
+  .tt__film:has(.tt__stage.is-drawing) .tt__canvas,
+  .tt__film:has(.tt__stage.is-drawing) .tt__still,
+  .tt__film:has(.tt__stage.is-drawing) .tt__veil { visibility: hidden; }
+  /* css tier / before the stage draws: the same very light vignette as the shader */
+  .tt__veil {
+    pointer-events: none;
+    background: radial-gradient(130% 100% at 50% 45%, transparent 62%, color-mix(in srgb, black 16%, transparent) 100%);   /* very light */
+  }
+  /* without JS: the film is the hero's still only; the other sections carry their own */
+  html:not(.js) .tt__film { position: absolute; height: 100vh; height: 100svh; }
+  html:not(.js) .tt__body { margin-block-start: 0; }
 </style>

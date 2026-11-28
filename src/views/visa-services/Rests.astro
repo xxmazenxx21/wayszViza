@@ -1,115 +1,165 @@
 ---
 /**
- * Visa Services §2.1 (the four services = the counters) and §2.2–2.3 (the five categories = the gates): one sticky
- * screen each, with a rest per item. Scene: motion/scenes/terminal-rests.ts (`data-rests`). Names in Arabic AND the
- * brief's English names (like bilingual airport signs); gate numbers live here, never in the 3D. Panels are stacked
- * and faded with opacity only: a focused link scrolls its rest into place. css tier: our stills cross-fade with the
- * panels. No JS: a plain list, each item with its still.
+ * Visa Services §2.1 (kind "services": the nine services, in the check-in hall) and §2.2 + §2.3 (kind "gates": the nine
+ * categories at their gates + «لست متأكدًا من نوع تأشيرتك؟»). One sticky screen each over the page's film; scene
+ * motion/scenes/airport-rests.ts: each card arrives from the walking direction, settles and rests while the footage
+ * keeps gliding. Each name also shows in the other language (like a bilingual airport sign). Gates: a DOM gate sign
+ * (zone letter + group, aria-hidden — every card also says its gate and group in text) changes per zone; gate codes
+ * live here, never in the footage. No JS: a plain list on the chapter's still.
  */
 import { useTranslations, type Lang } from '../../i18n';
 
-export interface RestItem {
-  tag?: string;                                   // gate number
+export interface RestCard {
   name: string;
-  alt: { text: string; lang: Lang };              // the name in the other language
+  alt?: { text: string; lang: Lang };            // the name in the other language
   text: string;
-  fit?: string;                                   // «تناسب:» line
+  fit?: string;                                  // «تناسب:» line (categories)
   href: string;
-  still: string;
+  link?: string;                                 // link label (default «التفاصيل»)
+  zone?: number;                                 // gates: 0…3 = A…D
+  gate?: string;                                 // gates: A1…D3
+  group?: string;                                // gates: the group label (§16)
+  unsure?: boolean;                              // the assessment card
 }
-interface Props { lang: Lang; kind: 'counter' | 'gate'; label: string; items: RestItem[] }
-const { lang, kind, label, items } = Astro.props;
+export interface RestSign { zone: number; letter: string; label: string }
+interface Props { lang: Lang; kind: 'services' | 'gates'; title: string; cards: RestCard[]; signs?: RestSign[]; still: string }
+const { lang, kind, title, cards, signs = [], still } = Astro.props;
 const t = useTranslations(lang);
-const suits = { ar: 'تناسب:', en: 'Suited to:' }[lang];
-const id = `rests-${kind}`;
+const id = `ar-${kind}`;
 ---
-<section class={`rests rests--${kind}`} data-scene="terminal-rests" data-rests={kind} data-shot data-waypoint aria-labelledby={id}>
-  <div class="rests__sticky">
-    <div class="rests__in container">
-      <h2 class="rests__label" id={id}>{label}</h2>
-      <ol class="rests__list" role="list">
-        {items.map((it) => (
-          <li class="rest">
-            <figure class="rest__still term-still" aria-hidden="true">
-              <img src={it.still} alt="" width="1000" height="1000" loading="lazy" decoding="async" />
-            </figure>
-            <div class="rest__panel">
-              {it.tag && <p class="rest__tag">{it.tag}</p>}
-              <h3 class="rest__name">{it.name}</h3>
-              <p class="rest__alt" lang={it.alt.lang} dir={it.alt.lang === 'ar' ? 'rtl' : 'ltr'}>{it.alt.text}</p>
-              <p class="rest__text">{it.text}</p>
-              {it.fit && <p class="rest__fit"><strong>{suits}</strong>{' '}{it.fit}</p>}
-              <a class="link-arrow rest__link" href={it.href}>
-                {t.cta.details}<span class="visually-hidden">{' — '}{it.name}</span>
-                <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
+<section class={`ar ar--${kind}`} data-scene="airport-rests" data-shot data-waypoint aria-labelledby={id} style={`--units: ${cards.length}`}>
+  <picture class="ar__still" aria-hidden="true">
+    <source media="(max-width: 1023px)" srcset={`/media/video/airport-${still}-poster-m.webp`} width="816" height="1440" />
+    <img src={`/media/video/airport-${still}-poster.webp`} srcset={`/media/video/airport-${still}-poster.webp 1920w, /media/video/airport-${still}-poster-hd.webp 2560w`} sizes="100vw" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+  </picture>
+  <div class="ar__sticky">
+    <div class="ar__in container">
+      <h2 class="ar__title" id={id}>{title}</h2>
+      {signs.length > 0 && (
+        <div class="ar__signs" aria-hidden="true">
+          {signs.map((s) => (
+            <p class="ar__sign" data-zone={s.zone}><span class="ar__letter">{s.letter}</span><span class="ar__label">{s.label}</span></p>
+          ))}
+        </div>
+      )}
+      <ol class="ar__list" role="list">
+        {cards.map((c) => (
+          <li class:list={['ar__card', { 'ar__card--unsure': c.unsure }]} data-zone={c.zone}>
+            {c.gate && <p class="ar__gate"><span class="ar__code">{c.gate}</span>{' '}<span>{c.group}</span></p>}
+            <h3 class="ar__name">{c.name}</h3>
+            {c.alt && <p class="ar__alt" lang={c.alt.lang} dir={c.alt.lang === 'ar' ? 'rtl' : 'ltr'}>{c.alt.text}</p>}
+            <p class="ar__text">{c.text}</p>
+            {c.fit && <p class="ar__fit"><strong>{t.visa.suits}</strong>{' '}{c.fit}</p>}
+            <a class="link-arrow ar__link" href={c.href}>
+              {c.link ?? t.cta.details}{!c.link && <span class="visually-hidden">{' — '}{c.name}</span>}
+              <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           </li>
         ))}
       </ol>
-      <div class="rests__ticks" aria-hidden="true">{items.map(() => <span></span>)}</div>
+      <div class="ar__ticks" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
 <style>
-  .rests { position: relative; }
-  .rests__in { position: relative; padding-block: var(--section-y); }
-  .rests__label { font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.6rem); line-height: 1.3; }
-  .rests__list { display: grid; gap: var(--space-8); margin-block-start: var(--space-6); }
-  .rest__still { margin: 0; }
-  .rest__still img { width: 100%; max-width: 34rem; height: auto; border-radius: var(--radius-lg); }
-  .rest__panel {
-    position: relative; max-width: 30rem; margin-block-start: var(--space-5);
-    padding: var(--space-6); border-radius: var(--radius-lg);
-    background: linear-gradient(160deg, color-mix(in srgb, var(--color-surface) 70%, transparent), color-mix(in srgb, var(--color-bg) 82%, transparent));
-    border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent), 0 24px 60px color-mix(in srgb, var(--color-bg) 60%, transparent);
-  }
-  .rest__tag { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-link); }
-  .rest__name { margin-block-start: var(--space-2); font-size: clamp(1.8rem, 1.2rem + 2.2vw, 3rem); line-height: 1.2; }
-  :global([dir='rtl']) .rest__name { line-height: 1.4; }
-  .rest__alt { margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--color-ink-muted); }
-  .rest__text { margin-block-start: var(--space-4); font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
-  .rest__fit { margin-block-start: var(--space-3); color: var(--color-ink-muted); line-height: 1.75; }
-  .rest__fit strong { color: var(--color-ink); font-weight: var(--weight-bold); }
-  .rest__link { margin-block-start: var(--space-5); color: var(--color-link); font-weight: var(--weight-bold); text-decoration: none; }
-  .rests__ticks { display: none; }
+  .ar { position: relative; --dir: 1; }
+  :global([dir='rtl']) .ar { --dir: -1; }
 
-  /* with JS: one sticky screen, the panels stacked in the same place, the stills behind them (css tier) */
-  :global(.js) .rests--counter { height: 480vh; height: 480lvh; }
-  :global(.js) .rests--gate { height: 580vh; height: 580lvh; }
-  :global(.js) .rests__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: clip; }
-  :global(.js) .rests__in { position: static; height: 100%; display: grid; align-content: end; padding-block: calc(76px + var(--space-5)) var(--space-6); }
-  :global(.js) .rests__list { margin-block-start: var(--space-4); }
-  :global(.js) .rest { grid-area: 1 / 1; }
-  /* lazy images without a box are never fetched: the stills wait until the section is near (terminal-rests adds .is-near) */
-  :global(.js) .rests:not(.is-near) .rest__still { display: none; }
-  :global(.js) .rest__still { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s var(--ease-out); pointer-events: none; }
-  :global(.js) .rest__still img { width: 100%; max-width: none; height: 100%; object-fit: cover; object-position: 50% 32%; border-radius: 0; }
-  :global(.js) .rest__panel { z-index: 2; margin: 0; opacity: 0; translate: 0 24px; pointer-events: none; transition: opacity 0.6s var(--ease-out), translate 0.6s var(--ease-out); }
-  :global(.js) .rest.is-active .rest__panel { opacity: 1; translate: 0 0; pointer-events: auto; }
-  :global(.js) .rest.is-active .rest__still { opacity: 1; }
-  :global(.js) .rests__ticks { display: flex; gap: var(--space-2); margin-block-start: var(--space-5); position: relative; z-index: 2; }
-  .rests__ticks span { width: 26px; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--color-ink) 24%, transparent); transition: background-color 0.4s var(--ease-out), width 0.4s var(--ease-out); }
-  .rests__ticks span:global(.is-on) { width: 46px; background: var(--color-accent); }
-  /* the text always sits on a dark gradient */
-  :global(.js) .rests__in::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
-    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 90%, transparent) 0%, color-mix(in srgb, var(--color-bg) 45%, transparent) 40%, transparent 62%);
+  /* ---------- no JS: a plain list on the chapter's still ---------- */
+  .ar__still { position: absolute; inset: 0; overflow: hidden; }
+  .ar__still img { width: 100%; height: 100%; object-fit: cover; }   /* never mirrored */
+  .ar__still::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--color-bg) 45%, transparent); }
+  :global(.js) .ar__still { display: none; }                           /* the film layer shows the footage (lazy: never fetched) */
+  .ar__in { position: relative; padding-block: var(--section-y); }
+  .ar__title { position: relative; z-index: 2; font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.4rem); line-height: 1.2; }
+  :global([dir='rtl']) .ar__title { line-height: 1.4; }
+  .ar__list { display: grid; gap: var(--space-5); margin-block-start: var(--space-6); }
+
+  /* ---------- the card: a light box of airport signage ---------- */
+  .ar__card {
+    position: relative; z-index: 2; max-width: 32rem; padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 55%, var(--color-bg)));   /* opaque: crisp on any frame */
+    border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 14%, transparent), 0 30px 70px color-mix(in srgb, var(--color-bg) 62%, transparent);
   }
-  .rests__label { position: relative; z-index: 2; }
+  .ar__card::before {      /* the strip of light along the top edge of a sign */
+    content: ''; position: absolute; inset-block-start: -1px; inset-inline: var(--space-6); height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  }
+  .ar__gate { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .ar__code {
+    display: inline-grid; place-items: center; min-width: 2.6em; padding: 0.2em 0.55em; border-radius: var(--radius-sm);
+    background: var(--color-accent); color: var(--color-bg); font-weight: var(--weight-extrabold); letter-spacing: 0.02em;
+  }
+  .ar__name { margin-block-start: var(--space-3); font-size: clamp(1.6rem, 1.15rem + 1.7vw, 2.5rem); line-height: 1.22; }
+  :global([dir='rtl']) .ar__name { line-height: 1.45; }
+  .ar__alt { margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .ar__text { margin-block-start: var(--space-4); font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 92%, transparent); }
+  .ar__fit { margin-block-start: var(--space-3); color: var(--color-ink-muted); line-height: 1.75; }
+  .ar__fit strong { color: var(--color-ink); font-weight: var(--weight-bold); }
+  .ar__link { margin-block-start: var(--space-5); color: var(--color-link); font-weight: var(--weight-bold); text-decoration: none; }
+  .ar__card--unsure {
+    background: linear-gradient(150deg, var(--color-brand), var(--color-bg));
+    border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+  .ar__card--unsure .ar__link {
+    display: inline-flex; padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill);
+    background: var(--color-accent); color: var(--color-bg);
+  }
+
+  /* ---------- the gate sign (zone letter + group) ---------- */
+  .ar__signs { display: none; }
+  .ar__sign { display: flex; align-items: center; gap: var(--space-4); }
+  .ar__letter {
+    display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: var(--radius-md);
+    background: var(--color-accent); color: var(--color-bg); font-size: 2rem; font-weight: var(--weight-extrabold); line-height: 1;
+  }
+  .ar__label { font-size: var(--text-xl); font-weight: var(--weight-bold); }
+
+  .ar__ticks { display: none; }
+
+  /* ---------- with JS: one sticky screen, the cards rest one after another in the same place ---------- */
+  :global(.js) .ar { height: calc((var(--units) + 0.6) * 62vh + 100vh); height: calc((var(--units) + 0.6) * 62lvh + 100lvh); }
+  :global(.js) .ar__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: clip; }
+  :global(.js) .ar__in {
+    position: static; height: 100%; display: grid; align-content: end;
+    padding-block: calc(76px + var(--space-5)) calc(100lvh - 100svh + var(--space-6));
+  }
+  :global(.js) .ar__title { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem); }
+  :global(.js) .ar__list { margin-block-start: var(--space-4); }
+  :global(.js) .ar__card { grid-area: 1 / 1; align-self: end; pointer-events: none; will-change: transform, opacity; }
+  :global(.js) .ar:not(.is-scrub) .ar__card:not(:first-child) { opacity: 0; }
+  :global(.js) .ar__card:global(.is-active) { pointer-events: auto; }
+  :global(.js) .ar__signs { display: grid; position: relative; z-index: 2; margin-block-start: var(--space-4); }
+  :global(.js) .ar__sign {
+    grid-area: 1 / 1; opacity: 0; translate: calc(var(--dir) * 24px) 0;
+    transition: opacity 0.6s var(--ease-out), translate 0.8s var(--ease-out);
+  }
+  :global(.js) .ar__sign:global(.is-active) { opacity: 1; translate: 0 0; }
+  :global(.js) .ar__ticks { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-start: var(--space-5); position: relative; z-index: 2; }
+  .ar__ticks :global(span) { width: 20px; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--color-ink) 26%, transparent); transition: background-color 0.4s var(--ease-out), width 0.4s var(--ease-out); }
+  .ar__ticks :global(span.is-on) { width: 40px; background: var(--color-accent); }
+  /* the text always sits on a dark gradient over the footage */
+  :global(.js) .ar__in::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background:
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-bg) 55%, transparent) 0%, transparent 20%),
+      linear-gradient(to top, color-mix(in srgb, var(--color-bg) 62%, transparent) 0%, transparent 42%);
+  }
   @media (min-width: 1024px) {
-    :global(.js) .rests__in { align-content: center; }
-    :global(.js) .rests__in::before { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 78%, transparent) 0%, color-mix(in srgb, var(--color-bg) 35%, transparent) 34%, transparent 52%); }
-    :global([dir='rtl'].js) .rests__in::before { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 78%, transparent) 0%, color-mix(in srgb, var(--color-bg) 35%, transparent) 34%, transparent 52%); }
-    :global(.js) .rest__still { inset-inline-start: 34%; -webkit-mask: radial-gradient(closest-side, black 70%, transparent); mask: radial-gradient(closest-side, black 70%, transparent); }
-    :global(.js) .rest__still img { object-fit: contain; }
-    :global(html:not(.js)) .rest { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; }
+    :global(.js) .ar__in { align-content: center; }
+    :global(.js) .ar__card { align-self: start; }
+    :global(.js) .ar__in::before { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 58%, transparent) 0%, color-mix(in srgb, var(--color-bg) 22%, transparent) 26%, transparent 40%); }
+    :global([dir='rtl'].js) .ar__in::before { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 58%, transparent) 0%, color-mix(in srgb, var(--color-bg) 22%, transparent) 26%, transparent 40%); }
+    :global(html:not(.js)) .ar__list { grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr)); }
   }
   @media (max-width: 639px) {
-    .rest__panel { padding: var(--space-5); }
-    .rest__text { font-size: var(--text-base); }
-    :global(.js) .rest__name { font-size: clamp(1.6rem, 1.2rem + 2vw, 2.2rem); }
+    .ar__card { padding: var(--space-5); }
+    .ar__card::before { inset-inline: var(--space-5); }
+    .ar__text { font-size: var(--text-base); }
+    .ar__letter { width: 2.6rem; height: 2.6rem; font-size: 1.6rem; }
+    .ar__label { font-size: var(--text-lg); }
   }
 </style>

@@ -26,12 +26,14 @@ export interface Act {
   prepare?(renderer: WebGLRenderer): Promise<unknown>;
   /** optional: draw into the act's own render targets, right before `scene` is drawn to the canvas */
   prerender?(renderer: WebGLRenderer): void;
+  /** optional: this act's own render-scale bounds (footage acts: the device pixel ratio up to 2, never below 1) */
+  ratio?: { max: number; min: number };
 }
 
 /**
  * Dynamic render scale = the canvas pixel ratio. The ONLY thing that adapts to the device.
- *   top     min(devicePixelRatio, 1.5) — full quality, on every device
- *   floor   0.75 (or the top, if the screen is below that)
+ *   top     min(devicePixelRatio, 1.5) — full quality, on every device (an act may set its own `ratio.max`)
+ *   floor   0.75 (or the top, if the screen is below that; an act may set its own `ratio.min`)
  *   step    0.125, at most one per sample window (60 rendered frames, after 30 warm-up frames)
  * Each window is judged by its MEDIAN frame gap (gaps snap to the display's refresh steps, so one long frame
  * or a burst of main-thread work does not move it).
@@ -136,6 +138,7 @@ export class Stage {
     this.calm = 0;
     if (this.drawing !== (act?.host ?? null)) this.setDrawing(null);   // the canvas is leaving that host
     if (act) {
+      if (act.ratio) this.ratio = this.top();          // an act with its own bounds starts at its own top
       if (this.canvas.parentElement !== act.host) act.host.append(this.canvas);
       this.ro.observe(act.host);
       this.resize();
@@ -143,11 +146,11 @@ export class Stage {
     this.sync();
   }
 
-  private top() { return Math.min(window.devicePixelRatio || 1, RATIO_TOP); }
+  private top() { return Math.min(window.devicePixelRatio || 1, this.active?.ratio?.max ?? RATIO_TOP); }
+  private floor() { return Math.min(this.active?.ratio?.min ?? RATIO_FLOOR, this.top()); }
 
   private pixelRatio() {
-    const top = this.top();
-    return Math.max(Math.min(this.ratio, top), Math.min(RATIO_FLOOR, top));
+    return Math.max(Math.min(this.ratio, this.top()), this.floor());
   }
 
   private applyRatio() {
@@ -223,7 +226,7 @@ export class Stage {
       else if (ms > SLOW_MS) this.held = true;                                // it cost nothing: slow for other reasons
       return;
     }
-    if (ms > SLOW_MS && !this.held && current > Math.min(RATIO_FLOOR, top)) {
+    if (ms > SLOW_MS && !this.held && current > this.floor()) {
       this.probe = { from: this.ratio, before: ms, down: true };
       this.setRatio(current - RATIO_STEP);
     } else if (ms < FAST_MS) {

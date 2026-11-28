@@ -4,6 +4,7 @@
   "ar": {
     "name": "الإرشاد في الطلب والخطابات",
     "description": "نرشدك خطوة بخطوة في تعبئة نموذج طلب التأشيرة، ونوضح المقصود بكل خانة، لتتجنب الأخطاء الشائعة مثل الخانات الفارغة أو التواريخ غير المتطابقة أو البيانات المتعارضة.",
+    "short": "شرح خانات النموذج وتجنب الأخطاء الشائعة.",
     "audience": [
       "من يعبئ نموذج طلب تأشيرة لأول مرة.",
       "من يجد صعوبة في فهم بعض خانات النموذج أو مصطلحاته.",
@@ -39,6 +40,7 @@
   "en": {
     "name": "Application & Cover Letter Guidance",
     "description": "We guide you step by step as you fill in the visa application form and explain what each field means, so you avoid common mistakes such as empty fields, dates that don’t match, or conflicting details.",
+    "short": "Explaining the fields of the form and avoiding common mistakes.",
     "audience": [
       "People filling in a visa application form for the first time.",
       "People who find some of the form’s fields or terms hard to understand.",

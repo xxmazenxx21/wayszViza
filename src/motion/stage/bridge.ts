@@ -172,24 +172,32 @@ export const paper = {
 };
 
 /**
- * WaysZ Visa — Visa Services «مطار الضوء» / "Terminal of Light" (docs/visa-services-creative-treatment.md). Written
- * by the scenes terminal-thread · terminal-hero · terminal-counters · terminal-gates · terminal-cta; read by
- * acts/terminal.ts (two instances: the 'journey' host behind hero → «لست متأكدًا…» and the 'finale' host of §2.4).
- * Sections of the journey host, in page order: 0 hero · 1 §2.1 counters · 2 §2.2 gates · 3 the information desk.
+ * WaysZ Visa — Visa Services «رحلة في المطار» / "Through the Terminal" (docs/visa-services-creative-treatment.md).
+ * Real footage: four videos scrubbed by the scroll. Written by the scenes airport-thread (the journey: hero → §2.2) and airport-cta
+ * (§2.4); read by acts/airport.ts (two instances: 'journey' and 'finale'). The scenes own scroll and the videos
+ * (motion/reel.ts); the act only draws the plates it finds here.
+ * Chapters (AIRPORT_CHAPTERS): 0 approach (hero) · 1 corridor (§2.1) · 2 gates (§2.2) · 3 takeoff (§2.4).
  */
-export type TerminalPoster = '' | 'hero' | 's1' | 's2' | 's3' | 's4' | 'g1' | 'g2' | 'g3' | 'g4' | 'g5' | 'info' | 'finale';
-export const terminal = {
-  shot: 0,                                   // journey: section index + progress inside it (0…4) → the camera path
-  light: 0,                                  // hero: 0…1 — the doors slide open, the hall wakes, the camera glides in
-  counter: 0,                                // §2.1: 0…3 — position along the four counters (fractions = walking between)
-  counterAct: 0,                             // §2.1: 0…1 — the current counter's own motion during its rest
-  gate: 0,                                   // §2.2: 0…4 — position along the five gates (sideways dolly)
-  gateAct: 0,                                // §2.2: 0…1 — the current gate's glimpse coming alive
-  takeoff: 0,                                // §2.4: 0…1 — roll · rotate · lift-off · into the clouds
-  pointer: { x: 0, y: 0 },                   // mouse over the page, −1…1 (a breath of the camera; touch never writes it)
-  side: 1 as 1 | -1,                         // 1 = LTR (the concourse runs right) · -1 = RTL (mirrored layout, never mirrored plane / "i")
-  compact: false,                            // small / portrait screens: wider lens, the subject in the upper part
-  poster: '' as TerminalPoster,              // dev only (?terminal=hero|s1…s4|g1…g5|info|finale): a still for the css tier
+export const AIRPORT_CHAPTERS = ['approach', 'corridor', 'gates', 'takeoff'] as const;
+export const AIRPORT_WIPE = { door: 0, light: 1 } as const;
+export interface AirportPlate {
+  a: HTMLVideoElement | null;                // current chapter's video (paused on the scrubbed frame)
+  aId: number;                               // changes whenever a new frame is on `a` (the act uploads only then)
+  aChapter: number;                          // its chapter (per-chapter grade match)
+  b: HTMLVideoElement | null;                // the next chapter's video during a cut
+  bId: number;
+  bChapter: number;
+  mix: number;                               // 0…1 transition a → b (0 = only a)
+  wipe: number;                              // AIRPORT_WIPE: the transition's style
+  push: number;                              // 0…1 progress through the current chapter
+  exit: number;                              // 0…1 the film dims into the page navy
+}
+const plate = (): AirportPlate => ({ a: null, aId: -1, aChapter: 0, b: null, bId: -1, bChapter: 1, mix: 0, wipe: 0, push: 0, exit: 0 });
+export const airport = {
+  journey: plate(),
+  finale: plate(),
+  pointer: { x: 0, y: 0 },                   // mouse over the page, −1…1 (parallax; touch never writes it)
+  side: 1 as 1 | -1,                         // 1 = LTR · −1 = RTL: the light wipe follows the reading direction (footage never mirrors)
 };
 
 /**

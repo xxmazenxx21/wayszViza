@@ -4,6 +4,7 @@
   "ar": {
     "name": "استشارة التأشيرة وتقييم الملف",
     "description": "جلسة مخصصة نفهم فيها غرض سفرك ووضعك، ثم نحدد معك نوع التأشيرة المناسب ومتطلباته والخطوات المتوقعة، لتبدأ التجهيز وأنت تعرف طريقك.",
+    "short": "تحديد نوع التأشيرة المناسب لغرض سفرك وشرح متطلباته.",
     "audience": [
       "من لا يعرف نوع التأشيرة المناسب لرحلته.",
       "من يسافر لأول مرة ويريد فهم الإجراءات من البداية.",
@@ -38,6 +39,7 @@
   "en": {
     "name": "Visa Consultation & File Assessment",
     "description": "A dedicated session where we understand the purpose of your trip and your situation, then work out with you the right visa type, its requirements and the expected steps, so you start preparing knowing your way.",
+    "short": "Identifying the right visa type for the purpose of your trip and explaining its requirements.",
     "audience": [
       "People who don’t know which visa suits their trip.",
       "First-time travelers who want to understand the process from the start.",

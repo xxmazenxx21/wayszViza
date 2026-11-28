@@ -4,6 +4,7 @@
   "ar": {
     "name": "الترجمة المعتمدة وتوثيق المستندات",
     "description": "كثير من المستندات تحتاج ترجمة معتمدة أو توثيقًا قبل تقديمها للسفارة. نترجم مستنداتك ترجمة معتمدة لدى الجهات الرسمية والسفارات، ونرشدك في خطوات توثيقها وتصديقها حسب ما تطلبه وجهتك.",
+    "short": "ترجمة معتمدة لمستنداتك وتوجيه في خطوات توثيقها.",
     "audience": [
       "من يحتاج ترجمة شهادات أو عقود أو مستندات أسرية أو مالية.",
       "من يحتاج توثيق مستنداته لدى الجهات المحلية أو السفارة.",
@@ -34,6 +35,7 @@
   "en": {
     "name": "Certified Translation & Attestation",
     "description": "Many documents need a certified translation or attestation before you submit them to an embassy. We provide certified translations accepted by official bodies and embassies, and guide you through the attestation and legalization steps your destination requires.",
+    "short": "Certified translation of your documents and guidance on attesting them.",
     "audience": [
       "Anyone who needs certificates, contracts or family or financial documents translated.",
       "Those who need their documents attested with local authorities or an embassy.",

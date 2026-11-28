@@ -4,6 +4,7 @@
   "ar": {
     "name": "المساعدة في حجز موعد التقديم",
     "description": "حجز موعد التقديم أو أخذ البصمات خطوة أساسية، وقد تكون مرهقة في مواسم الذروة. نساعدك على إنشاء حسابك وحجز موعدك في الجهة المعتمدة وفق المواعيد المتاحة، ونرتب معك المستندات المطلوبة ليوم الموعد.",
+    "short": "نساعدك على حجز موعد التقديم في الجهة المعتمدة وفق المتاح.",
     "audience": [
       "من يتقدم لأول مرة ولا يعرف خطوات الحجز.",
       "من يحتاج موعدًا مرتبطًا بتاريخ سفر أو فعالية.",
@@ -36,6 +37,7 @@
   "en": {
     "name": "Appointment Booking Assistance",
     "description": "Booking your submission or biometrics appointment is an essential step, and it can be stressful in peak seasons. We help you set up your account and book your appointment with the authorized center based on available slots, and we organize the documents you need for the day with you.",
+    "short": "We help you book your submission appointment with the authorized center, subject to availability.",
     "audience": [
       "First-time applicants unsure of the booking steps.",
       "Travelers who need an appointment that fits a trip or event date.",
