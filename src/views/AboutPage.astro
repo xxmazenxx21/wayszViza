@@ -2,7 +2,7 @@
 /**
  * About Us. Skeleton: every section is a <TodoSection> carrying its copy (no design yet).
  * Sources: intro = brief part 04 intro · relation = part 03 (WaysZ) §4.4, the text written about WaysZ Visa ·
- * why = part 04 §1.1 (verbatim lead) + §1.7, points written for this page · how = part 04 §1.6 · CTA = part 04 §1.8 / §1.9.
+ * why = part 04 §1.1 (verbatim lead), points written for this page · how = part 04 §1.6 · CTA = part 04 §1.8 / §1.9.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TodoSection from '../components/TodoSection.astro';
@@ -17,7 +17,7 @@ const copy = {
   ar: {
     title: 'من نحن',
     intro: 'موقع متخصص في استشارات التأشيرات والإرشاد في إجراءاتها، لكل من يسافر للعمل أو الدراسة أو الزيارة أو الإقامة.',
-    introMore: 'نرافقك من أول سؤال عن نوع التأشيرة المناسب حتى يوم موعدك، بخطوات واضحة، وحدود معلنة لما نقدمه وما لا نضمنه.',
+    introMore: 'نرافقك من أول سؤال عن نوع التأشيرة المناسب حتى يوم موعدك، بخطوات واضحة.',
     relationTitle: 'العلاقة بين WaysZ و WaysZ Visa',
     relation: 'WaysZ Visa منصة متخصصة تابعة لـ WaysZ، تركز بالكامل على استشارات التأشيرات والإرشاد في إجراءاتها. وبينما يعرض الموقع الرئيسي خدماتنا المتنوعة، تقدم WaysZ Visa تجربة مخصصة لمن يخطط للسفر أو الدراسة أو الهجرة، وتستفيد من خبرات فريق WaysZ في الترجمة المعتمدة واستشارات السفارات والاستشارات القانونية؛ كما تدعم المشاركين الدوليين في المعارض والمؤتمرات التي ننظمها.',
     whyTitle: 'لماذا WaysZ Visa؟',
@@ -25,7 +25,6 @@ const copy = {
     why: [
       ['وضوح من البداية', 'نشرح لك نوع التأشيرة المناسب ومتطلباته وخطواته بلغة بسيطة، قبل أن تبدأ التجهيز.'],
       ['ملف مخصص لحالتك', 'قائمة مستندات تناسب وضعك وغرض سفرك، لا قائمة عامة تُعطى للجميع.'],
-      ['صراحة فيما لا نضمنه', 'خدماتنا استشارية وإرشادية فقط؛ لا نعدك بموافقة ولا بموعد، ولا نملك أي تأثير على قرار الجهة المختصة.'],
       ['خبرات WaysZ إلى جانبك', 'ترجمة معتمدة واستشارات السفارات والاستشارات القانونية عبر فريق WaysZ عند الحاجة.'],
     ],
     howTitle: 'كيف نعمل',
@@ -41,7 +40,7 @@ const copy = {
   en: {
     title: 'About us',
     intro: 'A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.',
-    introMore: 'We walk with you from your first question about the right visa to the day of your appointment, with clear steps and openly stated limits on what we offer and what we don’t guarantee.',
+    introMore: 'We walk with you from your first question about the right visa to the day of your appointment, with clear steps.',
     relationTitle: 'WaysZ and WaysZ Visa',
     relation: 'WaysZ Visa is a specialized platform of WaysZ that focuses entirely on visa consultations and guidance through visa procedures. While the main website presents our wide range of services, WaysZ Visa offers a dedicated experience for anyone planning to travel, study or immigrate, drawing on the WaysZ team’s experience in certified translation, embassy consultations and legal advice. It also supports the international participants in the exhibitions and conferences we organize.',
     whyTitle: 'Why WaysZ Visa?',
@@ -49,7 +48,6 @@ const copy = {
     why: [
       ['Clarity from the start', 'We explain the right visa type, its requirements and its steps in plain language, before you start preparing.'],
       ['A file built for your case', 'A document checklist that fits your situation and the purpose of your trip, not a generic list handed to everyone.'],
-      ['Honest about what we don’t guarantee', 'Our services are advisory and guidance only: we don’t promise an approval or an appointment, and we have no influence over the competent authority’s decision.'],
       ['WaysZ experience at your side', 'Certified translation, embassy consultations and legal advice through the WaysZ team, when you need them.'],
     ],
     howTitle: 'How we work',
@@ -77,7 +75,7 @@ const copy = {
     <p><a href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></p>
   </TodoSection>
 
-  <TodoSection ref="about.2" title="لماذا WaysZ Visa؟ — part 04 §1.1 + §1.7">
+  <TodoSection ref="about.2" title="لماذا WaysZ Visa؟ — part 04 §1.1">
     <h2>{copy.whyTitle}</h2>
     <p>{copy.whyLead}</p>
     <ul role="list">{copy.why.map(([h, p]) => <li><h3>{h}</h3><p>{p}</p></li>)}</ul>

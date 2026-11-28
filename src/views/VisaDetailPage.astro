@@ -1,8 +1,7 @@
 ---
 /**
  * Visa Service Details Template (brief part 01 «ثانيًا» §3 · part 04 §3): ONE template → one page per file in
- * src/content/visas/. Plain rendering for now (no design yet): the nine elements in the brief's order.
- * §3.9 the legal notice is fixed text from i18n (`legal`), the same on every visa page — static, never animated.
+ * src/content/visas/. Plain rendering for now (no design yet): the seven elements of brief v3 §6 in order.
  */
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -16,36 +15,30 @@ const v = entry.data[lang];
 ---
 <BaseLayout lang={lang} title={`${v.name} | ${site.name}`} description={v.description}>
   <article class="visa container stack">
-    <!-- §3.1 name · §3.2 description -->
+    <!-- §6.1 name · §6.2 description -->
     <h1>{v.name}</h1>
     <p class="lead">{v.description}</p>
 
-    <!-- §3.3 -->
+    <!-- §6.3 -->
     <section class="stack">
       <h2>{t.visa.audience}</h2>
       <ul>{v.audience.map((x) => <li>{x}</li>)}</ul>
     </section>
 
-    <!-- §3.4 -->
+    <!-- §6.4 -->
     <section class="stack">
       <h2>{t.visa.help}</h2>
       <ul>{v.help.map((x) => <li>{x}</li>)}</ul>
     </section>
 
-    <!-- §3.5 -->
+    <!-- §6.5 -->
     <section class="stack">
       <h2>{t.visa.documents}</h2>
       <ul>{v.documents.map((x) => <li>{x}</li>)}</ul>
       <p class="note">* {v.documentsNote}</p>
     </section>
 
-    <!-- §3.6 -->
-    <section class="stack">
-      <h2>{t.visa.notGuaranteed}</h2>
-      <ul>{v.notGuaranteed.map((x) => <li>{x}</li>)}</ul>
-    </section>
-
-    <!-- §3.7 -->
+    <!-- §6.6 -->
     <section class="stack">
       <h2>{t.visa.faq}</h2>
       <dl class="stack">
@@ -58,15 +51,12 @@ const v = entry.data[lang];
       </dl>
     </section>
 
-    <!-- §3.8 start-consultation band -->
+    <!-- §6.7 start-consultation band -->
     <section class="stack">
       <h2>{v.cta.title}</h2>
       <p>{v.cta.text}</p>
       <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)}>{v.cta.button}</a></p>
     </section>
-
-    <!-- §3.9 fixed legal notice -->
-    <p class="legal"><strong>{t.legal.label}</strong>{" "}{t.legal.text}</p>
   </article>
 </BaseLayout>
 
@@ -76,5 +66,4 @@ const v = entry.data[lang];
   .visa ul { list-style: disc; padding-inline-start: var(--space-5); }
   .visa dt { font-weight: var(--weight-bold); }
   .note { color: var(--color-ink-muted); font-size: var(--text-sm); }
-  .legal { margin-block-start: var(--space-7); padding: var(--space-5); border-inline-start: 4px solid var(--color-error); background: var(--color-surface); }
 </style>

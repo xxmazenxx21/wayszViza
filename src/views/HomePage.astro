@@ -17,7 +17,6 @@ import Services from './home/Services.astro';
 import Types from './home/Types.astro';
 import Steps from './home/Steps.astro';
 import Faq from './home/Faq.astro';
-import Notice from './home/Notice.astro';
 import Cta from './home/Cta.astro';
 import Main from './home/Main.astro';
 import { useTranslations, type Lang } from '../i18n';
@@ -40,7 +39,6 @@ const names = Object.fromEntries(visas.map((v) => [v.id, { ar: v.data.ar.name, e
   <Types lang={lang} names={names} />
   <Steps lang={lang} />
   <Faq lang={lang} />
-  <Notice lang={lang} />
   <Cta lang={lang} />
   <Main lang={lang} />
 </BaseLayout>

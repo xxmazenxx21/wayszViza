@@ -22,11 +22,6 @@
       "أي متطلبات وصلتك من السفارة أو مركز التقديم أو الجهة الداعية."
     ],
     "documentsNote": "لا ترسل صور مستنداتك عبر نموذج الموقع؛ سيوضح لك المستشار طريقة مشاركتها بأمان عند الحاجة.",
-    "notGuaranteed": [
-      "اكتمال الملف لا يضمن الموافقة على التأشيرة؛ فالقرار للجهة المختصة وحدها.",
-      "لا نستخرج المستندات الرسمية نيابة عنك، وصحة البيانات الواردة فيها مسؤولية صاحبها.",
-      "رسوم السفارة ومراكز التقديم وتكاليف استخراج المستندات غير مشمولة في أتعاب الاستشارة."
-    ],
     "faq": [
       { "q": "هل تصلح قائمة المستندات نفسها لكل الدول؟", "a": "لا؛ تختلف المستندات حسب الدولة ونوع التأشيرة ووضعك، لذلك نعد القائمة لحالتك تحديدًا." },
       { "q": "هل تعدّلون بيانات مستنداتي لتبدو أقوى؟", "a": "لا؛ نراجع الاكتمال والاتساق وننبهك إلى ما ينقص، لكن المستندات يجب أن تكون صحيحة وصادرة من جهاتها الرسمية." },
@@ -59,11 +54,6 @@
       "Any requirements you received from the embassy, the application center or the inviting party."
     ],
     "documentsNote": "Don’t send copies of your documents through the website form; your consultant will explain how to share them safely when necessary.",
-    "notGuaranteed": [
-      "A complete file does not guarantee visa approval; the decision belongs to the competent authority alone.",
-      "We do not obtain official documents on your behalf, and the accuracy of the information in them is the responsibility of their owner.",
-      "Embassy and application center fees, and the cost of obtaining documents, are not included in the consultation fee."
-    ],
     "faq": [
       { "q": "Does the same document checklist work for every country?", "a": "No. Documents vary by country, visa type and your situation, so we prepare the checklist for your case specifically." },
       { "q": "Will you change the details of my documents to make them look stronger?", "a": "No. We check completeness and consistency and tell you what is missing, but documents must be accurate and issued by the official bodies that issue them." },

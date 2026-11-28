@@ -23,11 +23,6 @@
       "تفاصيل أسفارك السابقة، إن طلبها النموذج."
     ],
     "documentsNote": "يُعبأ النموذج ويُرسل باسمك عبر القنوات الرسمية؛ ولا تشارك كلمات المرور أو بيانات الدخول الخاصة بحساباتك مع أي أحد.",
-    "notGuaranteed": [
-      "النموذج الصحيح لا يضمن الموافقة على التأشيرة؛ فالقرار للجهة المختصة وحدها.",
-      "لا نضمن توفر مواعيد تقديم في تاريخ معين بعد إرسال الطلب.",
-      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
-    ],
     "faq": [
       { "q": "هل تعبئون النموذج بدلًا مني؟", "a": "نرشدك ونراجع معك كل خانة، ويُقدَّم الطلب باسمك وعلى مسؤوليتك وفق إجراءات الجهة الرسمية." },
       { "q": "ماذا لو اكتشفت خطأً بعد إرسال الطلب؟", "a": "تختلف إمكانية التعديل من جهة لأخرى؛ نوضح لك الخيارات المتاحة عادةً، ولهذا ننصح دائمًا بالمراجعة قبل الإرسال." },
@@ -61,11 +56,6 @@
       "Details of your previous travel, if the form asks for them."
     ],
     "documentsNote": "The form is filled in and submitted in your name through the official channels; never share your account passwords or login details with anyone.",
-    "notGuaranteed": [
-      "A correct form does not guarantee visa approval; the decision belongs to the competent authority alone.",
-      "We do not guarantee appointment availability on a specific date after you submit the application.",
-      "Embassy and application center fees are not included in the consultation fee."
-    ],
     "faq": [
       { "q": "Do you fill in the form for me?", "a": "We guide you and review every field with you; the application is submitted in your name and under your responsibility, according to the official body’s procedures." },
       { "q": "What if I find a mistake after submitting?", "a": "Whether you can correct it differs from one authority to another. We explain the options usually available, which is why we always recommend reviewing before you submit." },

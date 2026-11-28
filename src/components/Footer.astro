@@ -50,9 +50,7 @@ const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[
     </div>
   </div>
 
-  <div class="container site-footer__legal">
-    <!-- brief part 04 §3.9: the fixed legal notice — static, never animated -->
-    <p><strong>{t.legal.label}</strong>{" "}{t.legal.text}</p>
+  <div class="container site-footer__bottom">
     <p>© {year} {site.name}. {t.footer.rights}</p>
     <!-- TODO: privacy policy + terms pages (not in the brief yet), then link them here -->
   </div>
@@ -81,7 +79,7 @@ const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[
   .site-footer ul { display: grid; gap: var(--space-2); }
   .site-footer a { color: var(--color-ink-muted); text-decoration: none; }
   .site-footer a:hover { color: var(--color-ink); }
-  .site-footer__legal {
+  .site-footer__bottom {
     margin-block-start: var(--space-8); padding-block-start: var(--space-5);
     border-block-start: 1px solid var(--color-border);
     display: grid; gap: var(--space-2);

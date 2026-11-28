@@ -23,11 +23,6 @@
       "خطاب رفض سابق، إن وُجد."
     ],
     "documentsNote": "لا ترسل صور مستنداتك قبل الجلسة؛ يكفي أن تكون المعلومات معك، وسيوضح لك المستشار ما يلزم وطريقة مشاركته بأمان عند الحاجة.",
-    "notGuaranteed": [
-      "الاستشارة لا تعني الموافقة على التأشيرة؛ فالقرار للسفارة أو الجهة المختصة وحدها.",
-      "لا نضمن ثبات المتطلبات؛ فقد تغيرها الجهات الرسمية دون إشعار مسبق.",
-      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
-    ],
     "faq": [
       { "q": "لا أعرف نوع التأشيرة المناسب، هل أبدأ بالاستشارة؟", "a": "نعم، فهذه هي البداية المناسبة. اختر «لست متأكدًا» في نموذج طلب الاستشارة، وسنحدد معك النوع الأقرب لغرض سفرك." },
       { "q": "ماذا أعرف في نهاية الاستشارة؟", "a": "نوع التأشيرة المناسب لغرض رحلتك، ومتطلباته العامة، والخطوات التالية بالترتيب." },
@@ -61,11 +56,6 @@
       "A previous refusal letter, if any."
     ],
     "documentsNote": "Don’t send copies of your documents before the session; having the information with you is enough, and your consultant will explain what is needed and how to share it safely when necessary.",
-    "notGuaranteed": [
-      "A consultation does not mean visa approval; the decision belongs to the embassy or competent authority alone.",
-      "We do not guarantee that requirements stay the same; official bodies may change them without prior notice.",
-      "Embassy and application center fees are not included in the consultation fee."
-    ],
     "faq": [
       { "q": "I don’t know which visa I need. Should I start with a consultation?", "a": "Yes, that is the right place to start. Choose “Not sure” in the consultation request form, and we will work out with you the type closest to the purpose of your trip." },
       { "q": "What will I know at the end of the consultation?", "a": "The visa type that fits the purpose of your trip, its general requirements, and the next steps in order." },

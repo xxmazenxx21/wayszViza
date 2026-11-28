@@ -114,7 +114,7 @@ shadow is its own layer.
 ### footer-landing — every page
 
 Runway centre line decelerates with the last stretch of scroll (scrubbed), threshold lights come on, the logo
-wings rise and the plane comes down onto its spot. The legal notice is never animated.
+wings rise and the plane comes down onto its spot.
 
 ### page-hero — Immigration hero (`views/immigration/Hero.astro`) · reuse for any group / inner page
 
@@ -374,16 +374,15 @@ paths they name live in the WaysZ repo) or add new scenes.
 | +       | Home · «أنواع التأشيرات» (5 categories + not sure) | Pexels photos (`visa-*.jpg`) | `data-reveal` — BUILT |
 | 1.6     | Home · help steps (4)                     | —     | `paper-steps`: the stitching becomes a sky-blue thread (DrawSVG, scrubbed), steps light — BUILT |
 | +       | Home · FAQ (5)                            | —     | `accordion` + `paper-faq` — BUILT |
-| 1.7     | Home · approval is not guaranteed         | —     | none: a static card, never animated — BUILT |
 | 1.8     | Home · start-consultation CTA             | act `paper` (finale host): the booklet returns, ribbon slides out · still `paper-finale.webp` | `paper-cta`: the «ملف جاهز» seal (DOM) lands once, the booklet bounces — BUILT |
 | 1.9     | Home · «جزء من WaysZ» (link to waysz.org) | WaysZ gate photo | `boarding-pass` reused, reversed (WaysZ Visa → WaysZ), amber via `[data-brand="main"]` — BUILT |
-| —       | Footer                                    | logo  | `footer-landing` (runway + touchdown) — BUILT (kept from WaysZ); the legal notice is never animated |
+| —       | Footer                                    | logo  | `footer-landing` (runway + touchdown) — BUILT (kept from WaysZ) |
 | 2       | Visa Services · intro (title + intro)     | act `terminal`: the floating airport of light, approach lights pulsing to the doors · still `terminal-hero(-m).webp` | `terminal-thread` (one sticky host, hero → «لست متأكدًا…») · `terminal-hero` (sticky 200lvh: words rise, text leaves, doors open, the camera glides in) — BUILT |
 | 2.1     | Visa Services · the four services         | act `terminal`: four counters wake in turn (desk + stools · sheets through an arch · kiosk fields · clock + board + seat) · stills `terminal-s1…s4.webp` | `terminal-rests` (`data-rests=counter`, sticky 480lvh, 4 rests → `counter` / `counterAct`, panels by opacity) — BUILT |
 | 2.2     | Visa Services · five categories + «لست متأكدًا…» | act `terminal`: sideways dolly along five gate arches, each a portal onto a glimpse (library · stage · city · two houses + ribbon · dawn balloons), then the "i" desk · stills `terminal-g1…g5 · info.webp` | `terminal-rests` (`data-rests=gate`, sticky 580lvh, 5 rests → `gate` / `gateAct`) · `terminal-info` — BUILT |
 | +       | Visa Services · FAQ (4)                   | —     | `accordion` + `terminal-faq` (no canvas) — BUILT |
 | 2.4     | Visa Services · request-consultation CTA  | act `terminal` (finale host): the end window, a plane of light rolls and lifts off · still `terminal-finale.webp` | `terminal-cta` (sticky 230lvh → `takeoff`; the call rises as the plane lifts; magnetic button) — BUILT |
-| 3       | Visa detail template (nine elements) — 5 categories + 4 services | TODO | TODO (§3.9 legal notice: static, never animated) |
+| 3       | Visa detail template (seven elements + optional types / destinations / benefits) — 9 categories + 9 services | TODO | TODO |
 | —       | About · intro · WaysZ & WaysZ Visa · why · how we work · CTA | TODO | TODO                                  |
 | —       | Contact · intro · contact items · quick buttons · consultation card | TODO | TODO                            |
 | 4       | Consultation · intro + form + §4.8 warning | TODO | TODO (`form-flight` is the toolkit's form scene)               |

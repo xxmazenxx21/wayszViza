@@ -23,11 +23,6 @@
       "صور شخصية بالمواصفات المطلوبة، إن طُلبت."
     ],
     "documentsNote": "القائمة استرشادية؛ اتبع دائمًا التعليمات الواردة في خطاب الموعد أو على موقع السفارة أو مركز التقديم.",
-    "notGuaranteed": [
-      "الاستعداد الجيد لا يضمن الموافقة؛ فالقرار للموظف المختص والجهة الرسمية وحدها.",
-      "لا نحجز المواعيد نيابة عنك، ولا نضمن توفرها في تاريخ معين.",
-      "لا نحضر الموعد أو المقابلة نيابة عنك أو معك."
-    ],
     "faq": [
       { "q": "هل تعطونني إجابات جاهزة أحفظها؟", "a": "لا؛ ننصحك بأن تجيب بصدق وبكلماتك، ونساعدك على ترتيب أفكارك والتعبير عن وضعك بوضوح." },
       { "q": "ماذا أفعل إذا لم أعرف إجابة سؤال؟", "a": "الأفضل أن تقول ذلك بهدوء وصدق بدلًا من التخمين، ونتدرب معك على مواقف مماثلة." },
@@ -61,11 +56,6 @@
       "Personal photos to the required specifications, if requested."
     ],
     "documentsNote": "This list is for guidance only; always follow the instructions in your appointment letter or on the website of the embassy or application center.",
-    "notGuaranteed": [
-      "Good preparation does not guarantee approval; the decision belongs to the competent officer and the official body alone.",
-      "We do not book appointments on your behalf, and we do not guarantee their availability on a specific date.",
-      "We do not attend the appointment or interview for you or with you."
-    ],
     "faq": [
       { "q": "Will you give me ready-made answers to memorize?", "a": "No. We advise you to answer honestly and in your own words, and we help you organize your thoughts and explain your situation clearly." },
       { "q": "What should I do if I don’t know the answer to a question?", "a": "It is better to say so calmly and honestly than to guess, and we practice similar situations with you." },

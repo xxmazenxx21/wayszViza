@@ -281,7 +281,7 @@ export default scene;
    `scroll` listeners. (Canvas drawing for sequences happens inside the ScrollTrigger `onUpdate`.)
 10. Selectors scoped to the scene root. No global selectors in scenes.
 11. `markers: true` only while developing.
-12. Text and buttons readable in their final state within ~1.2s. Legal notices never animated.
+12. Text and buttons readable in their final state within ~1.2s.
     The LCP text (hero lead + buttons) is NEVER hidden by JS/CSS: stage only the headline (`data-intro`
     on the `<h1>`), move the rest with transforms only. Never `autoAlpha: 0` on the largest text block.
 13. Images: animate a wrapper, not the `<img>`. Always width/height. Below-the-fold media lazy.

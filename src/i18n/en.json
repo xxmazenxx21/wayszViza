@@ -38,12 +38,7 @@
     "audience": "Who is it for?",
     "help": "How we help",
     "documents": "Documents and information needed to start",
-    "notGuaranteed": "What we don’t guarantee",
     "faq": "Frequently asked questions"
-  },
-  "legal": {
-    "label": "Legal notice:",
-    "text": "WaysZ Visa is a private consultancy and is not affiliated with any embassy, consulate or government body. The decision to grant a visa rests solely with the competent authority. The information on this page is for guidance only, and requirements may change without prior notice."
   },
   "footer": {
     "about": "A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.",
@@ -80,7 +75,7 @@
     },
     "about": {
       "title": "About us | WaysZ Visa",
-      "description": "WaysZ Visa is a specialized platform of WaysZ for visa consultations and guidance through visa procedures — with clear steps and full honesty about what we offer and what we don’t guarantee."
+      "description": "WaysZ Visa is a specialized platform of WaysZ for visa consultations and guidance through visa procedures, with clear steps."
     },
     "contact": {
       "title": "Contact us | WaysZ Visa",

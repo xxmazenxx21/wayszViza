@@ -1,7 +1,6 @@
 /**
  * Footer §1.8 — "Landed". As the footer comes into view the runway centre line streaks past and slows to a
  * stop (scrubbed), the threshold lights come on, the logo wings rise and the plane touches down in its place.
- * The legal notice is never animated.
  */
 import { gsap } from 'gsap';
 import type { Scene } from '../index';

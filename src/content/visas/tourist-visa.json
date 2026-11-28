@@ -24,11 +24,6 @@
       "تأمين سفر، إن كان مطلوبًا."
     ],
     "documentsNote": "القائمة استرشادية؛ وتختلف المستندات المطلوبة عادةً حسب الدولة ووضعك المهني والمالي.",
-    "notGuaranteed": [
-      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
-      "لا نحجز تذاكر الطيران أو الفنادق نيابة عنك، ولا نضمن توفر مواعيد في تاريخ معين.",
-      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
-    ],
     "faq": [
       { "q": "هل أحجز تذاكر الطيران والفندق قبل التقديم؟", "a": "تطلب بعض الدول حجزًا مبدئيًا، لكن يُنصح عادةً بعدم دفع مبالغ غير قابلة للاسترداد قبل صدور القرار. نوضح لك ما يُطلب في حالتك." },
       { "q": "لماذا يهتم موظف التأشيرات بما يثبت عودتي؟", "a": "لأن تأشيرة الزيارة مؤقتة؛ لذلك تساعد مستندات مثل خطاب العمل أو الدراسة والالتزامات العائلية على توضيح أنك ستعود بعد رحلتك." },
@@ -63,11 +58,6 @@
       "Travel insurance, if required."
     ],
     "documentsNote": "This list is for guidance only; the documents usually requested vary by country and by your professional and financial situation.",
-    "notGuaranteed": [
-      "We do not guarantee visa approval or how long it takes to be issued.",
-      "We do not book flights or hotels on your behalf, and we do not guarantee appointment availability on a specific date.",
-      "Embassy and application center fees are not included in the consultation fee."
-    ],
     "faq": [
       { "q": "Should I book my flight and hotel before applying?", "a": "Some countries ask for a provisional booking, but it is usually advised not to pay non-refundable amounts before the decision. We explain what is requested in your case." },
       { "q": "Why does the visa officer care about proof that I will return?", "a": "Because a visit visa is temporary. Documents such as a letter from your employer or school, and your family commitments, help show that you will return after your trip." },

@@ -30,10 +30,8 @@ license) and gets a row in `docs/media-credits.md`.
 - No airline liveries or logos on planes, no visible brands/logos on products or screens.
 - No identifiable faces in hero roles or in a way that suggests they endorse WaysZ / WaysZ Visa (prefer hands, backs,
   silhouettes, wide shots).
-- No recognizable national passport (seal, cover text, country), flags or country names: use generic travel
-  shots (airplane window, terminal, a blank boarding pass, documents seen from far with no readable text).
-  On WaysZ Visa this matters most: never a real passport, visa sticker, embassy building, flag or readable
-  personal data, and nothing that suggests a link to an embassy or government body.
+- Country names and destination imagery (cities, landmarks, landscapes of the countries we serve) are welcome.
+  Avoid third-party logos and brand marks (airlines, companies) in hero media.
 - Check EVERY file frame by frame before optimizing (contact sheet:
   `ffmpeg -i in.mp4 -vf "fps=1,scale=640:-2,tile=3x3" -frames:v 1 sheet.jpg`). Real airports mean real liveries.
   A problem file is cropped, graded, blurred or skipped — and the decision is written in the credits log.
@@ -59,8 +57,8 @@ Names: lowercase, hyphens, English: `hero-sky`, `visa-consultation`, `visa-docum
 
 ## 4 · Shot list (search terms) — download into media-inbox/
 
-Generic travel and paperwork shots only (rules in §2: no passports, visa stickers, flags, embassy buildings or country /
-city names; no readable personal data; faces never in hero roles). Slots follow the brief (part 04 of WaysZ Visa).
+Travel, paperwork and destination shots (rules in §2: no third-party logos or brand marks in hero media; faces
+never in hero roles). Slots follow the brief (part 04 of WaysZ Visa).
 
 | Slot               | Type         | Search terms (Pexels / Mixkit / Unsplash)                                                      | Target           |
 | ------------------ | ------------ | ---------------------------------------------------------------------------------------------- | ---------------- |

@@ -18,7 +18,6 @@ the light; navy (`--color-bg` in `.theme-dark`) is the night. Nothing cartoonish
 - The client's text is used 100%, in the brief's order (part 04, Home). Additions (visa types, FAQ) are built on
   the brief and written in our own words.
 - 3D never carries text. Every word is DOM over a scrim. The booklet carries only the WaysZ mark (never mirrored).
-- §1.7 «تنبيه مهم» is never animated, never hidden: a plain static card.
 - Same scene for every visitor (quality policy). Phones get a portrait framing, not less.
 - css tier (no WebGL2 / context lost) and no JS: our own stills of the paper world (`scripts/render-paper-still.mjs`);
   every GSAP scene still runs and the page is complete without the canvas.
@@ -28,7 +27,7 @@ the light; navy (`--color-bg` in `.theme-dark`) is the night. Nothing cartoonish
 Hosts: ONE sticky stage host (`.paper__stage`) behind hero → §1.1 → §1.2–1.5 (the legal-thread pattern:
 `scenes/paper-thread.ts` measures the sections → `bridge.paper.shot`). A second host in §1.8 (`.pcta__stage`)
 for the reprise; the stage hands the one canvas to whichever host is most visible. Between them the canvas is
-gone (visa types, steps, FAQ, the notice): the stage stops drawing.
+gone (visa types, steps, FAQ): the stage stops drawing.
 
 | § | Section | DOM | 3D (act `paper`) | Motion | css tier / no JS |
 | --- | --- | --- | --- | --- | --- |
@@ -39,7 +38,7 @@ gone (visa types, steps, FAQ, the notice): the stage stops drawing.
 | + | «أنواع التأشيرات»: five category cards (photo + the brief's §2.2 description + «تناسب:» line) → detail pages, + «لست متأكدًا من نوع تأشيرتك؟» → /consultation/ | cards | — (canvas gone) | `data-reveal` | same |
 | 1.6 | «خطوات بسيطة نحو ملف جاهز»: four steps | HTML steps | — | the booklet's stitching becomes a sky-blue thread drawn through the steps with the scroll (SVG, DrawSVG); each step lights when the thread reaches it | full thread drawn |
 | + | FAQ (5 questions) | accordion | — | `accordion` + rows arrive once | all answers open |
-| 1.7 | «تنبيه مهم: …» whole | a calm, static card | — (canvas gone) | **none** | same |
+| ~~1.7~~ | removed by the client (brief v3 §4): the FAQ flows straight into §1.8 | | | | |
 | 1.8 | «جاهز لبدء رحلتك؟» + text + «ابدأ استشارتك» (magnetic) | text, the «ملف جاهز» seal (SVG, DOM) | the booklet returns closed; a sky-blue ribbon bookmark slides out; the seal lands once (small impact: the booklet bounces) | `paper-cta` | still `paper-finale.webp`; seal shown |
 | 1.9 | «جزء من WaysZ» + text + «زيارة موقع WaysZ» → site.mainSite | the WaysZ boarding pass reversed: «WaysZ Visa → WaysZ», stamp in WaysZ amber (semantic tokens under `[data-brand="main"]`) | — | `boarding-pass` (reused as is) | same |
 | — | Footer | | | `footer-landing` | |

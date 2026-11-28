@@ -24,11 +24,6 @@
       "تأمين صحي إن كان مطلوبًا."
     ],
     "documentsNote": "القائمة استرشادية وتختلف حسب الدولة والمؤسسة التعليمية ووضع المتقدم.",
-    "notGuaranteed": [
-      "لا نضمن الموافقة على التأشيرة أو مدة صدورها.",
-      "لا نضمن القبول الجامعي أو توفر مواعيد في تاريخ معين.",
-      "رسوم السفارة ومراكز التقديم غير مشمولة في أتعاب الاستشارة."
-    ],
     "faq": [
       { "q": "هل تقدمون الطلب نيابة عني؟", "a": "خدمتنا استشارية وإرشادية؛ نساعدك على تجهيز ملفك وفهم الخطوات، ويتم التقديم وفق إجراءات السفارة." },
       { "q": "سبق رفض طلبي، هل يمكنكم مساعدتي؟", "a": "نعم، نراجع خطاب الرفض وملفك السابق ونرشدك إلى نقاط التحسين قبل إعادة التقديم." },
@@ -63,11 +58,6 @@
       "Health insurance, if required."
     ],
     "documentsNote": "This list is for guidance only and varies by country, educational institution and the applicant’s situation.",
-    "notGuaranteed": [
-      "We do not guarantee visa approval or how long it takes to be issued.",
-      "We do not guarantee university admission or appointment availability on a specific date.",
-      "Embassy and application center fees are not included in the consultation fee."
-    ],
     "faq": [
       { "q": "Do you submit the application on my behalf?", "a": "Our service is advisory and guidance only: we help you prepare your file and understand the steps, and the application is submitted according to the embassy’s procedures." },
       { "q": "My application was refused before. Can you help me?", "a": "Yes. We review the refusal letter and your previous file, and guide you to the points to improve before you reapply." },
