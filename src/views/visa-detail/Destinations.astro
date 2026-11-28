@@ -1,0 +1,106 @@
+---
+/**
+ * Visa Service Details — 2c «وجهات نعمل عليها» (optional, brief v3 §6 · the lists of §7b), the signature of the page.
+ * Scene: motion/scenes/atlas-destinations.ts. One sticky screen with a rest per country: the camera of the act `atlas`
+ * flies from country to country in the list's order and the name lights up here as it arrives (the big name above the
+ * list repeats it for the eye only — aria-hidden). Every name is a link: the consultation form with the category and
+ * the country prefilled. Labelled lists (the investment page: citizenship · residency) are two legs.
+ * css tier: the still globe behind, the names still light up in turn. No JS: a plain list of links.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+export interface Leg { label?: string; countries: { code: string; name: string; href: string }[] }
+interface Props { lang: Lang; legs: Leg[]; still: string }
+const { lang, legs, still } = Astro.props;
+const t = useTranslations(lang);
+const all = legs.flatMap((l) => l.countries);
+---
+<section class="adest" id="destinations" data-scene="atlas-destinations" data-shot="destinations" data-waypoint aria-labelledby="adest-title" style={`--n: ${all.length}`}>
+  <div class="adest__sticky">
+    <div class="adest__still atlas-still" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 1023px)" srcset={`${still}-m.webp`} width="780" height="1688" />
+        <img src={`${still}.webp`} alt="" width="2400" height="1000" loading="lazy" decoding="async" />
+      </picture>
+    </div>
+    <div class="adest__scrim" aria-hidden="true"></div>
+    <div class="adest__in container">
+      <div class="adest__panel">
+        <h2 class="adest__title" id="adest-title">{t.visa.destinations}</h2>
+        <p class="adest__hint" id="adest-hint">{t.visa.destinationsHint}</p>
+        <p class="adest__now" aria-hidden="true">{all.map((c) => <span>{c.name}</span>)}</p>
+        {legs.map((leg) => (
+          <div class="adest__leg">
+            {leg.label && <h3 class="adest__leg-name">{leg.label}</h3>}
+            <ul class="adest__list" role="list">
+              {leg.countries.map((c) => (
+                <li class="adest__stop"><a href={c.href} aria-describedby="adest-hint">{c.name}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .adest { position: relative; }
+  .adest__sticky { position: relative; overflow: clip; }
+  .adest__still, .adest__scrim { display: none; }
+  .adest__in { position: relative; z-index: 2; padding-block: var(--section-y); }
+  .adest__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .adest__hint { margin-block-start: var(--space-3); max-width: 40ch; color: var(--color-ink-muted); line-height: 1.75; }
+  .adest__now { display: none; }
+  .adest__leg { margin-block-start: var(--space-6); }
+  .adest__leg-name { font-size: var(--text-lg); line-height: 1.4; transition: color 0.4s var(--ease-out); }
+  .adest__list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-start: var(--space-3); }
+  .adest__stop a {
+    display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-4); border-radius: var(--radius-pill);
+    color: color-mix(in srgb, var(--color-ink) 84%, transparent); text-decoration: none; font-size: var(--text-sm);
+    background: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    border: 1px solid var(--color-border);
+    transition: color 0.35s var(--ease-out), background-color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+  }
+  .adest__stop a:hover { color: var(--color-ink); border-color: color-mix(in srgb, var(--color-accent) 60%, transparent); }
+  .adest__stop:global(.is-on) a {
+    color: var(--color-on-accent); background: var(--color-accent-strong); border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent), 0 0 28px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+
+  /* with JS: one sticky screen, a rest per country (the act flies the globe on the free side / the upper part) */
+  :global(.js) .adest { height: calc(100vh + (var(--n) + 0.5) * 24vh); height: calc(100lvh + (var(--n) + 0.5) * 24lvh); }
+  :global(.js) .adest__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; }
+  :global(.js) .adest__in { height: 100%; display: grid; align-content: end; padding-block: calc(76px + var(--space-5)) var(--space-6); }
+  :global(.js) .adest__still { display: block; position: absolute; inset: 0; pointer-events: none; }
+  .adest__still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  /* feathered at the top: the scrim never draws a line across the globe while the section scrolls in */
+  :global(.js) .adest__scrim {
+    display: block; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    -webkit-mask: linear-gradient(to bottom, transparent, black 24%); mask: linear-gradient(to bottom, transparent, black 24%);
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 95%, transparent) 0%, color-mix(in srgb, var(--color-bg) 84%, transparent) 50%, transparent 74%);
+  }
+  :global(.js) .adest__now { display: grid; margin-block-start: var(--space-4); min-height: 1.3em; font-size: clamp(1.9rem, 1.2rem + 3vw, 3.4rem); font-weight: var(--weight-bold); line-height: 1.3; color: var(--color-ink); }
+  .adest__now span { grid-area: 1 / 1; opacity: 0; translate: 0 0.4em; transition: opacity 0.45s var(--ease-out), translate 0.6s var(--ease-out); }
+  .adest__now span:global(.is-on) { opacity: 1; translate: 0 0; }
+  :global(.js) .adest__leg { margin-block-start: var(--space-4); }
+  :global(.js) .adest__leg-name { color: var(--color-ink-muted); }
+  .adest__leg:global(.is-on) .adest__leg-name { color: var(--color-link); }
+  @media (min-width: 1024px) {
+    :global(.js) .adest { height: calc(100vh + (var(--n) + 0.5) * 30vh); height: calc(100lvh + (var(--n) + 0.5) * 30lvh); }
+    :global(.js) .adest__in { align-content: center; }
+    .adest__panel { max-width: 34rem; }
+    .adest__still img { object-position: 0% 50%; }
+    :global([dir='rtl']) .adest__still img { object-position: 100% 50%; }
+    :global(.js) .adest__scrim { -webkit-mask: linear-gradient(to bottom, transparent, black 24%, black 76%, transparent); mask: linear-gradient(to bottom, transparent, black 24%, black 76%, transparent); }
+    :global(.js) .adest__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 46%, transparent) 40%, transparent 60%); }
+    :global([dir='rtl'].js) .adest__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 46%, transparent) 40%, transparent 60%); }
+  }
+  @media (max-width: 639px) {
+    :global(.js) .adest__in { padding-block-end: calc(var(--space-5) + 64px); }   /* clear of the floating WhatsApp button */
+    :global(.js) .adest__hint { font-size: var(--text-sm); }
+    :global(.js) .adest__now { margin-block-start: var(--space-2); font-size: clamp(1.6rem, 1.1rem + 3vw, 2rem); }
+    .adest__stop a { min-height: 38px; padding-inline: var(--space-3); }
+    :global(.js) .adest__list { gap: 6px; }
+  }
+</style>

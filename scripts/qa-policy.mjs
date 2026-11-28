@@ -9,6 +9,7 @@
  * scenes ran (.is-scrub / split words), no console errors. Reports the render-scale range it saw.
  *   npm run build && npm run preview -- --port 4322
  *   node scripts/qa-policy.mjs [--base=http://localhost:4322] [--only=fragment] [--cpu=4] [--fps=30]
+ *                              [--pages=visa-services/work-visa/,visa-services/refusal-review/]   (instead of the default pages)
  */
 import { launch } from './qa-browser.mjs';
 
@@ -18,12 +19,15 @@ const only = args.find((a) => a.startsWith('--only='))?.slice(7);
 const cpu = Number(args.find((a) => a.startsWith('--cpu='))?.slice(6) ?? 4);
 const fps = Number(args.find((a) => a.startsWith('--fps='))?.slice(6) ?? 30);
 
-const pages = [
-  ['home', ''],
-  ['visa-services', 'visa-services/'],
-  ['student-visa', 'visa-services/student-visa/'],
-  ['consultation', 'consultation/'],
-];
+const pagesArg = args.find((a) => a.startsWith('--pages='))?.slice(8);
+const pages = pagesArg
+  ? pagesArg.split(',').map((path) => [path.split('/').filter(Boolean).pop() ?? 'home', path])
+  : [
+    ['home', ''],
+    ['visa-services', 'visa-services/'],
+    ['student-visa', 'visa-services/student-visa/'],
+    ['consultation', 'consultation/'],
+  ];
 const devices = [
   { name: 'desktop', viewport: { width: 1440, height: 900 } },
   { name: 'phone', viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },

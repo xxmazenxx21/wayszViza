@@ -1,0 +1,53 @@
+---
+/**
+ * Visa Service Details — 7 the start-consultation call (brief v3 §6: the page's own title, text and button).
+ * Scene: motion/scenes/atlas-cta.ts. In its own stage host (act `atlas`, mode finale): the limb of the night Earth is the
+ * horizon, and a plane of light climbs from Egypt along a high route over it toward the page's first destination while
+ * the call rises — the take-off. The button opens the consultation form with the page prefilled. Magnetic.
+ * css tier / no JS: our still of that horizon.
+ */
+interface Props {
+  cta: { title: string; text: string; button: string };
+  consult: string;
+  world: { dest: string; legs: string; mood: string };
+}
+const { cta, consult, world } = Astro.props;
+---
+<section class="acta theme-dark" data-scene="atlas-cta" data-waypoint aria-labelledby="acta-title">
+  <div class="acta__sticky">
+    <div class="acta__stage stage-host" aria-hidden="true" data-dest={world.dest} data-legs={world.legs} data-mood={world.mood}></div>
+    <div class="acta__still atlas-still" aria-hidden="true">
+      <img src="/media/img/atlas-finale.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+    </div>
+    <div class="acta__scrim" aria-hidden="true"></div>
+    <div class="acta__in container">
+      <h2 class="acta__title" id="acta-title">{cta.title}</h2>
+      <p class="acta__lead">{cta.text}</p>
+      <a class="btn btn--accent acta__btn" href={consult} data-magnetic>{cta.button}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .acta { position: relative; background: var(--color-bg); }
+  .acta__sticky { position: relative; overflow: clip; min-height: 100vh; min-height: 100svh; display: grid; align-items: start; }
+  :global(.js) .acta { height: 230vh; height: 230lvh; }
+  :global(.js) .acta__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; }
+  .acta__stage, .acta__still, .acta__scrim { position: absolute; inset: 0; }
+  .acta__still img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 100%; }
+  html:not(.js) .acta__stage { display: none; }
+  /* the text sits in the sky above the horizon */
+  .acta__scrim { pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--color-bg) 86%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 46%, transparent 64%); }
+  @media (min-width: 1024px) {
+    .acta__sticky { align-items: center; }
+    .acta__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 36%, transparent) 40%, transparent 58%); }
+    :global([dir='rtl']) .acta__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 36%, transparent) 40%, transparent 58%); }
+  }
+  .acta__in { position: relative; z-index: 2; padding-block: calc(76px + var(--space-7)) var(--section-y); }
+  @media (min-width: 1024px) { .acta__in { padding-block: var(--section-y); translate: 0 -12vh; } }
+  .acta__title { font-size: clamp(2.2rem, 1.2rem + 4vw, 5rem); line-height: 1.12; max-width: 15ch; }
+  :global([dir='rtl']) .acta__title { line-height: 1.36; }
+  .acta__lead { margin-block-start: var(--space-5); max-width: 38ch; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  .acta__btn { margin-block-start: var(--space-6); min-height: 56px; padding-inline: var(--space-7); font-size: var(--text-base); }
+  @media (max-width: 639px) { .acta__lead { font-size: var(--text-base); } }
+</style>

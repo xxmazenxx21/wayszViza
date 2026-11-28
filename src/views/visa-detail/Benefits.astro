@@ -1,0 +1,51 @@
+---
+/**
+ * Visa Service Details — 2d «مزايا شائعة» (optional, brief v3 §6: the investment programs). Scene: atlas-rise.
+ * A calm grid over the whole map (act `atlas`, shot "benefits": every destination lit, the globe veiled for reading);
+ * each benefit has its own drawn icon (our inline SVG, drawn once with GSAP DrawSVG).
+ * ICONS follow the order of `benefits` in src/content/visas/investment-residency-citizenship.json (the only page that has
+ * them): family security · wider mobility · an investment with value · business · a plan for the future.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; items: { title: string; text: string }[] }
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+const ICONS = [
+  'M24 5l15 6v12c0 10-7 17-15 20-8-3-15-10-15-20V11z M17 27l7-6 7 6 M19.5 25v8h9v-8',                       // a shield over a home
+  'M24 6a18 18 0 1 0 0.01 0 M6.5 19h35 M6.5 29h35 M24 6c-6 5-6 31 0 36 M24 6c6 5 6 31 0 36',                    // the globe
+  'M7 41h34 M11 41V22l13-10 13 10v19 M20 41v-9h8v9 M30 9l6-4 M33 5h3v3',                                         // a property that grows
+  'M7 17h34v22H7z M18 17v-5h12v5 M7 27h34 M22 27v3h4v-3',                                                       // a briefcase
+  'M5 35h38 M13 35a11 11 0 0 1 22 0 M24 13v5 M12.5 18.5l3 3 M35.5 18.5l-3 3 M10 41h28',                          // a sunrise
+];
+---
+<section class="abens" data-scene="atlas-rise" data-shot="benefits" data-waypoint aria-labelledby="abens-title">
+  <div class="container">
+    <h2 class="abens__title" id="abens-title" data-rise-title>{t.visa.benefits}</h2>
+    <ul class="abens__grid" role="list">
+      {items.map((b, i) => (
+        <li class="aben" data-rise-item>
+          <svg class="aben__icon" data-icon viewBox="0 0 48 48" width="48" height="48" aria-hidden="true"><path d={ICONS[i % ICONS.length]} /></svg>
+          <h3 class="aben__name">{b.title}</h3>
+          <p class="aben__text">{b.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .abens { position: relative; display: grid; align-items: center; min-height: 100vh; min-height: 100lvh; padding-block: var(--section-y); }
+  .abens__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; text-align: center; }
+  .abens__grid { display: grid; gap: var(--space-5); margin-block-start: var(--space-7); grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .abens__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .abens__grid { grid-template-columns: repeat(6, 1fr); } .aben { grid-column: span 2; } .aben:nth-child(4) { grid-column: 2 / span 2; } }
+  .aben {
+    padding: var(--space-6); border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    border: 1px solid var(--color-border);
+  }
+  .aben__icon { display: block; fill: none; stroke: var(--color-accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .aben__name { margin-block-start: var(--space-4); font-size: var(--text-xl); line-height: 1.4; }
+  .aben__text { margin-block-start: var(--space-2); color: color-mix(in srgb, var(--color-ink) 82%, transparent); line-height: 1.8; }
+</style>

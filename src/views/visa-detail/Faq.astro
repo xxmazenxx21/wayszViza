@@ -1,0 +1,49 @@
+---
+/**
+ * Visa Service Details — 6 «أسئلة شائعة» (brief v3 §6, the page's own questions). The accordion pattern of Home / Visa
+ * Services: scenes `accordion` (open / close) + atlas-rise (closed answers `inert`, the heading by words, rows arrive
+ * once). No canvas here. No JS: every answer open.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; items: { q: string; a: string }[] }
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="afaq section theme-dark" data-scene="accordion atlas-rise" data-waypoint aria-labelledby="afaq-title">
+  <div class="container afaq__in">
+    <h2 class="afaq__title" id="afaq-title" data-rise-title>{t.visa.faq}</h2>
+    <div class="afaq__list">
+      {items.map((f, i) => (
+        <div class="faq__item" data-rise-item>
+          <h3 class="afaq__q">
+            <button type="button" aria-expanded="false" aria-controls={`afaq-${i}`}>
+              <span>{f.q}</span>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            </button>
+          </h3>
+          <div class="faq__panel" id={`afaq-${i}`}><p class="afaq__a">{f.a}</p></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .afaq { background: var(--color-bg); }
+  .afaq__in { display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) { .afaq__in { grid-template-columns: 1fr 2fr; align-items: start; } }
+  .afaq__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .afaq__list { border-block-start: 1px solid var(--color-border); }
+  .afaq :global(.faq__item) { border-block-end: 1px solid var(--color-border); }
+  .afaq__q { font: inherit; }
+  .afaq__q button {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+    width: 100%; padding-block: var(--space-5); text-align: start; color: inherit;
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg); line-height: 1.5;
+  }
+  .afaq__q button:hover { color: var(--color-link); }
+  .afaq__q svg { flex: none; fill: none; stroke: var(--color-link); stroke-width: 1.8; stroke-linecap: round; transition: rotate var(--dur-base) var(--ease-out); }
+  .afaq__q button[aria-expanded='true'] svg { rotate: 45deg; }
+  .afaq__a { padding-block-end: var(--space-5); color: var(--color-ink-muted); line-height: 1.85; max-width: 62ch; }
+</style>

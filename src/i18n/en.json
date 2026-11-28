@@ -50,7 +50,17 @@
     "faq": "Frequently asked questions",
     "types": "Common types",
     "destinations": "Destinations we work with",
-    "benefits": "Common benefits"
+    "benefits": "Common benefits",
+    "crumb": "Breadcrumb",
+    "destinationsHint": "Choose your destination and we’ll open your consultation request with it.",
+    "destCountFew": "{n} destinations",
+    "destCountMany": "{n} destinations",
+    "seeDestinations": "See the destinations",
+    "fileReady": "File ready",
+    "related": "Services that complete your file",
+    "more": "Continue your journey",
+    "prev": "Previous",
+    "next": "Next"
   },
   "footer": {
     "about": "A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.",

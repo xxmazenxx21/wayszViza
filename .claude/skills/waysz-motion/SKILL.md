@@ -84,7 +84,12 @@ even there every GSAP scene, Lenis and the cursor run. Smoothness = the stage's 
   `terminal` (WaysZ Visa Services: an airport floating over a cloud sea, drawn in light — ONE glowing-line mesh of
   screen-space ribbons, ONE frosted-panel mesh, ONE instanced sprite mesh with SDF shapes, dust, a full-screen sky ray pass
   with the cloud sea; per-vertex light groups / motions / gate portals; all additive, no texture, no render target;
-  6 draw calls, 9 in the finale; two hosts like `paper`).
+  6 draw calls, 9 in the finale; two hosts like `paper`),
+  `atlas` (WaysZ Visa detail template «خريطة الرحلة»: the night Earth of `globe` / `explore` with ONE page's destinations lit,
+  analytic routes from Egypt merged into one mesh, an instanced sprite mesh riding them, a camera pose per journey section
+  and a flight country to country; moods per category group through scene parameters only; the finale makes the limb a
+  horizon and flies a plane of light over it. The world is built once per page and shared by its two hosts; 10 draw calls,
+  13 in the finale).
 - **Hand-off between acts**: the canvas moves into the host of the act that is MOST visible. While it paints
   there the host has `.is-drawing` — hide the section's DOM media with CSS on that class
   (`.host.is-drawing ~ .card .media { visibility: hidden }`); when the canvas leaves, the DOM version is back.
@@ -199,6 +204,8 @@ WaysZ Visa Home («رحلة الورق», act `paper`): paper-thread · paper-he
 paper-faq · paper-cta (+ accordion, boarding-pass, footer-landing). Contract: `reference.md` → «paper».
 WaysZ Visa Services («مطار الضوء», act `terminal`): terminal-thread · terminal-hero · terminal-rests · terminal-info ·
 terminal-faq · terminal-cta (+ accordion, footer-landing). Contract: `reference.md` → «terminal».
+WaysZ Visa detail template («خريطة الرحلة», act `atlas`, 18 pages): atlas-thread · atlas-hero · atlas-destinations · atlas-rise ·
+atlas-steps · atlas-docs · atlas-cta (+ accordion, footer-landing). Contract: `reference.md` → «atlas».
 Built for the WaysZ pages (names below = the WaysZ page that uses them; all available here as lazy chunks):
 Home: preloader · hero-takeoff · image-sequence · areas · media-reveal · globe-route · approach ·
 boarding-pass · footer-landing (every page). Immigration page: page-hero · journey-route · dossier ·

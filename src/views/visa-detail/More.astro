@@ -1,0 +1,90 @@
+---
+/**
+ * Visa Service Details — «تابع رحلتك» after the call: on category pages three services that complete a file of that
+ * group (chosen per group in VisaDetailPage.astro), then the previous / next page inside the same kind (categories show
+ * their group). Scene: atlas-rise. No canvas.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+export interface Related { name: string; text: string; href: string }
+export interface Neighbour { name: string; href: string; group?: string }
+interface Props { lang: Lang; related: Related[]; prev: Neighbour; next: Neighbour }
+const { lang, related, prev, next } = Astro.props;
+const t = useTranslations(lang);
+const arrow = 'M5 12h14m-6-6 6 6-6 6';                    // forward (flips in RTL with .icon-dir)
+const back = 'M19 12H5m6-6-6 6 6 6';
+---
+<section class="amore section theme-dark" data-scene="atlas-rise" data-waypoint aria-labelledby="amore-title">
+  <div class="container">
+    <h2 class="amore__title" id="amore-title" data-rise-title>{t.visa.more}</h2>
+    {related.length > 0 && (
+      <>
+        <h3 class="amore__sub">{t.visa.related}</h3>
+        <ul class="amore__cards" role="list">
+          {related.map((r) => (
+            <li class="amore__card" data-rise-item>
+              <a href={r.href}>
+                <span class="amore__name">{r.name}</span>
+                <span class="amore__text">{r.text}</span>
+                <span class="amore__go">
+                  {t.cta.details}
+                  <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={arrow} /></svg>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+    <nav class="amore__nav" aria-labelledby="amore-title">
+      <a class="amore__step" href={prev.href} rel="prev" data-rise-item>
+        <span class="amore__dir">
+          <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={back} /></svg>
+          {t.visa.prev}{prev.group && <span class="amore__group">· {prev.group}</span>}
+        </span>
+        <span class="amore__step-name">{prev.name}</span>
+      </a>
+      <a class="amore__step amore__step--next" href={next.href} rel="next" data-rise-item>
+        <span class="amore__dir">
+          {next.group && <span class="amore__group">{next.group} ·</span>}{t.visa.next}
+          <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d={arrow} /></svg>
+        </span>
+        <span class="amore__step-name">{next.name}</span>
+      </a>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .amore { background: var(--color-bg); border-block-start: 1px solid var(--color-border); }
+  .amore__title { font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem); line-height: 1.3; }
+  .amore__sub { margin-block-start: var(--space-6); font-size: var(--text-lg); color: var(--color-ink-muted); }
+  .amore__cards { display: grid; gap: var(--space-5); margin-block-start: var(--space-4); }
+  @media (min-width: 768px) { .amore__cards { grid-template-columns: repeat(3, 1fr); } }
+  .amore__card a {
+    display: flex; flex-direction: column; gap: var(--space-3); height: 100%; padding: var(--space-6); border-radius: var(--radius-lg);
+    color: inherit; text-decoration: none; background: var(--color-bg-alt); border: 1px solid var(--color-border);
+    transition: border-color var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
+  }
+  .amore__card a:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); background: var(--color-surface); }
+  .amore__name { font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1.4; }
+  .amore__text { color: var(--color-ink-muted); line-height: 1.75; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .amore__go { display: inline-flex; align-items: center; gap: var(--space-2); margin-block-start: auto; padding-block-start: var(--space-2); color: var(--color-link); font-weight: var(--weight-bold); }
+  .amore__go svg, .amore__dir svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: translate var(--dur-base) var(--ease-out); }
+  .amore__card a:hover .amore__go svg { translate: 5px 0; }
+  :global([dir='rtl']) .amore__card a:hover .amore__go svg { translate: -5px 0; }
+
+  .amore__nav { display: grid; gap: var(--space-4); margin-block-start: var(--space-7); }
+  @media (min-width: 768px) { .amore__nav { grid-template-columns: 1fr 1fr; } }
+  .amore__step {
+    display: grid; gap: var(--space-2); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg);
+    color: inherit; text-decoration: none; border: 1px solid var(--color-border);
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .amore__step:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .amore__step--next { text-align: end; }
+  .amore__dir { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-link); font-weight: var(--weight-bold); }
+  .amore__step--next .amore__dir { justify-content: flex-end; }
+  .amore__group { color: var(--color-ink-muted); font-weight: var(--weight-regular); }
+  .amore__step-name { font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1.4; }
+</style>

@@ -1,0 +1,51 @@
+---
+/**
+ * Visa Service Details — 3 «لمن تناسب؟» (brief v3 §6). Scene: atlas-rise. The last screen over the globe (act `atlas`,
+ * shot "audience": the map steps back, the routes keep their light): the heading and three large lines, each marked
+ * like a point on the map. Text on the reading side, over a scrim.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; items: string[] }
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="aaud" data-scene="atlas-rise" data-shot="audience" data-waypoint aria-labelledby="aaud-title">
+  <div class="aaud__scrim" aria-hidden="true"></div>
+  <div class="container aaud__in">
+    <h2 class="aaud__title" id="aaud-title" data-rise-title>{t.visa.audience}</h2>
+    <ul class="aaud__list" role="list">
+      {items.map((x) => (
+        <li class="aaud__item" data-rise-item>
+          <span class="aaud__mark" aria-hidden="true"></span>
+          <p>{x}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .aaud { position: relative; display: grid; align-items: center; min-height: 100vh; min-height: 100lvh; padding-block: var(--section-y); }
+  .aaud__scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    -webkit-mask: linear-gradient(to bottom, transparent, black 22%); mask: linear-gradient(to bottom, transparent, black 22%);
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 92%, transparent) 0%, color-mix(in srgb, var(--color-bg) 62%, transparent) 55%, transparent 85%);
+  }
+  @media (min-width: 1024px) {
+    .aaud__scrim { -webkit-mask: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent); mask: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent); }
+    .aaud__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 42%, transparent 62%); }
+    :global([dir='rtl']) .aaud__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 84%, transparent) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 42%, transparent 62%); }
+  }
+  .aaud__in { position: relative; z-index: 2; align-self: end; }
+  @media (min-width: 1024px) { .aaud__in { align-self: center; } }
+  .aaud__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .aaud__list { display: grid; gap: var(--space-5); margin-block-start: var(--space-6); max-width: 36rem; }
+  .aaud__item { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4); align-items: baseline; padding-block-end: var(--space-5); border-block-end: 1px solid var(--color-border); }
+  .aaud__item p { font-size: var(--text-xl); line-height: 1.55; }
+  :global([dir='rtl']) .aaud__item p { line-height: 1.75; }
+  /* a point on the map: ring + dot in the accent */
+  .aaud__mark { position: relative; inline-size: 18px; block-size: 18px; border-radius: 50%; border: 1.5px solid var(--color-accent); translate: 0 0.15em; }
+  .aaud__mark::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent); }
+  @media (max-width: 639px) { .aaud__item p { font-size: var(--text-lg); } }
+</style>

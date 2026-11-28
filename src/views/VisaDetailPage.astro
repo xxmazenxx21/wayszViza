@@ -1,105 +1,117 @@
 ---
 /**
- * Visa Service Details Template (brief part 01 «ثانيًا» §3 · part 04 §3): ONE template → one page per file in
- * src/content/visas/. Plain rendering for now (no design yet — step 2): the seven elements of brief v3 §6 in order,
- * plus the optional 2b «أنواع شائعة» · 2c «وجهات نعمل عليها» · 2d «مزايا شائعة» where the page has them.
- * 2c: each country opens the consultation form with the category and the country prefilled.
+ * Visa Service Details — «خريطة الرحلة» / "The Route Map" (docs/visa-detail-creative-treatment.md).
+ * ONE template → one page per file in src/content/visas/ (9 categories + 9 services, brief v3 §2 · §3 · §6), AR + EN.
+ * Content: the JSON as it is, in the order of brief v3 §6 — hero (name + description) → 2b types → 2c destinations →
+ * 2d benefits → «لمن تناسب؟» → «كيف نساعد؟» → documents + note → FAQ → the call; optional blocks simply don't render.
+ * Then «تابع رحلتك»: 3 related services (category pages) + previous / next inside the same kind.
+ *
+ * ONE stage host (`.atlas__stage`, CSS sticky) behind hero → «لمن تناسب؟»: the act `atlas` (scene atlas-thread) draws the
+ * night Earth with the page's destinations, the routes from Egypt and the flight from country to country; the sections
+ * scroll over it. The call has its own host for the finale (scene atlas-cta). Each category group has its own mood (scene
+ * parameters only); services get the calmer «network» world (every destination of brief §1.6b, none singled out).
+ * Links: every call → /consultation/?type=<slug> (services: ?service=<slug>); each country → …&destination=<ISO>.
+ * css tier / no JS: our own stills of the globe (scripts/render-atlas-still.mjs) — the page is complete without them.
  */
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from './visa-detail/Hero.astro';
+import Types from './visa-detail/Types.astro';
+import Destinations, { type Leg } from './visa-detail/Destinations.astro';
+import Benefits from './visa-detail/Benefits.astro';
+import Audience from './visa-detail/Audience.astro';
+import Help from './visa-detail/Help.astro';
+import Documents from './visa-detail/Documents.astro';
+import Faq from './visa-detail/Faq.astro';
+import Cta from './visa-detail/Cta.astro';
+import More, { type Neighbour, type Related } from './visa-detail/More.astro';
 import { site } from '../lib/site';
 import { countries } from '../lib/countries';
+import { regions } from '../data/destinations';
 import { localizePath, useTranslations, type Lang } from '../i18n';
+import type { VisaGroup } from '../content.config';
 
 interface Props { lang: Lang; entry: CollectionEntry<'visas'> }
 const { lang, entry } = Astro.props;
 const t = useTranslations(lang);
-const v = entry.data[lang];
-const consult = (code: string) => `${localizePath('/consultation/', lang)}?type=${entry.id}&destination=${code}`;
+const d = entry.data;
+const v = d[lang];
+const isCategory = d.kind === 'category';
+const form = localizePath('/consultation/', lang);
+const consult = `${form}?${isCategory ? 'type' : 'service'}=${entry.id}`;
+const page = (slug: string) => localizePath(`/visa-services/${slug}/`, lang);
+
+// 2c — the legs (one list, or citizenship + residency) with each country's prefilled consultation link
+const legs: Leg[] = (v.destinations ?? []).map((leg) => ({
+  label: leg.label,
+  countries: countries(leg.countries, lang).map((c) => ({ ...c, href: `${consult}&destination=${c.code}` })),
+}));
+const dest = legs.flatMap((l) => l.countries.map((c) => c.code));
+const starts = legs.map((_, i) => legs.slice(0, i).reduce((n, l) => n + l.countries.length, 0));
+// the world of the act: the page's destinations + the mood of its group · services: every destination of §1.6b
+const world = dest.length
+  ? { dest: dest.join(','), legs: starts.join(','), mood: isCategory ? d.group : 'network' }
+  : { dest: regions.flatMap((r) => r.countries).join(','), legs: '0', mood: 'network' };
+const still = `/media/img/atlas-${isCategory && dest.length ? entry.id : 'network'}`;
+
+// hero: where the visitor is (breadcrumb + group), the count of destinations (categories)
+const kicker = isCategory ? `${t.nav.categories} · ${t.nav.groups[d.group]}` : t.nav.services;
+const count = dest.length
+  ? (lang === 'ar' && dest.length >= 3 && dest.length <= 10 ? t.visa.destCountFew : t.visa.destCountMany).replace('{n}', String(dest.length))
+  : undefined;
+const more = dest.length ? { href: '#destinations', label: t.visa.seeDestinations } : { href: '#help', label: t.visa.help };
+
+// «تابع رحلتك» — previous / next inside the same kind (in order; categories run through their groups), and on category
+// pages three services that complete a file of that group
+const all = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
+const same = all.filter((e) => e.data.kind === d.kind);
+const at = same.findIndex((e) => e.id === entry.id);
+const neighbour = (e: (typeof all)[number]): Neighbour => ({
+  name: e.data[lang].name, href: page(e.id), group: e.data.kind === 'category' ? t.nav.groups[e.data.group] : undefined,
+});
+const prev = neighbour(same[(at - 1 + same.length) % same.length]);
+const next = neighbour(same[(at + 1) % same.length]);
+const RELATED: Record<VisaGroup, string[]> = {
+  visit: ['travel-bookings', 'appointment-booking', 'refusal-review'],                  // itinerary, the slot, a second try
+  study: ['document-readiness', 'translation-attestation', 'appointment-preparation'],  // admission papers, diplomas, the interview
+  work: ['translation-attestation', 'application-guidance', 'appointment-preparation'], // certificates, the cover letter, the interview
+  residence: ['visa-consultation', 'translation-attestation', 'document-readiness'],    // the path first, then a long file
+};
+const related: Related[] = isCategory
+  ? RELATED[d.group].map((slug) => all.find((e) => e.id === slug)).filter((e): e is (typeof all)[number] => !!e)
+    .map((e) => ({ name: e.data[lang].name, text: e.data[lang].description, href: page(e.id) }))
+  : [];
 ---
-<BaseLayout lang={lang} title={`${v.name} | ${site.name}`} description={v.description}>
-  <article class="visa container stack">
-    <!-- §6.1 name · §6.2 description -->
-    <h1>{v.name}</h1>
-    <p class="lead">{v.description}</p>
-
-    <!-- §6 2b common types (optional) -->
-    {v.types && (
-      <section class="stack">
-        <h2>{t.visa.types}</h2>
-        <ul>{v.types.map((x) => <li>{x.title && <><strong>{x.title}:</strong>{' '}</>}{x.text}</li>)}</ul>
-      </section>
-    )}
-
-    <!-- §6 2c destinations we work with (optional) — country names from Intl, links prefill the form -->
-    {v.destinations && (
-      <section class="stack">
-        <h2>{t.visa.destinations}</h2>
-        {v.destinations.map((d) => (
-          <div class="stack">
-            {d.label && <h3>{d.label}</h3>}
-            <ul class="countries" role="list">
-              {countries(d.countries, lang).map((c) => <li><a href={consult(c.code)}>{c.name}</a></li>)}
-            </ul>
-          </div>
-        ))}
-      </section>
-    )}
-
-    <!-- §6 2d common benefits (optional) -->
-    {v.benefits && (
-      <section class="stack">
-        <h2>{t.visa.benefits}</h2>
-        <ul>{v.benefits.map((x) => <li><strong>{x.title}:</strong>{' '}{x.text}</li>)}</ul>
-      </section>
-    )}
-
-    <!-- §6.3 -->
-    <section class="stack">
-      <h2>{t.visa.audience}</h2>
-      <ul>{v.audience.map((x) => <li>{x}</li>)}</ul>
-    </section>
-
-    <!-- §6.4 -->
-    <section class="stack">
-      <h2>{t.visa.help}</h2>
-      <ul>{v.help.map((x) => <li>{x}</li>)}</ul>
-    </section>
-
-    <!-- §6.5 -->
-    <section class="stack">
-      <h2>{t.visa.documents}</h2>
-      <ul>{v.documents.map((x) => <li>{x}</li>)}</ul>
-      <p class="note">* {v.documentsNote}</p>
-    </section>
-
-    <!-- §6.6 -->
-    <section class="stack">
-      <h2>{t.visa.faq}</h2>
-      <dl class="stack">
-        {v.faq.map((f) => (
-          <div>
-            <dt>{f.q}</dt>
-            <dd>{f.a}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-
-    <!-- §6.7 start-consultation band -->
-    <section class="stack">
-      <h2>{v.cta.title}</h2>
-      <p>{v.cta.text}</p>
-      <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)}>{v.cta.button}</a></p>
-    </section>
-  </article>
+<BaseLayout lang={lang} title={`${v.name} | ${site.name}`} description={v.description} headerOverlay>
+  <div class="atlas theme-dark">
+    <div class="atlas__stage stage-host" data-scene="atlas-thread" aria-hidden="true" data-dest={world.dest} data-legs={world.legs} data-mood={world.mood}></div>
+    <div class="atlas__body">
+      <Hero lang={lang} name={v.name} description={v.description} kicker={kicker} consult={consult} more={more} count={count} still={still} />
+      {v.types && <Types lang={lang} items={v.types} />}
+      {legs.length > 0 && <Destinations lang={lang} legs={legs} still={still} />}
+      {v.benefits && <Benefits lang={lang} items={v.benefits} />}
+      <Audience lang={lang} items={v.audience} />
+    </div>
+  </div>
+  <Help lang={lang} items={v.help} />
+  <Documents lang={lang} items={v.documents} note={v.documentsNote} />
+  <Faq lang={lang} items={v.faq} />
+  <Cta cta={v.cta} consult={consult} world={world} />
+  <More lang={lang} related={related} prev={prev} next={next} />
 </BaseLayout>
 
-<style>
-  .visa { padding-block: 160px var(--section-y); }
-  .visa section { padding-block-start: var(--space-6); }
-  .visa ul { list-style: disc; padding-inline-start: var(--space-5); }
-  .visa dt { font-weight: var(--weight-bold); }
-  .visa .countries { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
-  .note { color: var(--color-ink-muted); font-size: var(--text-sm); }
+<style is:global>
+  /* One stage host for hero → «لمن تناسب؟»: it sticks to the screen while the sections scroll over it. */
+  .atlas { position: relative; background: var(--color-bg); }
+  .atlas__stage { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; }
+  .atlas__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
+  /* without JS there is no canvas: the sections simply follow each other (the hero keeps its still) */
+  html:not(.js) .atlas__stage { display: none; }
+  html:not(.js) .atlas__body { margin-block-start: 0; }
+  /* our stills of the globe (css tier, no JS) step aside while the canvas paints */
+  .atlas-still { transition: opacity 0.9s var(--ease-out); }
+  .atlas__stage.is-drawing ~ .atlas__body .atlas-still,
+  .acta__stage.is-drawing ~ .atlas-still { opacity: 0; }
+  /* dev: re-rendering the stills (scripts/render-atlas-still.mjs) */
+  .is-poster .atlas__body, .is-poster .acta__in, .is-poster .acta__scrim, .is-poster .acta .atlas-still { visibility: hidden; }
 </style>

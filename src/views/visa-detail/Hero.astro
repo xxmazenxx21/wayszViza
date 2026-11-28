@@ -1,0 +1,101 @@
+---
+/**
+ * Visa Service Details — hero (brief v3 §6: 1 the name · 2 the description). Scene: motion/scenes/atlas-hero.ts.
+ * Breadcrumb back to /visa-services/, where the page sits (group of categories · our services), the name (words rise:
+ * data-intro on the h1 only), the description (the LCP — never hidden), the call and a second link to the page's own
+ * signature block. Behind it the act `atlas` turns the night Earth: the page's countries glow, routes rise from Egypt.
+ * css tier / no JS: our still of that globe — full screen, so the text stays the largest paint. The wide still is a
+ * panorama with the globe in the middle: `object-position` puts the globe on the free side in both directions
+ * (a map never mirrors).
+ */
+import { localizePath, useTranslations, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang; name: string; description: string; kicker: string; consult: string;
+  more: { href: string; label: string }; count?: string; still: string;
+}
+const { lang, name, description, kicker, consult, more, count, still } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="ahero" data-scene="atlas-hero" data-shot="hero" data-waypoint aria-labelledby="ahero-title">
+  <div class="ahero__sticky">
+    <div class="ahero__still atlas-still" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 1023px)" srcset={`${still}-m.webp`} width="780" height="1688" />
+        <img src={`${still}.webp`} alt="" width="2400" height="1000" decoding="async" fetchpriority="high" />
+      </picture>
+    </div>
+    <div class="ahero__scrim" aria-hidden="true"></div>
+    <div class="ahero__content container">
+      <nav class="ahero__crumb" aria-label={t.visa.crumb}>
+        <ol role="list">
+          <li><a href={localizePath('/visa-services/', lang)}>{t.nav.visaServices}</a></li>
+          <li aria-current="page">{name}</li>
+        </ol>
+      </nav>
+      <p class="ahero__kicker">{kicker}</p>
+      <h1 class="ahero__title" id="ahero-title" data-intro>{name}</h1>
+      <p class="ahero__lead">{description}</p>
+      <div class="ahero__actions">
+        <a class="btn btn--accent ahero__btn" href={consult} data-magnetic>{t.cta.start}</a>
+        <a class="link-arrow ahero__more" href={more.href}>
+          {more.label}
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      {count && (
+        <p class="ahero__count">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c-3 3-3 14 0 17M12 3.5c3 3 3 14 0 17" /></svg>
+          {count}
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ahero { position: relative; }
+  .ahero__sticky { position: relative; overflow: clip; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; }
+  :global(.js) .ahero { height: 200vh; height: 200lvh; }
+  :global(.js) .ahero__sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; min-height: 34rem; }
+  :global(.js) .ahero__content { padding-block-end: calc(100lvh - 100svh + var(--space-8)); }
+
+  .ahero__still { position: absolute; inset: 0; pointer-events: none; }
+  .ahero__still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .ahero__scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 95%, transparent) 0%, color-mix(in srgb, var(--color-bg) 72%, transparent) 42%, transparent 70%);
+  }
+  @media (min-width: 1024px) {
+    .ahero__sticky { align-items: center; }
+    .ahero__still img { object-position: 0% 50%; }
+    :global([dir='rtl']) .ahero__still img { object-position: 100% 50%; }
+    .ahero__scrim { background: linear-gradient(to right, color-mix(in srgb, var(--color-bg) 88%, transparent) 0%, color-mix(in srgb, var(--color-bg) 52%, transparent) 38%, transparent 62%); }
+    .ahero__scrim { -webkit-mask: linear-gradient(to top, transparent, black 20%); mask: linear-gradient(to top, transparent, black 20%); }
+    :global([dir='rtl']) .ahero__scrim { background: linear-gradient(to left, color-mix(in srgb, var(--color-bg) 88%, transparent) 0%, color-mix(in srgb, var(--color-bg) 52%, transparent) 38%, transparent 62%); }
+  }
+
+  .ahero__content { position: relative; z-index: 2; padding-block: calc(76px + var(--space-7)) var(--space-8); }
+  .ahero__crumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .ahero__crumb li + li::before { content: '/'; margin-inline-end: var(--space-2); opacity: 0.6; }
+  .ahero__crumb a { color: var(--color-link); text-decoration: none; }
+  .ahero__crumb a:hover { text-decoration: underline; }
+  .ahero__crumb [aria-current] { color: color-mix(in srgb, var(--color-ink) 80%, transparent); }
+  .ahero__kicker { margin-block-start: var(--space-6); font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-link); }
+  .ahero__title {
+    margin-block-start: var(--space-3); max-width: 15ch;
+    font-size: clamp(2.5rem, 1.1rem + 5.2vw, 6rem); line-height: 1.05; letter-spacing: -0.02em;
+  }
+  :global([dir='rtl']) .ahero__title { letter-spacing: 0; line-height: 1.3; }
+  .ahero__lead { margin-block-start: var(--space-5); max-width: 46ch; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 90%, transparent); }
+  .ahero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-block-start: var(--space-6); }
+  .ahero__btn { min-height: 54px; padding-inline: var(--space-6); }
+  .ahero__more { color: var(--color-link); font-weight: var(--weight-bold); text-decoration: none; }
+  .ahero__more:hover svg { translate: 0 4px; }
+  .ahero__count { display: inline-flex; align-items: center; gap: var(--space-2); margin-block-start: var(--space-6); font-size: var(--text-sm); color: var(--color-ink-muted); }
+  .ahero__count svg { fill: none; stroke: var(--color-accent); stroke-width: 1.5; }
+  @media (max-width: 639px) {
+    .ahero__lead { font-size: var(--text-base); line-height: 1.75; }
+    .ahero__kicker { margin-block-start: var(--space-5); }
+  }
+</style>

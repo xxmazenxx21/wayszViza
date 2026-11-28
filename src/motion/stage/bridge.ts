@@ -191,3 +191,36 @@ export const terminal = {
   compact: false,                            // small / portrait screens: wider lens, the subject in the upper part
   poster: '' as TerminalPoster,              // dev only (?terminal=hero|s1…s4|g1…g5|info|finale): a still for the css tier
 };
+
+/**
+ * WaysZ Visa — the Visa Service Details template «خريطة الرحلة» / "The Route Map" (docs/visa-detail-creative-treatment.md).
+ * Written by the scenes atlas-thread · atlas-hero · atlas-destinations · atlas-cta; read by acts/atlas.ts (two instances:
+ * the 'journey' host behind hero → «لمن تناسب؟» and the 'finale' host of the call). The journey sections are optional
+ * (types · destinations · benefits exist only where the page has them), so the thread hands the act their NAMES.
+ */
+export type AtlasShot = 'hero' | 'types' | 'destinations' | 'benefits' | 'audience';
+export type AtlasPoster = '' | 'hero' | 'finale';
+/** the page's world: the four groups of categories (brief v3 §2) · 'network' = a service page (no destinations of its own) */
+export type AtlasMood = 'visit' | 'study' | 'work' | 'residence' | 'network';
+export interface AtlasConfig {
+  dest: string[];                            // ISO codes in page order (the legs one after the other)
+  legs: number[];                            // index where each leg starts ([0] = one list · [0, 7] = citizenship, then residency)
+  mood: AtlasMood;
+}
+/** both stage hosts carry the page's world as data attributes: data-dest="DE,FR" data-legs="0" data-mood="visit" */
+export const readAtlasConfig = (host: HTMLElement): AtlasConfig => ({
+  dest: (host.dataset.dest ?? '').split(',').filter(Boolean),
+  legs: (host.dataset.legs ?? '0').split(',').map(Number),
+  mood: (host.dataset.mood ?? 'network') as AtlasMood,
+});
+export const atlas = {
+  shots: [] as AtlasShot[],                  // the journey sections of this page, in page order
+  shot: 0,                                   // section index + progress inside it (0…shots.length) → the camera
+  push: 0,                                   // hero: 0…1 — the text leaves, the camera leans in
+  stop: -1,                                  // destinations: position along the list (0…n−1, fractions = flying) · −1 = outside
+  takeoff: 0,                                // finale: 0…1 — a plane of light climbs from Egypt over the horizon
+  pointer: { x: 0, y: 0 },                   // mouse over the page, −1…1 (a breath of the globe; touch never writes it)
+  side: 1 as 1 | -1,                         // 1 = LTR (text on the left, globe on the right) · −1 = RTL (mirrored layout, never the map)
+  compact: false,                            // small / portrait screens: the globe holds the upper part of the screen
+  poster: '' as AtlasPoster,                 // dev only (?atlas=hero|finale): a still for the css tier
+};

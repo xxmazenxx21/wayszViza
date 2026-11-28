@@ -27,10 +27,15 @@ requests) — open the link once and replace the note with the contributor's nam
 | public/media/img/terminal-s1…s4 · g1…g5 · info (.webp)       | our own renders of the four counters, the five gates and the information desk (`?terminal=s1…s4 · g1…g5 · info`) | WaysZ Visa | — | 2026-11-22 | css tier / no JS of Visa Services §2.1 · §2.2 · «لست متأكدًا…»: 1000×1000 each (18–29 KB), loaded lazily |
 | public/media/img/terminal-finale.webp                        | our own render of the end window and the runway (`?terminal=finale`)                  | WaysZ Visa            | —                      | 2026-11-22 | css tier / no JS of Visa Services §2.4: 1000×1000 (13 KB), loaded lazily |
 | public/media/img/paper-finale.webp                          | our own render of the closed booklet with its ribbon (`?paper=finale`)               | WaysZ Visa            | —                      | 2026-11-21 | css tier / no JS of Home §1.8: 1100×1100 (16 KB), loaded lazily |
+| public/media/img/atlas-<slug>.webp · atlas-<slug>-m.webp (9 categories) | our own renders of the night globe with each category's destinations and routes (act `atlas`, `scripts/render-atlas-still.mjs`, `?atlas=hero`) | WaysZ Visa | — | 2026-11-28 | css tier / no JS of the visa detail hero (and behind the destinations list): 2400×1000 panorama (globe in the middle) + 780×1688 phone |
+| public/media/img/atlas-network.webp · atlas-network-m.webp | our own render of the «network» globe of the service pages (`?atlas=hero` on a service page) | WaysZ Visa | — | 2026-11-28 | css tier / no JS of the nine service pages |
+| public/media/img/atlas-finale.webp                          | our own render of the horizon and the take-off (`?atlas=finale`)                       | WaysZ Visa            | —                      | 2026-11-28 | css tier / no JS of the call on every visa detail page: 1600×1000 |
 
 Astro generates the responsive WebP files of `src/assets/media/*` at build time (`dist/_astro/`).
 
 The first four rows are files the kept WaysZ toolkit uses (rows copied from the WaysZ credits log). The paper world of
 the Home page (act `paper`) is drawn at runtime from our own vector drawings: it ships no image, model or texture file. The same holds for the airport of light of the Visa Services page (act `terminal`):
-primitives built in code, sprite shapes drawn by the shader, no texture at all.
+primitives built in code, sprite shapes drawn by the shader, no texture at all. The route map of the visa detail
+template (act `atlas`) reuses the two files of the first rows (the night Earth and the Natural Earth borders): no new
+download.
 Unsplash now answers scripted downloads with a browser check, so new photos came from Pexels (direct CDN files).

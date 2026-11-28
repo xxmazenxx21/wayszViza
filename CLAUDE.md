@@ -130,8 +130,9 @@ wayszViza/
 ├─ docs/brief/                    WaysZ-Visa-Brief-v3.md (CURRENT brief) · WaysZ-Website-Brief-v2.pdf (original)
 ├─ docs/visa-services-creative-treatment.md  Visa Services concept «مطار الضوء» + storyboard + budgets
 ├─ docs/home-creative-treatment.md  Home concept «رحلة الورق» + storyboard + budgets
+├─ docs/visa-detail-creative-treatment.md  Visa detail template «خريطة الرحلة» + storyboard + budgets
 ├─ scripts/                       Playwright QA: qa-shots · qa-policy · qa-weight · qa-fps (+ qa-browser: shared launch)
-│                                 data build: build-borders (globe borders of the explore act) · render-paper-still (Home stills) · render-terminal-still (Visa Services stills)
+│                                 data build: build-borders (globe borders of the explore / atlas acts) · render-paper-still (Home stills) · render-terminal-still (Visa Services stills) · render-atlas-still (visa detail stills)
 ├─ docs/media-credits.md          one row per media file we ship (source, author, license)
 ├─ media-inbox/                   RAW downloads before optimizing — gitignored, never shipped
 ├─ public/
@@ -155,12 +156,13 @@ wayszViza/
    ├─ motion/                     index.ts · config.ts · smooth-scroll.ts · globals/ · scenes/ (the whole WaysZ toolkit:
    │  │                           unused scenes are lazy chunks and cost nothing)
    │  ├─ code-glyphs.ts           decorative code blocks: split into characters, measure where each one sits
-   │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (paper — the Visa Home · terminal — Visa Services · flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
+   │  └─ stage/                   3D layer: stage.ts (renderer + render scale) · tier.ts (WebGL or css) · bridge.ts · acts/ (paper — the Visa Home · terminal — Visa Services · atlas — the visa detail template · flight · wipe · globe · explore · glyphs · justice · gala · sky) · shaders/
    ├─ pages/                      THIN wrappers only (AR at /, EN under /en/)
    ├─ styles/                     tokens.css (identical to WaysZ's) · base.css
    └─ views/                      real page content: HomePage · VisaServicesPage · VisaDetailPage · AssessmentPage ·
                                   ConsultationPage · AboutPage · ContactPage · PrivacyPage · TermsPage · NotFoundPage ·
-                                  MotionLab · home/ (one file per Home section) · visa-services/ (one file per Visa Services section)
+                                  MotionLab · home/ (one file per Home section) · visa-services/ (one file per Visa Services section) ·
+                                  visa-detail/ (one file per section of the visa detail template)
 ```
 
 ## Pages & languages

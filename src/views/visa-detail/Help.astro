@@ -1,0 +1,68 @@
+---
+/**
+ * Visa Service Details — 4 «كيف نساعد؟» (brief v3 §6). Scene: atlas-steps. The help items ARE a sequence: a short
+ * numbered route. A line of light fills with the scroll and a point of light rides its head; each step lights when the
+ * light reaches its number. Wide screens: the heading stays beside the route (CSS sticky). No JS: the whole route lit.
+ */
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; items: string[] }
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="ahelp section theme-dark" id="help" data-scene="atlas-steps" data-waypoint aria-labelledby="ahelp-title">
+  <div class="container ahelp__in">
+    <div class="ahelp__side">
+      <h2 class="ahelp__title" id="ahelp-title">{t.visa.help}</h2>
+    </div>
+    <div class="ahelp__route">
+      <div class="ahelp__line" aria-hidden="true"><span class="ahelp__fill"></span><span class="ahelp__spark"></span></div>
+      <ol class="ahelp__list" role="list">
+        {items.map((x, i) => (
+          <li class="ahelp__step">
+            <span class="ahelp__num" aria-hidden="true">{i + 1}</span>
+            <p class="ahelp__text">{x}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ahelp { position: relative; background: var(--color-bg); }
+  .ahelp__in { display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) {
+    .ahelp__in { grid-template-columns: 5fr 7fr; align-items: start; }
+    .ahelp__side { position: sticky; top: calc(76px + var(--space-6)); }
+  }
+  .ahelp__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  .ahelp__route { position: relative; padding-inline-start: 84px; }
+  .ahelp__line { position: absolute; inset-block: 26px; inset-inline-start: 25px; width: 2px; background: color-mix(in srgb, var(--color-ink) 16%, transparent); }
+  .ahelp__fill { position: absolute; inset: 0; background: var(--color-accent); box-shadow: 0 0 10px color-mix(in srgb, var(--color-accent) 70%, transparent); }
+  :global(.js) .ahelp__fill { clip-path: inset(0 0 100% 0); }
+  .ahelp__spark {
+    position: absolute; top: 0; inset-inline-start: -7px; width: 16px; height: 16px; margin-block-start: -8px; border-radius: 50%;
+    background: var(--color-ink); box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 50%, transparent), 0 0 24px 6px var(--color-accent);
+    opacity: 0; transition: opacity 0.3s var(--ease-out);
+  }
+  .ahelp__spark:global(.is-on) { opacity: 1; }
+  .ahelp__list { display: grid; gap: var(--space-7); }
+  .ahelp__step { position: relative; min-height: 52px; }
+  .ahelp__num {
+    position: absolute; top: 0; inset-inline-start: -84px; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg);
+    background: var(--color-bg); border: 2px solid color-mix(in srgb, var(--color-ink) 28%, transparent);
+    transition: background-color 0.5s var(--ease-out), border-color 0.5s var(--ease-out), color 0.5s var(--ease-out), scale 0.5s var(--ease-out);
+  }
+  .ahelp__step:global(.is-on) .ahelp__num, :global(html:not(.js)) .ahelp__num { background: var(--color-accent-strong); border-color: var(--color-accent); color: var(--color-on-accent); scale: 1.06; }
+  .ahelp__text { padding-block-start: 10px; font-size: var(--text-lg); line-height: 1.8; color: color-mix(in srgb, var(--color-ink) 88%, transparent); transition: color 0.5s var(--ease-out); }
+  .ahelp__step:global(.is-on) .ahelp__text { color: var(--color-ink); }
+  @media (max-width: 639px) {
+    .ahelp__route { padding-inline-start: 64px; }
+    .ahelp__line { inset-inline-start: 20px; inset-block: 21px; }
+    .ahelp__num { inset-inline-start: -64px; width: 42px; height: 42px; font-size: var(--text-base); }
+    .ahelp__text { font-size: var(--text-base); padding-block-start: 7px; }
+    .ahelp__list { gap: var(--space-6); }
+  }
+</style>

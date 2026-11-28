@@ -339,6 +339,47 @@ starts from exactly it), `sky-all` (css tier: behind the hero once the title set
   hands always turn clockwise.
 - css tier / no JS: stills from `scripts/render-terminal-still.mjs` (`?terminal=hero|s1…s4|g1…g5|info|finale`).
 
+### atlas — WaysZ Visa Service Details «خريطة الرحلة» (act `atlas`, scenes atlas-thread · atlas-hero · atlas-destinations · atlas-rise · atlas-steps · atlas-docs · atlas-cta)
+
+```html
+<div class="atlas theme-dark">
+  <div class="atlas__stage stage-host" data-scene="atlas-thread" aria-hidden="true"
+       data-dest="DE,FR,…" data-legs="0" data-mood="visit|study|work|residence|network"></div>   <!-- ONE sticky host -->
+  <div class="atlas__body">                                                        <!-- margin-top: -100lvh -->
+    <section data-scene="atlas-hero" data-shot="hero">…</section>
+    <section data-scene="atlas-rise" data-rise="stage" data-shot="types">…</section>   <!-- optional -->
+    <section data-scene="atlas-destinations" data-shot="destinations">…</section>      <!-- optional -->
+    <section data-scene="atlas-rise" data-shot="benefits">…</section>                  <!-- optional -->
+    <section data-scene="atlas-rise" data-shot="audience">…</section>
+  </div>
+</div>
+<section data-scene="atlas-steps">…</section> <section data-scene="atlas-docs">…</section>
+<section data-scene="accordion atlas-rise">…</section>                                 <!-- no canvas -->
+<section class="acta" data-scene="atlas-cta"><div class="acta__stage stage-host" data-dest… ></div>…</section>   <!-- finale host -->
+<section data-scene="atlas-rise">…</section>                                            <!-- «تابع رحلتك» -->
+```
+
+- `createAtlasAct(host, borders, config, 'journey' | 'finale')` — one act, two hosts. The WORLD (map, land mask, borders,
+  the page's fills / outlines / routes / sprites) is built once per page and shared (reference-counted); the finale act is
+  added in idle time after the stage boots. Config from the hosts' data attributes (`readAtlasConfig` in bridge.ts);
+  services: every destination of brief §1.6b in the `network` mood.
+- Bridge `atlas`: `shots` (names of the journey sections this page has — optional blocks skip their poses) · `shot`
+  (index + progress, from atlas-thread) · `push` 0…1 (hero) · `stop` (destinations: 0…n−1, fractions = flying) ·
+  `takeoff` 0…1 (finale) · `pointer` · `side` · `compact` · `poster` (`?atlas=hero|finale`).
+- Camera poses: hero (globe on the free side, slow drift) · types (the planet rises behind the cards, veiled) ·
+  destinations (slerp of the facing between countries, a step back on long hops / between legs, closer for small
+  countries) · benefits (the whole map behind the grid, veiled) · audience (steps back, then fades to plain night as the
+  host leaves). Finale: a frame built so Egypt sits on the near cap and the route to the first destination leaves the
+  horizon on a curve away from the text; the horizon line is placed from the globe's projected radius.
+- Moods: scene parameters only (sun side / strength, city lights, atmosphere, route height / speed, pulses, drift, stars).
+- Measured: 10 draw calls (journey), 9 (network), 13 (finale). The routes are analytic: the sprite shader rides the same
+  curve and the head of each route's own pulse. No depth buffer: everything over the sphere fades behind the horizon.
+- Destinations DOM: chips are links (consultation prefilled with the category and the country), `.is-on` = the visited
+  one (colour only, every name readable); the big name above the list is aria-hidden. A focused chip scrolls to its rest.
+- css tier / no JS: stills from `scripts/render-atlas-still.mjs` (`atlas-<slug>(-m)` per category, `atlas-network(-m)`,
+  `atlas-finale`). The wide stills are panoramas with the globe in the middle: `object-position` puts it on the free side
+  in both directions (a map never mirrors).
+
 ### destinations (Motion Lab) — sticky cards that stack
 
 Kept for the Motion Lab; Home uses `areas`.
@@ -382,13 +423,15 @@ paths they name live in the WaysZ repo) or add new scenes.
 | 2.2     | Visa Services · five categories + «لست متأكدًا…» | act `terminal`: sideways dolly along five gate arches, each a portal onto a glimpse (library · stage · city · two houses + ribbon · dawn balloons), then the "i" desk · stills `terminal-g1…g5 · info.webp` | `terminal-rests` (`data-rests=gate`, sticky 580lvh, 5 rests → `gate` / `gateAct`) · `terminal-info` — BUILT |
 | +       | Visa Services · FAQ (4)                   | —     | `accordion` + `terminal-faq` (no canvas) — BUILT |
 | 2.4     | Visa Services · request-consultation CTA  | act `terminal` (finale host): the end window, a plane of light rolls and lifts off · still `terminal-finale.webp` | `terminal-cta` (sticky 230lvh → `takeoff`; the call rises as the plane lifts; magnetic button) — BUILT |
-| 3       | Visa detail template (seven elements + optional types / destinations / benefits) — 9 categories + 9 services | TODO | TODO |
+| 3       | Visa detail template (brief v3 §6: hero · 2b types · 2c destinations · 2d benefits · audience · help · documents · FAQ · call) — 9 categories + 9 services, «خريطة الرحلة» | act `atlas`: the night Earth with the page's countries lit and routes from Egypt (categories: their group's mood · services: the «network» world of §1.6b); the finale horizon with a plane of light · stills `atlas-<slug>(-m)` · `atlas-network(-m)` · `atlas-finale` | `atlas-thread` (one sticky host, hero → audience) · `atlas-hero` (sticky 200lvh) · `atlas-rise` (types staged from depth · benefits icons draw · audience · FAQ · «تابع رحلتك») · `atlas-destinations` (sticky, a rest per country → `atlas.stop`) · `atlas-steps` (numbered route) · `atlas-docs` (checklist ticks + «ملف جاهز» seal) · `atlas-cta` (sticky 230lvh → `takeoff`) — BUILT |
 | —       | About · intro · WaysZ & WaysZ Visa · why · how we work · CTA | TODO | TODO                                  |
 | —       | Contact · intro · contact items · quick buttons · consultation card | TODO | TODO                            |
 | 4       | Consultation · intro + form + §4.8 warning | TODO | TODO (`form-flight` is the toolkit's form scene)               |
 
-Pins: Home may use 3 and uses 0 — the hero, §1.1 and §1.2–1.5 are CSS sticky + scrub. Other pages: max 2 (Visa Services uses 0).
-Home concept and budgets: `docs/home-creative-treatment.md` · Visa Services: `docs/visa-services-creative-treatment.md`.
+Pins: Home may use 3 and uses 0 — the hero, §1.1 and §1.2–1.5 are CSS sticky + scrub. Other pages: max 2 (Visa Services and the
+visa detail template use 0).
+Home concept and budgets: `docs/home-creative-treatment.md` · Visa Services: `docs/visa-services-creative-treatment.md` · Visa detail
+template: `docs/visa-detail-creative-treatment.md`.
 
 ## What to reuse on the next pages
 
