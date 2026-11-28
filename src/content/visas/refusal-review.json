@@ -1,0 +1,68 @@
+{
+  "kind": "service",
+  "order": 5,
+  "ar": {
+    "name": "مراجعة الرفض وإعادة التقديم",
+    "description": "رُفض طلبك؟ الرفض لا يعني دائمًا نهاية الطريق؛ كثيرًا ما يعود لنقص في مستند، أو عدم اتساق في البيانات، أو عدم وضوح غرض السفر. نراجع معك خطاب الرفض وملفك السابق، ونحدد نقاط الضعف، ونساعدك على بناء ملف أقوى قبل إعادة التقديم.",
+    "audience": [
+      "من رُفض طلب تأشيرته مؤخرًا ويريد فهم الأسباب.",
+      "من يخطط لإعادة التقديم على نفس الوجهة أو وجهة أخرى.",
+      "من لديه أكثر من رفض سابق ويحتاج مراجعة شاملة."
+    ],
+    "help": [
+      "قراءة خطاب الرفض وشرح أسبابه بلغة بسيطة.",
+      "مراجعة ملفك السابق كاملًا وتحديد الفجوات والتعارضات.",
+      "خطة واضحة لتقوية الملف: المستندات الإضافية، وخطاب الغرض، وتوقيت إعادة التقديم.",
+      "توضيح الخيارات المتاحة، مثل إعادة التقديم أو طلب إعادة النظر حيث تسمح الجهة بذلك."
+    ],
+    "documents": [
+      "خطاب الرفض.",
+      "نسخة من طلبك السابق.",
+      "المستندات التي قدمتها سابقًا.",
+      "أي مراسلات مع السفارة أو مركز التقديم."
+    ],
+    "documentsNote": "لا ترسل هذه المستندات عبر الموقع؛ سيوضح لك المستشار الطريقة الآمنة لمشاركتها.",
+    "faq": [
+      { "q": "هل الرفض السابق يقلل فرصي دائمًا؟", "a": "ليس بالضرورة؛ المهم أن تعالج أسباب الرفض بوضوح في طلبك الجديد." },
+      { "q": "متى يمكنني إعادة التقديم؟", "a": "يختلف حسب الدولة وسبب الرفض. ننصحك بالتوقيت المناسب بعد معالجة نقاط الضعف." },
+      { "q": "هل يجب أن أذكر الرفض السابق في طلبي الجديد؟", "a": "غالبًا نعم؛ الإفصاح الصحيح جزء أساسي من ملف متسق وصادق." }
+    ],
+    "cta": {
+      "title": "الرفض بداية لملف أوضح",
+      "text": "ابدأ استشارتك، ونراجع معك أسباب الرفض ونرتب خطوتك التالية.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Refusal Review & Reapplication",
+    "description": "Was your application refused? A refusal isn’t always the end of the road; it often comes down to a missing document, inconsistent details or an unclear travel purpose. We review the refusal letter and your previous file with you, pinpoint the weak points and help you build a stronger file before you reapply.",
+    "audience": [
+      "Anyone recently refused who wants to understand why.",
+      "Those planning to reapply to the same or another destination.",
+      "Applicants with more than one previous refusal who need a full review."
+    ],
+    "help": [
+      "Reading your refusal letter and explaining its reasons in plain language.",
+      "Reviewing your whole previous file and identifying gaps and inconsistencies.",
+      "A clear plan to strengthen the file: extra documents, your cover letter and the timing of your reapplication.",
+      "Explaining your options, such as reapplying or requesting a review where the authority allows it."
+    ],
+    "documents": [
+      "The refusal letter.",
+      "A copy of your previous application.",
+      "The documents you submitted.",
+      "Any correspondence with the embassy or application center."
+    ],
+    "documentsNote": "Don’t send these documents through the website; your consultant will explain the safe way to share them.",
+    "faq": [
+      { "q": "Does a previous refusal always hurt my chances?", "a": "Not necessarily; what matters is clearly addressing the refusal reasons in your new application." },
+      { "q": "When can I reapply?", "a": "It depends on the country and the reason. We advise on the right timing once the weak points are fixed." },
+      { "q": "Should I mention the previous refusal in my new application?", "a": "Usually yes; accurate disclosure is a key part of a consistent, honest file." }
+    ],
+    "cta": {
+      "title": "A refusal can start a clearer file",
+      "text": "Start your consultation, and we’ll review the refusal with you and plan your next step.",
+      "button": "Start your consultation"
+    }
+  }
+}

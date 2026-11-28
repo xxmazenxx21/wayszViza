@@ -1,0 +1,68 @@
+{
+  "kind": "service",
+  "order": 6,
+  "ar": {
+    "name": "المساعدة في حجز موعد التقديم",
+    "description": "حجز موعد التقديم أو أخذ البصمات خطوة أساسية، وقد تكون مرهقة في مواسم الذروة. نساعدك على إنشاء حسابك وحجز موعدك في الجهة المعتمدة وفق المواعيد المتاحة، ونرتب معك المستندات المطلوبة ليوم الموعد.",
+    "audience": [
+      "من يتقدم لأول مرة ولا يعرف خطوات الحجز.",
+      "من يحتاج موعدًا مرتبطًا بتاريخ سفر أو فعالية.",
+      "العائلات والمجموعات التي تحتاج مواعيد متقاربة."
+    ],
+    "help": [
+      "تحديد الجهة الصحيحة للتقديم حسب وجهتك ونوع تأشيرتك ومكان إقامتك.",
+      "المساعدة في إنشاء الحساب وتعبئة بيانات الحجز بدقة.",
+      "متابعة المواعيد المتاحة وحجز الأنسب لخطتك.",
+      "قائمة بما تحمله يوم الموعد، وما يحدث خلاله."
+    ],
+    "documents": [
+      "بيانات جواز السفر.",
+      "نوع التأشيرة والوجهة.",
+      "تواريخ السفر المتوقعة.",
+      "بيانات التواصل."
+    ],
+    "documentsNote": "المطلوب للحجز يختلف حسب الجهة.",
+    "faq": [
+      { "q": "هل يمكنكم مساعدتي في موعد قريب؟", "a": "نتابع المواعيد المتاحة باستمرار، ونحجز لك أقرب موعد يناسب خطتك." },
+      { "q": "هل يجب أن أحضر الموعد بنفسي؟", "a": "في أغلب الحالات نعم، لأخذ البصمات والصورة. نوضح لك ما يخص حالتك." },
+      { "q": "متى أحجز الموعد؟", "a": "بعد أن يقترب ملفك من الاكتمال، ومبكرًا قدر الإمكان في مواسم الذروة." }
+    ],
+    "cta": {
+      "title": "موعدك في وقته، وملفك جاهز له",
+      "text": "اطلب الخدمة، ونرتب معك موعدك ومستنداته.",
+      "button": "اطلب استشارة"
+    }
+  },
+  "en": {
+    "name": "Appointment Booking Assistance",
+    "description": "Booking your submission or biometrics appointment is an essential step, and it can be stressful in peak seasons. We help you set up your account and book your appointment with the authorized center based on available slots, and we organize the documents you need for the day with you.",
+    "audience": [
+      "First-time applicants unsure of the booking steps.",
+      "Travelers who need an appointment that fits a trip or event date.",
+      "Families and groups who need appointments close together."
+    ],
+    "help": [
+      "Identifying the right center for your destination, visa type and place of residence.",
+      "Helping you create the account and fill in the booking details accurately.",
+      "Watching available slots and booking the one that best fits your plan.",
+      "A checklist of what to bring on the day, and what happens during the appointment."
+    ],
+    "documents": [
+      "Your passport details.",
+      "Your visa type and destination.",
+      "Your expected travel dates.",
+      "Your contact details."
+    ],
+    "documentsNote": "What’s needed to book differs by center.",
+    "faq": [
+      { "q": "Can you help me get an early appointment?", "a": "We keep watching available slots and book the earliest one that fits your plan." },
+      { "q": "Do I need to attend in person?", "a": "In most cases yes, for fingerprints and a photo. We explain what applies to you." },
+      { "q": "When should I book?", "a": "Once your file is nearly complete, and as early as possible in peak seasons." }
+    ],
+    "cta": {
+      "title": "Your appointment on time, your file ready for it",
+      "text": "Request the service, and we’ll arrange your appointment and its documents with you.",
+      "button": "Request a consultation"
+    }
+  }
+}

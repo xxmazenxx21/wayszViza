@@ -1,4 +1,5 @@
 ---
+/** 404 (brief v3 §19.5): heading, text and four links — Home · Visa services · Find your visa · Request a consultation. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
@@ -6,12 +7,24 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const en = useTranslations('en');
+const links = [
+  { href: localizePath('/', lang), label: t.nav.home },
+  { href: localizePath('/visa-services/', lang), label: t.nav.visaServices },
+  { href: localizePath('/assessment/', lang), label: t.nav.findVisa },
+  { href: localizePath('/consultation/', lang), label: t.cta.request, accent: true },
+];
 ---
 <BaseLayout lang={lang} title={t.pages.notFound.title} description={t.pages.notFound.description} noindex>
   <section class="container section stack" style="padding-top: 180px; min-height: 70vh">
     <h1>{t.pages.notFound.heading}</h1>
-    <p class="lead">{t.pages.notFound.description}</p>
-    <p><a class="btn btn--accent" href={localizePath('/', lang)}>{t.pages.notFound.back}</a></p>
+    <p class="lead">{t.pages.notFound.text}</p>
+    <ul class="nf-links" role="list">
+      {links.map((l) => <li><a class:list={['btn', l.accent ? 'btn--accent' : 'btn--ghost']} href={l.href}>{l.label}</a></li>)}
+    </ul>
     {lang === 'ar' && <p lang="en" dir="ltr"><a href="/en/">{en.pages.notFound.back} (English)</a></p>}
   </section>
 </BaseLayout>
+
+<style>
+  .nf-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+</style>

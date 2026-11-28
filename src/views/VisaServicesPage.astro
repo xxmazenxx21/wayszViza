@@ -27,6 +27,7 @@ const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.dat
 const byId = Object.fromEntries(visas.map((v) => [v.id, v.data]));
 const href = (slug: string) => localizePath(`/visa-services/${slug}/`, lang);
 
+// TODO(step 4): show all 9 services (brief v3 §5 2.1) — the counters of the `terminal` act were built for these 4.
 // §2.1 — the brief's short description of each service (names from the collection: the same as the brief's)
 const services: RestItem[] = [
   { slug: 'visa-consultation', ar: 'تحديد نوع التأشيرة المناسب لغرض سفرك وشرح متطلباته.', en: 'Identifying the right visa type for the purpose of your trip and explaining its requirements.' },
@@ -38,6 +39,7 @@ const services: RestItem[] = [
   return { name: d[lang].name, alt: { text: d[other].name, lang: other }, text: s[lang], href: href(s.slug), still: `/media/img/terminal-s${i + 1}.webp` };
 });
 
+// TODO(step 4): show all 9 categories in their 4 groups (brief v3 §5 2.2, §7) — the `terminal` act has 5 gates.
 // §2.2 + §2.3 — the five categories: Arabic name + the brief's English name, description, «تناسب:»
 const categories: RestItem[] = [
   { slug: 'student-visa', en: 'Student Visa',

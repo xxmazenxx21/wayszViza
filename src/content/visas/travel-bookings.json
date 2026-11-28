@@ -1,0 +1,64 @@
+{
+  "kind": "service",
+  "order": 7,
+  "ar": {
+    "name": "حجوزات السفر وتأمين السفر للملف",
+    "description": "كثير من الجهات تطلب ما يثبت خط سير رحلتك وإقامتك وتأمينك الطبي خلال السفر. نرتب لك حجوزات طيران وفندق وتأمين سفر تناسب متطلبات ملفك ومدة رحلتك، لتكون كل مستنداتك متسقة مع بعضها.",
+    "audience": [
+      "المتقدمون لتأشيرات السياحة والزيارة والأعمال.",
+      "من يحتاج حجوزات مرنة قبل صدور التأشيرة.",
+      "المسافرون الذين يحتاجون تأمين سفر يطابق متطلبات الجهة."
+    ],
+    "help": [
+      "توضيح نوع الحجز والتأمين الذي يطلبه ملفك.",
+      "ترتيب حجز طيران وفندق يطابق خط السير ومدة الإقامة، مع خيارات قابلة للتعديل حيث أمكن.",
+      "ترتيب تأمين سفر طبي يغطي مدة الرحلة وفق المتطلبات المعتادة.",
+      "مراجعة اتساق الحجوزات مع بيانات الطلب وخطاب الغرض."
+    ],
+    "documents": [
+      "بيانات جواز السفر.",
+      "تواريخ السفر والوجهات.",
+      "عدد المسافرين."
+    ],
+    "documentsNote": "متطلبات الحجز والتأمين تختلف حسب الجهة ونوع التأشيرة.",
+    "faq": [
+      { "q": "هل أشتري تذكرة نهائية قبل صدور التأشيرة؟", "a": "غالبًا لا يُنصح بذلك. نوضح لك نوع الحجز المناسب في هذه المرحلة." },
+      { "q": "هل يكفي أي تأمين سفر؟", "a": "لا؛ بعض الجهات تشترط حدًا أدنى للتغطية ومدة محددة. نرتب ما يطابق المتطلبات." }
+    ],
+    "cta": {
+      "title": "ملف متسق من أول حجز",
+      "text": "اطلب الخدمة، ونرتب حجوزاتك وتأمينك بما يناسب ملفك.",
+      "button": "اطلب استشارة"
+    }
+  },
+  "en": {
+    "name": "Travel Bookings & Insurance for Your File",
+    "description": "Many authorities ask for proof of your itinerary, your accommodation and your travel medical insurance. We arrange flight, hotel and travel insurance bookings that suit your file’s requirements and the length of your trip, so all your documents line up.",
+    "audience": [
+      "Applicants for tourist, visit and business visas.",
+      "Travelers who need flexible bookings before their visa is issued.",
+      "Travelers who need insurance that meets the authority’s requirements."
+    ],
+    "help": [
+      "Explaining which bookings and insurance your file needs.",
+      "Arranging flight and hotel bookings that match your itinerary and stay, with changeable options where possible.",
+      "Arranging travel medical insurance that covers your trip in line with usual requirements.",
+      "Checking that your bookings match your application data and cover letter."
+    ],
+    "documents": [
+      "Your passport details.",
+      "Your travel dates and destinations.",
+      "The number of travelers."
+    ],
+    "documentsNote": "Booking and insurance requirements differ by authority and visa type.",
+    "faq": [
+      { "q": "Should I buy a final ticket before my visa is issued?", "a": "It’s usually not advised. We explain the right type of booking at this stage." },
+      { "q": "Will any travel insurance do?", "a": "No; some authorities require minimum cover and a set period. We arrange what matches the requirements." }
+    ],
+    "cta": {
+      "title": "A consistent file from the first booking",
+      "text": "Request the service, and we’ll arrange bookings and insurance that suit your file.",
+      "button": "Request a consultation"
+    }
+  }
+}

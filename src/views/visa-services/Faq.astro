@@ -1,9 +1,8 @@
 ---
 /**
- * Visa Services — a short FAQ before §2.4 (addition): four questions about choosing the right visa type and what
- * happens in a consultation, in our own words. Ideas from boundless.com, atlys.com, visahq.com, y-axis.com, oravisa.com
- * and official visa guidance pages — no text, names or slogans taken. Nothing promises a visa, an approval, an
- * appointment or a processing time; no country, fee or requirement is stated as a fact.
+ * Visa Services — a short FAQ before §2.4 (brief v3 §19.2): questions 1–3 as before (our own words, about choosing
+ * the right visa type and what happens in a consultation; ideas from boundless.com, atlys.com, visahq.com, y-axis.com,
+ * oravisa.com and official guidance — no text taken) · 4 (answer edited) and 5 (new) word for word from §19.2.
  * Scenes: accordion (open / close) + terminal-faq (closed answers `inert`, rows arrive once). No canvas. No JS: all open.
  */
 import { useTranslations, type Lang } from '../../i18n';
@@ -16,13 +15,15 @@ const items = {
     ['كيف أعرف نوع التأشيرة المناسب لرحلتي؟', 'يتحدد نوع التأشيرة غالبًا بالغرض الرئيسي من سفرك، ومدة بقائك، وما ستفعله هناك: دراسة، أو عمل، أو زيارة، أو إقامة. وقد تختلف التسميات والشروط من دولة لأخرى، لذلك نبدأ بفهم وضعك، ثم نوضح لك الفئة الأقرب ومتطلباتها كما تعلنها الجهة المختصة.'],
     ['ماذا لو كان لرحلتي أكثر من غرض؟', 'هذا شائع، كأن تحضر مؤتمرًا ثم تزور أقاربك. المهم هنا هو الغرض الأساسي للرحلة والمستندات التي تدعمه. نساعدك على ترتيب الأولويات واختيار الفئة التي تعبّر عن غرضك بوضوح وصدق.'],
     ['ماذا يحدث في جلسة الاستشارة؟', 'نستمع إلى غرض سفرك ووجهتك ومدة إقامتك ووضعك الحالي، ثم نوضح لك نوع التأشيرة المناسب، والمستندات التي تُطلب عادة، والخطوات المتوقعة بالترتيب، لتخرج بصورة واضحة لما عليك تجهيزه.'],
-    ['وماذا بعد الاستشارة؟', 'القرار لك: قد تكتفي بالصورة الواضحة وتتقدّم بنفسك، أو تكمل معنا في جاهزية المستندات، والإرشاد في تعبئة الطلب، والاستعداد للموعد. وفي كل الأحوال يبقى قرار التأشيرة للسفارة أو الجهة المختصة وحدها.'],
+    ['وماذا بعد الاستشارة؟', 'القرار لك: قد تكتفي بالصورة الواضحة وتتقدّم بنفسك، أو تكمل معنا في جاهزية المستندات، والإرشاد في الطلب، وحجز الموعد، والاستعداد للمقابلة، حتى يكون ملفك جاهزًا بالكامل.'],
+    ['هل تقدمون خدمات بعد تجهيز الملف؟', 'نعم: حجز موعد التقديم، وحجوزات الطيران والفندق وتأمين السفر المناسبة للملف، والترجمة المعتمدة وتوثيق المستندات، ومراجعة الرفض إن حدث.'],
   ],
   en: [
     ['How do I know which visa type fits my trip?', 'The visa type usually depends on the main purpose of your trip, how long you will stay and what you will do there: study, work, a visit or living abroad. Names and conditions can differ from one country to another, so we start by understanding your situation, then explain the closest category and its requirements as the competent authority publishes them.'],
     ['What if my trip has more than one purpose?', 'That is common, for example attending a conference and then visiting relatives. What matters is the main purpose of the trip and the documents that support it. We help you set your priorities and choose the category that reflects your purpose clearly and honestly.'],
     ['What happens in a consultation session?', 'We listen to the purpose of your trip, your destination, how long you plan to stay and your current situation, then explain the right visa type, the documents usually requested and the expected steps in order, so you leave with a clear picture of what you need to prepare.'],
-    ['What happens after the consultation?', 'It is your call: you may be happy with the clear picture and apply on your own, or continue with us through document readiness, application guidance and appointment preparation. Either way, the visa decision rests with the embassy or the competent authority alone.'],
+    ['What happens after the consultation?', 'It’s your call: you may take the clear picture and apply on your own, or continue with us through document readiness, application guidance, appointment booking and interview preparation, until your file is fully ready.'],
+    ['Do you offer services beyond preparing the file?', 'Yes: booking your submission appointment, flight, hotel and travel insurance bookings that suit your file, certified translation and attestation, and a refusal review if needed.'],
   ],
 }[lang];
 ---

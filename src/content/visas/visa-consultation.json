@@ -2,7 +2,7 @@
   "kind": "service",
   "order": 1,
   "ar": {
-    "name": "استشارة التأشيرة",
+    "name": "استشارة التأشيرة وتقييم الملف",
     "description": "جلسة مخصصة نفهم فيها غرض سفرك ووضعك، ثم نحدد معك نوع التأشيرة المناسب ومتطلباته والخطوات المتوقعة، لتبدأ التجهيز وأنت تعرف طريقك.",
     "audience": [
       "من لا يعرف نوع التأشيرة المناسب لرحلته.",
@@ -12,6 +12,7 @@
     "help": [
       "نستمع إلى تفاصيل رحلتك: الوجهة والغرض والمدة والموعد المتوقع.",
       "نحدد نوع التأشيرة الأقرب لغرض سفرك، ونشرح متطلباته العامة.",
+      "تقييم مبدئي لنقاط القوة والضعف في ملفك: الوضع الوظيفي والمالي وتاريخ السفر وأي رفض سابق.",
       "نوضح الخطوات المتوقعة بالترتيب، من تجهيز المستندات حتى موعد التقديم.",
       "نرشدك إلى ما تحتاجه بعد ذلك، مثل جاهزية المستندات أو الإرشاد في تعبئة الطلب."
     ],
@@ -26,7 +27,7 @@
     "faq": [
       { "q": "لا أعرف نوع التأشيرة المناسب، هل أبدأ بالاستشارة؟", "a": "نعم، فهذه هي البداية المناسبة. اختر «لست متأكدًا» في نموذج طلب الاستشارة، وسنحدد معك النوع الأقرب لغرض سفرك." },
       { "q": "ماذا أعرف في نهاية الاستشارة؟", "a": "نوع التأشيرة المناسب لغرض رحلتك، ومتطلباته العامة، والخطوات التالية بالترتيب." },
-      { "q": "هل تتعاملون مع السفارة نيابة عني؟", "a": "لا؛ خدمتنا استشارية وإرشادية، ويتم التقديم وفق إجراءات السفارة أو مركز التقديم المعتمد." }
+      { "q": "هل تتعاملون مع السفارة نيابة عني؟", "a": "نرافقك حتى يوم التقديم: نجهز ملفك معك، ونساعدك على حجز موعدك في الجهة المعتمدة، ونجهزك له، ثم تحضر الموعد بنفسك لتسليم طلبك وفق إجراءات السفارة أو مركز التقديم." }
     ],
     "cta": {
       "title": "ابدأ من السؤال الصحيح",
@@ -35,7 +36,7 @@
     }
   },
   "en": {
-    "name": "Visa Consultation",
+    "name": "Visa Consultation & File Assessment",
     "description": "A dedicated session where we understand the purpose of your trip and your situation, then work out with you the right visa type, its requirements and the expected steps, so you start preparing knowing your way.",
     "audience": [
       "People who don’t know which visa suits their trip.",
@@ -45,6 +46,7 @@
     "help": [
       "We listen to the details of your trip: destination, purpose, length and expected date.",
       "We identify the visa type closest to the purpose of your trip and explain its general requirements.",
+      "A preliminary assessment of your file’s strengths and weak points: your job, finances, travel history and any previous refusal.",
       "We lay out the expected steps in order, from preparing documents to the application appointment.",
       "We point you to what you need next, such as Document Readiness or Application Guidance."
     ],
@@ -59,7 +61,7 @@
     "faq": [
       { "q": "I don’t know which visa I need. Should I start with a consultation?", "a": "Yes, that is the right place to start. Choose “Not sure” in the consultation request form, and we will work out with you the type closest to the purpose of your trip." },
       { "q": "What will I know at the end of the consultation?", "a": "The visa type that fits the purpose of your trip, its general requirements, and the next steps in order." },
-      { "q": "Do you deal with the embassy on my behalf?", "a": "No. Our service is advisory and guidance only, and the application is submitted according to the procedures of the embassy or the official application center." }
+      { "q": "Do you deal with the embassy on my behalf?", "a": "We are with you up to submission day: we prepare your file with you, help you book your appointment with the authorized center and get you ready for it; you then attend in person to hand in your application, as the embassy or application center requires." }
     ],
     "cta": {
       "title": "Start with the right question",

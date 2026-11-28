@@ -1,0 +1,64 @@
+{
+  "kind": "service",
+  "order": 8,
+  "ar": {
+    "name": "الترجمة المعتمدة وتوثيق المستندات",
+    "description": "كثير من المستندات تحتاج ترجمة معتمدة أو توثيقًا قبل تقديمها للسفارة. نترجم مستنداتك ترجمة معتمدة لدى الجهات الرسمية والسفارات، ونرشدك في خطوات توثيقها وتصديقها حسب ما تطلبه وجهتك.",
+    "audience": [
+      "من يحتاج ترجمة شهادات أو عقود أو مستندات أسرية أو مالية.",
+      "من يحتاج توثيق مستنداته لدى الجهات المحلية أو السفارة.",
+      "الطلاب والمهنيون المتقدمون لمعادلة شهاداتهم."
+    ],
+    "help": [
+      "تحديد المستندات التي تحتاج ترجمة أو توثيقًا لملفك تحديدًا.",
+      "ترجمة معتمدة بلغات متعددة، مع مراجعة دقة الأسماء والتواريخ.",
+      "الإرشاد في ترتيب خطوات التوثيق والتصديق والجهات المختصة بها.",
+      "مطابقة المستندات المترجمة مع بيانات الطلب."
+    ],
+    "documents": [
+      "المستندات المطلوب ترجمتها أو توثيقها.",
+      "اللغة المطلوبة.",
+      "الوجهة والجهة التي ستُقدَّم إليها."
+    ],
+    "documentsNote": "متطلبات التوثيق تختلف حسب الدولة ونوع المستند. لا ترسل المستندات عبر الموقع.",
+    "faq": [
+      { "q": "هل ترجمتكم معتمدة لدى السفارات؟", "a": "نعم، نقدم ترجمة معتمدة لدى الجهات الرسمية والسفارات." },
+      { "q": "ما الفرق بين الترجمة المعتمدة والتوثيق؟", "a": "الترجمة تنقل المستند للغة المطلوبة، أما التوثيق فهو اعتماد الجهات الرسمية لصحة المستند أو توقيعه." }
+    ],
+    "cta": {
+      "title": "مستنداتك بلغة السفارة",
+      "text": "اطلب الخدمة، ونحدد معك ما يحتاج ترجمة أو توثيقًا.",
+      "button": "اطلب استشارة"
+    }
+  },
+  "en": {
+    "name": "Certified Translation & Attestation",
+    "description": "Many documents need a certified translation or attestation before you submit them to an embassy. We provide certified translations accepted by official bodies and embassies, and guide you through the attestation and legalization steps your destination requires.",
+    "audience": [
+      "Anyone who needs certificates, contracts or family or financial documents translated.",
+      "Those who need their documents attested with local authorities or an embassy.",
+      "Students and professionals applying to have their qualifications recognized."
+    ],
+    "help": [
+      "Identifying which of your documents need translation or attestation.",
+      "Certified translation in several languages, with checks on names and dates.",
+      "Guidance on the order of attestation and legalization steps and the authorities involved.",
+      "Matching translated documents against your application data."
+    ],
+    "documents": [
+      "The documents to translate or attest.",
+      "The target language.",
+      "The destination and the authority they’re for."
+    ],
+    "documentsNote": "Attestation requirements differ by country and document type. Don’t send documents through the website.",
+    "faq": [
+      { "q": "Are your translations accepted by embassies?", "a": "Yes, we provide certified translations accepted by official bodies and embassies." },
+      { "q": "What’s the difference between certified translation and attestation?", "a": "Translation renders the document into the required language; attestation is official confirmation that the document or its signature is genuine." }
+    ],
+    "cta": {
+      "title": "Your documents in the embassy’s language",
+      "text": "Request the service, and we’ll work out what needs translating or attesting.",
+      "button": "Request a consultation"
+    }
+  }
+}

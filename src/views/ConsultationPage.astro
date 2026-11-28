@@ -6,6 +6,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import countries from '../data/countries.json';
+import { countries as namedCountries } from '../lib/countries';
 import { useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -48,11 +49,8 @@ const copy = {
 }[lang];
 
 // §4.2 «قائمة»: the brief gives no list — every country of src/data/countries.json (ISO 3166-1), named by the
-// browser-independent Intl data at build time, sorted in the page's language.
-const names = new Intl.DisplayNames([lang], { type: 'region' });
-const destinations = countries
-  .map(([id]) => ({ id: String(id), name: names.of(String(id)) ?? String(id) }))
-  .sort((a, b) => a.name.localeCompare(b.name, lang));
+// browser-independent Intl data at build time (src/lib/countries.ts), sorted in the page's language.
+const destinations = namedCountries(countries.map(([id]) => String(id)), lang, true).map((c) => ({ id: c.code, name: c.name }));
 const contactValues = ['phone', 'whatsapp', 'email'];
 ---
 <BaseLayout lang={lang} title={t.pages.consultation.title} description={t.pages.consultation.description}>

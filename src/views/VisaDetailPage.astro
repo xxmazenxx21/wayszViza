@@ -1,23 +1,58 @@
 ---
 /**
  * Visa Service Details Template (brief part 01 «ثانيًا» §3 · part 04 §3): ONE template → one page per file in
- * src/content/visas/. Plain rendering for now (no design yet): the seven elements of brief v3 §6 in order.
+ * src/content/visas/. Plain rendering for now (no design yet — step 2): the seven elements of brief v3 §6 in order,
+ * plus the optional 2b «أنواع شائعة» · 2c «وجهات نعمل عليها» · 2d «مزايا شائعة» where the page has them.
+ * 2c: each country opens the consultation form with the category and the country prefilled.
  */
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../lib/site';
+import { countries } from '../lib/countries';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang; entry: CollectionEntry<'visas'> }
 const { lang, entry } = Astro.props;
 const t = useTranslations(lang);
 const v = entry.data[lang];
+const consult = (code: string) => `${localizePath('/consultation/', lang)}?type=${entry.id}&destination=${code}`;
 ---
 <BaseLayout lang={lang} title={`${v.name} | ${site.name}`} description={v.description}>
   <article class="visa container stack">
     <!-- §6.1 name · §6.2 description -->
     <h1>{v.name}</h1>
     <p class="lead">{v.description}</p>
+
+    <!-- §6 2b common types (optional) -->
+    {v.types && (
+      <section class="stack">
+        <h2>{t.visa.types}</h2>
+        <ul>{v.types.map((x) => <li>{x.title && <><strong>{x.title}:</strong>{' '}</>}{x.text}</li>)}</ul>
+      </section>
+    )}
+
+    <!-- §6 2c destinations we work with (optional) — country names from Intl, links prefill the form -->
+    {v.destinations && (
+      <section class="stack">
+        <h2>{t.visa.destinations}</h2>
+        {v.destinations.map((d) => (
+          <div class="stack">
+            {d.label && <h3>{d.label}</h3>}
+            <ul class="countries" role="list">
+              {countries(d.countries, lang).map((c) => <li><a href={consult(c.code)}>{c.name}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <!-- §6 2d common benefits (optional) -->
+    {v.benefits && (
+      <section class="stack">
+        <h2>{t.visa.benefits}</h2>
+        <ul>{v.benefits.map((x) => <li><strong>{x.title}:</strong>{' '}{x.text}</li>)}</ul>
+      </section>
+    )}
 
     <!-- §6.3 -->
     <section class="stack">
@@ -65,5 +100,6 @@ const v = entry.data[lang];
   .visa section { padding-block-start: var(--space-6); }
   .visa ul { list-style: disc; padding-inline-start: var(--space-5); }
   .visa dt { font-weight: var(--weight-bold); }
+  .visa .countries { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
   .note { color: var(--color-ink-muted); font-size: var(--text-sm); }
 </style>

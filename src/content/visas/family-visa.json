@@ -1,9 +1,18 @@
 {
   "kind": "category",
-  "order": 4,
+  "group": "visit",
+  "order": 2,
   "ar": {
     "name": "التأشيرة العائلية",
     "description": "تريد زيارة أقاربك أو الالتحاق بأفراد أسرتك المقيمين بالخارج؟ نرشدك في إثبات صلة القرابة، وتجهيز مستندات الداعي، وتنظيم ملفك بحيث يعكس غرض زيارتك بوضوح.",
+    "types": [
+      { "text": "زيارة عائلية بدعوة يتحمل فيها المسافر تكاليف رحلته" },
+      { "text": "زيارة عائلية يتكفل فيها الداعي بالإقامة والتكاليف" },
+      { "text": "لمّ الشمل أو الالتحاق بالزوج أو الزوجة" }
+    ],
+    "destinations": [
+      { "countries": ["ES", "FR", "DE", "PT", "CH", "IT", "US", "CA"] }
+    ],
     "audience": [
       "من يزور أقارب من الدرجة الأولى مقيمين بالخارج.",
       "الأزواج والأبناء الراغبون في الالتحاق بأحد أفراد الأسرة المقيم بالخارج.",
@@ -11,6 +20,7 @@
     ],
     "help": [
       "تحديد نوع التأشيرة المناسب لحالتك: زيارة عائلية أم لمّ شمل.",
+      "توضيح الفرق بين الزيارة التي تتحملها بنفسك والزيارة التي يتكفل بها الداعي، وما يُطلب في كل حالة من المسافر والداعي.",
       "الإرشاد في المستندات التي تثبت صلة القرابة، وترجمتها ترجمة معتمدة عبر WaysZ.",
       "توضيح مستندات الداعي، مثل خطاب الدعوة وإثبات إقامته وقدرته المالية إن طُلبت.",
       "مراجعة ملفك قبل التقديم، وتجهيزك للمقابلة إن كانت مطلوبة."
@@ -38,6 +48,14 @@
   "en": {
     "name": "Family Visa",
     "description": "Want to visit your relatives, or join family members who live abroad? We guide you on proving your family relationship, preparing the inviting person’s documents, and organizing your file so it shows the purpose of your visit clearly.",
+    "types": [
+      { "text": "Family visit where the traveler covers the trip" },
+      { "text": "Family visit where the host covers stay and costs" },
+      { "text": "Family reunion or joining a spouse" }
+    ],
+    "destinations": [
+      { "countries": ["ES", "FR", "DE", "PT", "CH", "IT", "US", "CA"] }
+    ],
     "audience": [
       "People visiting first-degree relatives who live abroad.",
       "Spouses and children who want to join a family member living abroad.",
@@ -45,6 +63,7 @@
     ],
     "help": [
       "Choosing the right visa type for your case: a family visit or family reunification.",
+      "Explaining the difference between a visit you fund yourself and one your host sponsors, and what each case usually requires from you and from your host.",
       "Guidance on the documents that prove your relationship, with certified translation through WaysZ.",
       "Explaining the inviting person’s documents, such as the invitation letter and proof of their residence and financial means, if requested.",
       "Reviewing your file before you apply, and preparing you for the interview if one is required."

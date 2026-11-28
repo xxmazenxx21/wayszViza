@@ -877,3 +877,106 @@
 7. **الإثبات الاجتماعي:** آراء عملاء · أرقام (سنوات الخبرة، عدد الملفات، الفروع) · شعارات الشركاء · الشهادات والتراخيص.
 8. **النصوص القانونية:** سياسة الخصوصية والشروط والأحكام (من محاميكم، أو نجهز مسودة للمراجعة).
 9. **الشعار والألوان النهائية** + مراجعة المصطلحات الإنجليزية (معلّق من قبل).
+
+---
+
+## 19. إكمال البريف (28 نوفمبر 2026) 🆕
+
+### 19.1 الأسئلة الشائعة في الرئيسية (القائمة النهائية) ✏️
+
+تحل محل قائمة الرئيسية الحالية بالكامل (`src/views/home/Faq.astro`).
+
+| # | AR | EN |
+|---|---|---|
+| 1 | **كيف تساعدونني على تقوية فرص قبول طلبي؟** نبني ملفك على غرض سفرك الحقيقي: نوع التأشيرة الصحيح، ومستندات مرتبة ومتسقة، وخطاب غرض واضح، واستعداد جيد للموعد والمقابلة. الملف القوي هو أفضل ما تقدمه لنفسك. | **How do you help me strengthen my application?** We build your file around your real purpose: the right visa type, organized and consistent documents, a clear cover letter and solid preparation for your appointment and interview. A strong file is the best thing you can bring. |
+| 2 | **متى أبدأ التجهيز قبل موعد سفري؟** كلما بدأت مبكرًا كان أفضل؛ فمواعيد التقديم ومدة دراسة الطلبات تختلف من دولة لأخرى ومن موسم لآخر. نرتب معك خطواتك لتكون جاهزًا في الوقت المناسب. | **How early should I start preparing before my trip?** The earlier the better: appointment availability and processing times differ by country and by season. We plan your steps with you so you're ready on time. |
+| 3 | **هل يمكنني التقديم بنفسي دون استشارة؟** نعم، في كثير من الحالات. وتفيدك الاستشارة أكثر إذا لم تكن متأكدًا من نوع التأشيرة، أو تسافر لأول مرة، أو سبق رفض طلب لك، أو تريد مراجعة ملفك قبل التقديم. | **Can I apply on my own without a consultation?** Yes, in many cases. A consultation helps most when you're unsure which visa you need, are traveling for the first time, have had a refusal, or want your file reviewed before you apply. |
+| 4 | **ماذا أجهز قبل جلسة الاستشارة؟** يكفي أن تكون المعلومات معك: بيانات جواز سفرك، والدولة التي تقصدها، وموعد سفرك المتوقع وغرضه، وأي خطابات لديك مثل دعوة أو قبول دراسي، وخطاب الرفض إن وُجد. لا ترسل صور المستندات عبر الموقع. | **What should I prepare before the consultation?** Having the information with you is enough: your passport details, destination, expected travel date and purpose, any letters such as an invitation or admission letter, and a refusal letter if there is one. Don't send copies of documents through the website. |
+| 5 | **سبق رفض طلبي، هل يمكنني التقديم مرة أخرى؟** غالبًا نعم. في خدمة «مراجعة الرفض وإعادة التقديم» نقرأ خطاب الرفض معك، ونحدد نقاط الضعف، ونبني ملفًا أقوى قبل أن تتقدم من جديد. | **My application was refused. Can I apply again?** Usually yes. With our «Refusal review & reapplication» service we read the refusal letter with you, pinpoint the weak points and build a stronger file before you apply again. |
+| 6 | **هل تحجزون موعد التقديم بدلًا مني؟** نعم، نتولى حجز موعدك في الجهة المعتمدة ونختار معك أنسب موعد متاح. | **Can you book my submission appointment?** Yes, we book your appointment with the authorized center and pick the best available slot with you. |
+| 7 | **هل تخدمون الشركات والوفود؟** نعم. ننسق ملفات تأشيرات فرق العمل والمشاركين في المعارض والمؤتمرات في مكان واحد. | **Do you work with companies and delegations?** Yes. We coordinate visa files for business teams and for exhibition and conference participants, in one place. |
+| 8 | **هل تعملون على برامج الإقامة والجنسية عن طريق الاستثمار؟** نعم، بصفتنا وكيلًا معتمدًا. نقارن معك البرامج المتاحة في أوروبا والكاريبي وغيرها، ونرافقك في ملفك حتى صدور القرار. | **Do you handle residency and citizenship by investment?** Yes, as an authorized agent. We compare the programs in Europe, the Caribbean and beyond with you, and support your file until a decision is made. |
+
+### 19.2 الأسئلة الشائعة في صفحة خدمات التأشيرات ✏️
+
+- **الأسئلة 1–3:** كما هي في `src/views/visa-services/Faq.astro`.
+- **السؤال 4 (تعديل الإجابة):**
+  - AR: **وماذا بعد الاستشارة؟** القرار لك: قد تكتفي بالصورة الواضحة وتتقدّم بنفسك، أو تكمل معنا في جاهزية المستندات، والإرشاد في الطلب، وحجز الموعد، والاستعداد للمقابلة، حتى يكون ملفك جاهزًا بالكامل.
+  - EN: **What happens after the consultation?** It's your call: you may take the clear picture and apply on your own, or continue with us through document readiness, application guidance, appointment booking and interview preparation, until your file is fully ready.
+- **السؤال 5 (جديد):**
+  - AR: **هل تقدمون خدمات بعد تجهيز الملف؟** نعم: حجز موعد التقديم، وحجوزات الطيران والفندق وتأمين السفر المناسبة للملف، والترجمة المعتمدة وتوثيق المستندات، ومراجعة الرفض إن حدث.
+  - EN: **Do you offer services beyond preparing the file?** Yes: booking your submission appointment, flight, hotel and travel insurance bookings that suit your file, certified translation and attestation, and a refusal review if needed.
+
+### 19.3 عناوين ووصف SEO 🆕
+
+> صفحات التأشيرة الـ 18 تأخذ العنوان من `name` والوصف من `description` تلقائيًا: «<الاسم> | WaysZ Visa».
+
+| الصفحة | العنوان AR | الوصف AR | Title EN | Description EN |
+|---|---|---|---|---|
+| الرئيسية ✏️ | WaysZ Visa \| طريقك إلى التأشيرة يبدأ بخطوة صحيحة | استشارات تأشيرات وهجرة متكاملة: سياحة، ودراسة، وعمل، وإقامة، وإقامة وجنسية عن طريق الاستثمار. نجهز ملفك، ونحجز موعدك، ونجهزك للمقابلة. | WaysZ Visa \| Your path to a visa starts with the right step | Complete visa and immigration consulting: tourism, study, work, residence, and residency or citizenship by investment. We prepare your file, book your appointment and get you ready for your interview. |
+| خدمات التأشيرات ✏️ | خدمات التأشيرات \| WaysZ Visa | 9 أنواع تأشيرات و9 خدمات في مكان واحد: من اختيار التأشيرة المناسبة وتجهيز المستندات حتى حجز الموعد ومراجعة الرفض. | Visa services \| WaysZ Visa | 9 visa types and 9 services in one place: from choosing the right visa and preparing documents to booking your appointment and refusal reviews. |
+| اعرف تأشيرتك 🆕 | اعرف تأشيرتك المناسبة \| WaysZ Visa | أجب عن أسئلة قصيرة في أقل من دقيقة، واعرف نوع التأشيرة الأقرب لحالتك، ووجهاتها، والخدمات التي تحتاجها. | Find the right visa for you \| WaysZ Visa | Answer a few short questions in under a minute and find the visa type closest to your situation, its destinations and the services you need. |
+| طلب الاستشارة ✅ | كما في الريبو | كما في الريبو | as in the repo | as in the repo |
+| من نحن ✏️ | من نحن \| WaysZ Visa | WaysZ Visa منصة متخصصة تابعة لـ WaysZ في استشارات التأشيرات والهجرة، ووكيل معتمد لبرامج الإقامة والجنسية عن طريق الاستثمار. | About us \| WaysZ Visa | WaysZ Visa is a WaysZ platform specialized in visa and immigration consulting, and an authorized agent for residency and citizenship by investment programs. |
+| تواصل معنا ✅ | كما في الريبو | كما في الريبو | as in the repo | as in the repo |
+| سياسة الخصوصية 🆕 | سياسة الخصوصية \| WaysZ Visa | كيف تجمع WaysZ Visa بياناتك وتستخدمها وتحميها عند تواصلك معنا أو طلبك استشارة. | Privacy policy \| WaysZ Visa | How WaysZ Visa collects, uses and protects your data when you contact us or request a consultation. |
+| الشروط والأحكام 🆕 | الشروط والأحكام \| WaysZ Visa | شروط استخدام موقع WaysZ Visa وخدماتنا الاستشارية. | Terms and conditions \| WaysZ Visa | The terms of use of the WaysZ Visa website and our consulting services. |
+| 404 ✏️ | الصفحة غير موجودة \| WaysZ Visa | لم نجد الصفحة التي تبحث عنها. | Page not found \| WaysZ Visa | We couldn't find the page you're looking for. |
+
+### 19.4 نصوص صفحة تواصل معنا ✏️
+
+| العنصر | AR | EN |
+|---|---|---|
+| العنوان | تواصل معنا | Contact us |
+| المقدمة | يسعدنا تواصلك. أخبرنا باستفسارك، وسيتواصل معك فريق WaysZ Visa في أقرب وقت ممكن. | We're glad to hear from you. Tell us your question, and the WaysZ Visa team will contact you as soon as possible. |
+| بيانات التواصل | الهاتف · واتساب · البريد الإلكتروني · العنوان · مواعيد العمل | Phone · WhatsApp · Email · Address · Working hours |
+| الفروع 🆕 | فروعنا — لكل فرع: الاسم، العنوان، «افتح الخريطة»، مواعيد العمل | Our branches — each: name, address, «Open map», working hours |
+| السوشيال ميديا 🆕 | تابعنا | Follow us |
+| الأزرار السريعة | اتصل بنا · راسلنا على واتساب · أرسل بريدًا إلكترونيًا | Call us · Message us on WhatsApp · Send an email |
+| بطاقة الاستشارة | **لديك طلب تأشيرة؟** لطلبات التأشيرة، املأ نموذج طلب الاستشارة بتفاصيل سفرك، وسيتواصل معك أحد مستشارينا لتحديد الخطوات المناسبة لحالتك. [اطلب استشارة] | **Have a visa request?** Fill in the consultation request form with your trip details, and one of our consultants will contact you to set the right next steps. [Request a consultation] |
+| بطاقة الأداة 🆕 | **لست متأكدًا من نوع تأشيرتك؟** جرّب «اعرف تأشيرتك» في أقل من دقيقة. [اعرف تأشيرتك] | **Not sure which visa you need?** Try «Find your visa» in under a minute. [Find your visa] |
+
+- كل البيانات من `src/lib/site.ts` (`TODO(client)` حتى يرسلها العميل للكيان الجديد).
+
+### 19.5 صفحة 404 ✏️
+
+- **العنوان:** يبدو أنك سلكت طريقًا غير موجود · *Looks like you took a road that doesn't exist*
+- **النص:** ربما تغيّر عنوان الصفحة أو لم تعد موجودة. اختر وجهتك من هنا: · *The page may have moved or no longer exists. Pick your destination from here:*
+- **روابط:** الرئيسية · خدمات التأشيرات · اعرف تأشيرتك · اطلب استشارة — *Home · Visa services · Find your visa · Request a consultation*
+- (تحل محل «الطريق ده مش موجود» العامية.)
+
+### 19.6 سياسة الخصوصية — مسودة 🆕 ❓
+
+> مسودة عامة يراجعها العميل أو محاميه. `[اسم الكيان]` و`[البريد]` و`[التاريخ]` = `TODO(client)`.
+
+**العنوان:** سياسة الخصوصية · *Privacy policy* — **آخر تحديث:** [التاريخ] · *Last updated: [date]*
+
+| # | AR | EN |
+|---|---|---|
+| 1 | **من نحن** — هذا الموقع تديره [اسم الكيان] تحت اسم WaysZ Visa، وهي جزء من WaysZ. توضح هذه السياسة كيف نتعامل مع بياناتك عند استخدامك الموقع. | **Who we are** — This website is operated by [entity name] as WaysZ Visa, part of WaysZ. This policy explains how we handle your data when you use the site. |
+| 2 | **البيانات التي نجمعها** — ما تكتبه في نموذج طلب الاستشارة: الاسم، ورقم الهاتف، والبريد الإلكتروني، وبلد الإقامة، والوجهة، ونوع التأشيرة، والخدمات المطلوبة، وتفاصيل الرحلة، ووصف استفسارك. لا نطلب أي مستندات عبر الموقع. أداة «اعرف تأشيرتك» تعمل داخل متصفحك ولا ترسل إجاباتك إلينا إلا إذا أكملت طلب الاستشارة. | **What we collect** — What you enter in the consultation request form: name, phone, email, country of residence, destination, visa type, services needed, trip details and your inquiry. We don't ask for documents through the site. «Find your visa» runs in your browser and sends nothing to us unless you continue to the consultation request. |
+| 3 | **لماذا نستخدمها** — للتواصل معك بخصوص طلبك، وتجهيز استشارتك، وتقديم الخدمات التي تطلبها. لا نبيع بياناتك ولا نستخدمها لأغراض لا علاقة لها بطلبك. | **Why we use it** — To contact you about your request, prepare your consultation and provide the services you ask for. We don't sell your data or use it for anything unrelated to your request. |
+| 4 | **مشاركة البيانات** — لا نشارك بياناتك إلا بالقدر اللازم لتقديم خدمتك، مثل مزودي الخدمات التقنية الذين يستقبلون رسائل النموذج، أو الجهات التي تطلب منا التعامل معها بخصوص ملفك. | **Sharing** — We share your data only as needed to provide your service, such as technical providers that receive form messages, or parties you ask us to deal with regarding your file. |
+| 5 | **مدة الاحتفاظ** — نحتفظ ببياناتك طوال فترة التعامل معك، ثم للمدة اللازمة قانونيًا أو حتى تطلب حذفها. | **Retention** — We keep your data while we work with you, then for as long as the law requires or until you ask us to delete it. |
+| 6 | **حقوقك** — يمكنك طلب الاطلاع على بياناتك أو تصحيحها أو حذفها في أي وقت عبر [البريد]. | **Your rights** — You can ask to access, correct or delete your data at any time via [email]. |
+| 7 | **ملفات تعريف الارتباط** — يستخدم الموقع ما يلزم فقط لعمله وتذكّر تفضيلاتك البسيطة، مثل اللغة. | **Cookies** — The site uses only what it needs to work and to remember simple preferences such as language. |
+| 8 | **الأمان** — نستخدم اتصالًا آمنًا (HTTPS) وإجراءات معقولة لحماية بياناتك. | **Security** — We use a secure connection (HTTPS) and reasonable measures to protect your data. |
+| 9 | **التعديلات والتواصل** — قد نحدّث هذه السياسة، ويظهر تاريخ آخر تحديث أعلى الصفحة. لأي سؤال عن الخصوصية: [البريد]. | **Changes and contact** — We may update this policy; the last-updated date is shown at the top. Privacy questions: [email]. |
+
+### 19.7 الشروط والأحكام — مسودة 🆕 ❓
+
+> مسودة عامة يراجعها العميل أو محاميه. نفس الـ placeholders.
+
+**العنوان:** الشروط والأحكام · *Terms and conditions* — **آخر تحديث:** [التاريخ] · *Last updated: [date]*
+
+| # | AR | EN |
+|---|---|---|
+| 1 | **القبول** — باستخدامك موقع WaysZ Visa فأنت توافق على هذه الشروط. | **Acceptance** — By using the WaysZ Visa website you agree to these terms. |
+| 2 | **طبيعة الخدمة** — نقدم استشارات وإرشادًا وخدمات مساندة في إجراءات التأشيرات والهجرة، ونعمل كوكيل معتمد في برامج الإقامة والجنسية عن طريق الاستثمار التي نعلن عنها. قرارات منح التأشيرات والإقامات والجنسيات تصدرها الجهات الحكومية المختصة. | **Our service** — We provide consulting, guidance and support services for visa and immigration procedures, and act as an authorized agent for the residency and citizenship by investment programs we list. Visa, residence and citizenship decisions are issued by the competent government authorities. |
+| 3 | **المعلومات على الموقع** — المحتوى للتعريف العام، وقد تتغير متطلبات الدول. التفاصيل الخاصة بحالتك تُحدد في الاستشارة. | **Information on the site** — Content is for general information, and country requirements may change. The details for your case are set in your consultation. |
+| 4 | **مسؤوليتك** — تقديم معلومات ومستندات صحيحة وكاملة، والالتزام بالمواعيد التي يتم الاتفاق عليها. | **Your responsibility** — Providing accurate, complete information and documents, and keeping the agreed appointments. |
+| 5 | **الأتعاب والرسوم** — تُتفق أتعاب خدماتنا معك قبل البدء. رسوم السفارات ومراكز التقديم والجهات الحكومية والحجوزات تُدفع لأصحابها. | **Fees** — Our service fees are agreed with you before we start. Embassy, application-center, government and booking fees are paid to those parties. |
+| 6 | **الملكية الفكرية** — محتوى الموقع وتصميمه ملك WaysZ، ولا يجوز نسخه دون إذن. | **Intellectual property** — The site's content and design belong to WaysZ and may not be copied without permission. |
+| 7 | **الروابط الخارجية** — قد يحتوي الموقع على روابط لمواقع أخرى لسنا مسؤولين عن محتواها. | **External links** — The site may link to other websites whose content we're not responsible for. |
+| 8 | **التعديلات** — قد نحدّث هذه الشروط، ويظهر تاريخ آخر تحديث أعلى الصفحة. | **Changes** — We may update these terms; the last-updated date is shown at the top. |
+| 9 | **القانون والتواصل** — تخضع هذه الشروط لقوانين [الدولة] ❓. لأي سؤال: [البريد]. | **Law and contact** — These terms are governed by the laws of [country] ❓. Questions: [email]. |

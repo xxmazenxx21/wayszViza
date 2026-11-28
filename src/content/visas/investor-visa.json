@@ -1,0 +1,91 @@
+{
+  "kind": "category",
+  "group": "residence",
+  "order": 8,
+  "ar": {
+    "name": "تأشيرة المستثمر ورواد الأعمال",
+    "description": "تخطط للاستثمار في نشاط قائم أو لتأسيس مشروعك بالخارج؟ كثير من الدول تقدم تأشيرات لجذب المستثمرين ورواد الأعمال. نساعدك على فهم المسارات المتاحة وشروطها العامة، ونرشدك في تجهيز خطة العمل وإثبات الأموال والخبرة.",
+    "types": [
+      { "text": "تأشيرة رائد الأعمال لتأسيس مشروع جديد" },
+      { "text": "تأشيرة المستثمر في نشاط قائم" },
+      { "text": "تأشيرة المشروعات الناشئة المبتكرة، وغالبًا تحتاج دعم جهة حاضنة أو معتمدة" }
+    ],
+    "destinations": [
+      { "countries": ["ES", "CA", "AU", "US", "GB", "NZ", "DE", "AT", "SE", "FR", "BE"] }
+    ],
+    "audience": [
+      "المستثمرون الراغبون في ضخ رأس مال في نشاط بالخارج.",
+      "أصحاب الأعمال الذين يريدون التوسع أو تأسيس فرع بالخارج.",
+      "رواد المشروعات الناشئة أصحاب الأفكار المبتكرة."
+    ],
+    "help": [
+      "جلسة لفهم أهدافك الاستثمارية وخبرتك، وشرح المسارات المحتملة ومتطلباتها العامة.",
+      "الإرشاد في هيكل خطة العمل وما يُطلب عادةً أن توضحه.",
+      "تنظيم مستندات إثبات الأموال ومصدرها، وخبرتك في إدارة الأعمال.",
+      "التنسيق مع الاستشارات القانونية والترجمة المعتمدة عند الحاجة، ومتابعة خطوات التقديم معك."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "خطة عمل.",
+      "ما يثبت الأموال ومصدرها.",
+      "القوائم المالية أو مستندات نشاطك التجاري الحالي.",
+      "ما يثبت خبرتك في إدارة الأعمال.",
+      "شهادة الحالة الجنائية والفحص الطبي، إن طُلبا.",
+      "ما يثبت مستوى اللغة، إن طُلب."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف متطلبات الاستثمار ومجالاته المقبولة عادةً حسب الدولة والبرنامج.",
+    "faq": [
+      { "q": "ما الحد الأدنى للاستثمار المطلوب؟", "a": "يختلف من دولة لأخرى ومن برنامج لآخر، ويتغير من وقت لآخر. نوضح لك المتطلبات الحالية لوجهتك في الاستشارة." },
+      { "q": "هل تمنح هذه التأشيرات إقامة دائمة؟", "a": "بعضها قد يفتح طريقًا للتمديد أو الإقامة الدائمة بشروط. نشرح لك المسار المتوقع لكل برنامج." },
+      { "q": "هل تساعدونني في كتابة خطة العمل؟", "a": "نرشدك في هيكلها وما يجب أن توضحه، ويمكن التنسيق مع متخصصين لإعدادها." }
+    ],
+    "cta": {
+      "title": "مشروعك بالخارج يبدأ بخطة واضحة",
+      "text": "ابدأ استشارتك، ونرسم معك طريق تأشيرة المستثمر المناسب لك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Investor & Entrepreneur Visa",
+    "description": "Planning to invest in an existing business or start your own abroad? Many countries offer visas to attract investors and entrepreneurs. We help you understand the available paths and their general conditions, and guide you in preparing your business plan, proof of funds and experience.",
+    "types": [
+      { "text": "Entrepreneur visa for starting a new business" },
+      { "text": "Investor visa for an existing business" },
+      { "text": "Innovative start-up visa, often requiring endorsement from an incubator or approved body" }
+    ],
+    "destinations": [
+      { "countries": ["ES", "CA", "AU", "US", "GB", "NZ", "DE", "AT", "SE", "FR", "BE"] }
+    ],
+    "audience": [
+      "Investors looking to put capital into a business abroad.",
+      "Business owners who want to expand or open a branch abroad.",
+      "Start-up founders with innovative ideas."
+    ],
+    "help": [
+      "A session to understand your investment goals and experience, and to explain possible paths and their general requirements.",
+      "Guidance on how to structure your business plan and what it usually needs to show.",
+      "Organizing your proof of funds and their source, and your business management experience.",
+      "Coordinating legal advice and certified translation when needed, and following the application steps with you."
+    ],
+    "documents": [
+      "A valid passport.",
+      "A business plan.",
+      "Proof of funds and their source.",
+      "Financial statements or documents of your current business.",
+      "Proof of business management experience.",
+      "A police clearance certificate and medical exam, if required.",
+      "Proof of language level, if required."
+    ],
+    "documentsNote": "This list is a guide; investment requirements and eligible sectors usually vary by country and program.",
+    "faq": [
+      { "q": "What is the minimum investment?", "a": "It differs between countries and programs and changes over time. We explain your destination’s current requirements in your consultation." },
+      { "q": "Do these visas lead to permanent residence?", "a": "Some may open a path to extension or permanent residence under conditions. We explain the expected path for each program." },
+      { "q": "Can you help me write the business plan?", "a": "We guide you on its structure and what it should show, and can coordinate with specialists to prepare it." }
+    ],
+    "cta": {
+      "title": "Your business abroad starts with a clear plan",
+      "text": "Start your consultation, and we’ll map out the right investor visa path with you.",
+      "button": "Start your consultation"
+    }
+  }
+}

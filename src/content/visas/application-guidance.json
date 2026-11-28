@@ -2,7 +2,7 @@
   "kind": "service",
   "order": 3,
   "ar": {
-    "name": "الإرشاد في تعبئة الطلب",
+    "name": "الإرشاد في الطلب والخطابات",
     "description": "نرشدك خطوة بخطوة في تعبئة نموذج طلب التأشيرة، ونوضح المقصود بكل خانة، لتتجنب الأخطاء الشائعة مثل الخانات الفارغة أو التواريخ غير المتطابقة أو البيانات المتعارضة.",
     "audience": [
       "من يعبئ نموذج طلب تأشيرة لأول مرة.",
@@ -13,6 +13,8 @@
       "شرح أقسام النموذج والمقصود بكل خانة.",
       "الإرشاد في كتابة البيانات كما وردت في جواز السفر والمستندات.",
       "مراجعة النموذج معك قبل الإرسال، للتأكد من اكتماله واتساقه.",
+      "الإرشاد في كتابة خطاب الغرض من السفر بما يتسق مع بيانات الطلب ومستنداتك.",
+      "إعداد خط سير رحلة واضح يتوافق مع حجوزاتك ومدة إقامتك.",
       "توضيح خطوات ما بعد التعبئة، مثل حجز الموعد ودفع الرسوم عبر القنوات الرسمية."
     ],
     "documents": [
@@ -24,7 +26,7 @@
     ],
     "documentsNote": "يُعبأ النموذج ويُرسل باسمك عبر القنوات الرسمية؛ ولا تشارك كلمات المرور أو بيانات الدخول الخاصة بحساباتك مع أي أحد.",
     "faq": [
-      { "q": "هل تعبئون النموذج بدلًا مني؟", "a": "نرشدك ونراجع معك كل خانة، ويُقدَّم الطلب باسمك وعلى مسؤوليتك وفق إجراءات الجهة الرسمية." },
+      { "q": "هل تعبئون النموذج بدلًا مني؟", "a": "نرشدك ونراجع معك كل خانة حتى يكتمل النموذج ويتسق مع مستنداتك، ثم يُقدَّم الطلب باسمك وفق إجراءات الجهة الرسمية." },
       { "q": "ماذا لو اكتشفت خطأً بعد إرسال الطلب؟", "a": "تختلف إمكانية التعديل من جهة لأخرى؛ نوضح لك الخيارات المتاحة عادةً، ولهذا ننصح دائمًا بالمراجعة قبل الإرسال." },
       { "q": "هل يجب أن تتطابق بيانات النموذج مع المستندات؟", "a": "نعم؛ فالتعارض بين النموذج والمستندات من الأسباب الشائعة لتأخير الطلبات أو رفضها." }
     ],
@@ -35,7 +37,7 @@
     }
   },
   "en": {
-    "name": "Application Guidance",
+    "name": "Application & Cover Letter Guidance",
     "description": "We guide you step by step as you fill in the visa application form and explain what each field means, so you avoid common mistakes such as empty fields, dates that don’t match, or conflicting details.",
     "audience": [
       "People filling in a visa application form for the first time.",
@@ -46,6 +48,8 @@
       "Explaining the sections of the form and what each field means.",
       "Guidance on entering your details exactly as they appear in your passport and documents.",
       "Reviewing the form with you before you submit it, to check it is complete and consistent.",
+      "Guidance on writing your cover letter so it matches your application data and documents.",
+      "Preparing a clear itinerary that matches your bookings and length of stay.",
       "Explaining the steps after the form, such as booking the appointment and paying the fees through the official channels."
     ],
     "documents": [
@@ -57,7 +61,7 @@
     ],
     "documentsNote": "The form is filled in and submitted in your name through the official channels; never share your account passwords or login details with anyone.",
     "faq": [
-      { "q": "Do you fill in the form for me?", "a": "We guide you and review every field with you; the application is submitted in your name and under your responsibility, according to the official body’s procedures." },
+      { "q": "Do you fill in the form for me?", "a": "We guide you and review every field with you until the form is complete and matches your documents; the application is then submitted in your name, following the official body’s procedures." },
       { "q": "What if I find a mistake after submitting?", "a": "Whether you can correct it differs from one authority to another. We explain the options usually available, which is why we always recommend reviewing before you submit." },
       { "q": "Do the form details have to match my documents?", "a": "Yes. Inconsistencies between the form and the documents are a common reason for applications being delayed or refused." }
     ],

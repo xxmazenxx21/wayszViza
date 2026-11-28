@@ -1,0 +1,81 @@
+{
+  "kind": "category",
+  "group": "work",
+  "order": 6,
+  "ar": {
+    "name": "تأشيرة البحث عن عمل",
+    "description": "تريد دخول دولة للبحث عن عمل فيها بنفسك؟ بعض الدول تمنح أصحاب المؤهلات والخبرات المطلوبة تأشيرة مؤقتة لهذا الغرض. نساعدك على فهم شروطها العامة، وتجهيز ملف مؤهلاتك وخطة بحثك.",
+    "destinations": [
+      { "countries": ["DE", "AT", "SE", "PT", "NL", "BE"] }
+    ],
+    "audience": [
+      "أصحاب المؤهلات الجامعية أو المهنية والخبرات المطلوبة.",
+      "المهنيون الراغبون في استكشاف سوق العمل بالخارج قبل الحصول على عرض.",
+      "من يستوفي متطلبات اللغة أو يستعد لها."
+    ],
+    "help": [
+      "تقييم مبدئي لمؤهلاتك وخبراتك مقابل الشروط العامة لهذا النوع من التأشيرات.",
+      "الإرشاد في معادلة شهاداتك أو الاعتراف بها إن طُلب ذلك.",
+      "مساعدتك على إعداد خطة بحث عن عمل واضحة وإثبات القدرة على تغطية فترة الإقامة.",
+      "شرح ما يحدث عند حصولك على وظيفة، وخطوات الانتقال إلى تأشيرة العمل."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "الشهادات الدراسية أو المهنية، ومعادلتها إن طُلبت.",
+      "سيرة ذاتية بالصيغة المعتادة في الدولة المقصودة.",
+      "شهادات الخبرة وخطابات التوصية.",
+      "ما يثبت القدرة المالية لتغطية فترة البحث.",
+      "ما يثبت مستوى اللغة، إن طُلب.",
+      "تأمين صحي، إن طُلب."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف المتطلبات عادةً حسب الدولة ومجال عملك.",
+    "faq": [
+      { "q": "هل يسمح لي بالعمل بهذه التأشيرة؟", "a": "عادةً لا يُسمح بالعمل قبل الحصول على وظيفة وتغيير نوع الإقامة، والقواعد تختلف من دولة لأخرى. نوضح لك ما يخص وجهتك." },
+      { "q": "ماذا يحدث إذا وجدت وظيفة؟", "a": "تنتقل عادةً إلى تأشيرة أو إقامة عمل وفق إجراءات الدولة. نرشدك في هذه الخطوة أيضًا." },
+      { "q": "هل تناسبني هذه التأشيرة أم تأشيرة العمل؟", "a": "إن كان لديك عرض عمل فتأشيرة العمل غالبًا أنسب؛ وإن لم يكن، نقيّم معك فرص تأشيرة البحث عن عمل." }
+    ],
+    "cta": {
+      "title": "خطوتك المهنية القادمة قد تبدأ من هنا",
+      "text": "ابدأ استشارتك، ونقيّم معك فرصك ونرتب ملفك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Job Seeker Visa",
+    "description": "Want to enter a country to look for work there yourself? Some countries grant qualified, experienced professionals a temporary visa for this purpose. We help you understand its general conditions and prepare your qualifications file and job search plan.",
+    "destinations": [
+      { "countries": ["DE", "AT", "SE", "PT", "NL", "BE"] }
+    ],
+    "audience": [
+      "Holders of in-demand university or vocational qualifications and experience.",
+      "Professionals who want to explore a job market abroad before getting an offer.",
+      "Those who meet, or are preparing for, the language requirements."
+    ],
+    "help": [
+      "A preliminary assessment of your qualifications and experience against the general conditions of this visa type.",
+      "Guidance on having your certificates recognized, if required.",
+      "Helping you prepare a clear job search plan and proof that you can support yourself during your stay.",
+      "Explaining what happens once you find a job, and the steps to move to a work visa."
+    ],
+    "documents": [
+      "A valid passport.",
+      "Academic or vocational certificates, and their recognition if required.",
+      "A CV in the format usual in your destination.",
+      "Experience and reference letters.",
+      "Proof of funds to cover your search period.",
+      "Proof of language level, if required.",
+      "Health insurance, if required."
+    ],
+    "documentsNote": "This list is a guide; requirements usually vary by country and by your field.",
+    "faq": [
+      { "q": "Can I work on this visa?", "a": "Usually not before you find a job and change your residence status, and the rules differ between countries. We explain what applies to your destination." },
+      { "q": "What happens if I find a job?", "a": "You usually move to a work visa or permit under the country’s procedures. We guide you through that step too." },
+      { "q": "Is this visa or a work visa right for me?", "a": "If you have a job offer, a work visa usually fits better; if not, we assess your options for a job seeker visa with you." }
+    ],
+    "cta": {
+      "title": "Your next career move may start here",
+      "text": "Start your consultation, and we’ll assess your options and organize your file with you.",
+      "button": "Start your consultation"
+    }
+  }
+}

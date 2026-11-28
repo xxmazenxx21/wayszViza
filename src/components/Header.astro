@@ -4,9 +4,11 @@
  * «خدمات التأشيرات» = a link to /visa-services/ + the submenu built like WaysZ's «خدماتنا» (`.has-sub` / `.sub`:
  * opens on hover and keyboard focus, no JS needed on wide screens). On top of it: a caret button (aria-expanded) that
  * toggles it — the only way to open it in the mobile menu — Esc closes it, ↑/↓ move between its links.
- * Two labelled groups from src/content/visas/: «أنواع التأشيرات» (kind 'category') · «خدماتنا» (kind 'service').
+ * Two labelled groups from src/content/visas/ (brief v3 §1): «أنواع التأشيرات» (kind 'category', in its four groups
+ * زيارة · دراسة · عمل · إقامة واستثمار) · «خدماتنا» (kind 'service'). Desktop: three columns (types take two).
  */
 import { getCollection } from 'astro:content';
+import { visaGroups } from '../content.config';
 import Logo from './Logo.astro';
 import { site } from '../lib/site';
 import { languages, localizePath, otherLang, switchLangPath, useTranslations, type Lang } from '../i18n';
@@ -21,18 +23,18 @@ const to = otherLang(lang);
 const here = Astro.url.pathname;
 
 const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
-const group = (kind: 'category' | 'service') => visas
-  .filter((v) => v.data.kind === kind)
-  .map((v) => ({ href: localizePath(`/visa-services/${v.id}/`, lang), label: v.data[lang].name }));
-const groups = [
-  { id: 'sub-categories', label: t.nav.categories, items: group('category') },
-  { id: 'sub-services', label: t.nav.services, items: group('service') },
-];
+const item = (v: (typeof visas)[number]) => ({ href: localizePath(`/visa-services/${v.id}/`, lang), label: v.data[lang].name });
+const categorySets = visaGroups.map((g) => ({
+  id: `sub-group-${g}`, label: t.nav.groups[g],
+  items: visas.filter((v) => v.data.kind === 'category' && v.data.group === g).map(item),
+}));
+const services = visas.filter((v) => v.data.kind === 'service').map(item);
 
-// الرئيسية · خدمات التأشيرات ▾ · من نحن · تواصل معنا · WaysZ (external, the sister site)
+// الرئيسية · خدمات التأشيرات ▾ · اعرف تأشيرتك · من نحن · تواصل معنا · WaysZ (external, the sister site)
 const links = [
   { href: localizePath('/', lang), label: t.nav.home },
   { href: localizePath('/visa-services/', lang), label: t.nav.visaServices, sub: true },
+  { href: localizePath('/assessment/', lang), label: t.nav.findVisa },
   { href: localizePath('/about/', lang), label: t.nav.about },
   { href: localizePath('/contact/', lang), label: t.nav.contact },
 ];
@@ -61,14 +63,25 @@ const isCurrent = (href: string) =>
                   </button>
                 </span>
                 <div class="sub" id="sub-visas">
-                  {groups.map((g) => (
-                    <div class="sub__group">
-                      <p class="sub__label" id={g.id}>{g.label}</p>
-                      <ul role="list" aria-labelledby={g.id}>
-                        {g.items.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
-                      </ul>
+                  <div class="sub__group sub__group--types">
+                    <p class="sub__label">{t.nav.categories}</p>
+                    <div class="sub__sets">
+                      {categorySets.map((g) => (
+                        <div class="sub__set">
+                          <p class="sub__set-label" id={g.id}>{g.label}</p>
+                          <ul role="list" aria-labelledby={g.id}>
+                            {g.items.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+                  <div class="sub__group">
+                    <p class="sub__label" id="sub-services">{t.nav.services}</p>
+                    <ul role="list" aria-labelledby="sub-services">
+                      {services.map((i) => <li><a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>{i.label}</a></li>)}
+                    </ul>
+                  </div>
                 </div>
               </>
             ) : (
@@ -196,25 +209,31 @@ const isCurrent = (href: string) =>
   .has-sub[data-sub-open='true'] .sub-toggle__caret { rotate: 180deg; }
   .sub__label { font-size: var(--text-xs); color: var(--color-ink-muted); margin-block-end: var(--space-2); }
   .sub__group ul { display: grid; gap: var(--space-1); }
+  .sub__sets { display: grid; gap: var(--space-4); }
+  .sub__set-label { font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--color-ink); margin-block-end: var(--space-1); }
   .nav-cta { display: none; }
   @media (min-width: 1024px) {
+    /* the longer list (9 types in 4 groups + 9 services) opens as one panel centred under the header */
+    .has-sub { position: static; }
     .site-nav .sub {
-      position: absolute; inset-inline-start: calc(-1 * var(--space-4)); top: 100%;
-      display: grid; grid-template-columns: repeat(2, minmax(14rem, 1fr)); gap: var(--space-5);
+      position: absolute; top: 100%; inset-inline: 0; margin-inline: auto;
+      display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-5);
+      width: min(54rem, var(--container));
       padding: var(--space-4);
-      margin-block-start: var(--space-3);
       background: var(--color-bg-alt); border: 1px solid var(--color-border); border-radius: var(--radius-md);
       box-shadow: var(--shadow-lg);
       opacity: 0; visibility: hidden; translate: 0 -6px;
       transition: opacity var(--dur-fast) var(--ease-out), translate var(--dur-fast) var(--ease-out), visibility var(--dur-fast);
     }
-    .site-nav .sub::before { content: ''; position: absolute; inset: calc(-1 * var(--space-3)) 0 100% 0; }  /* hover bridge */
+    .site-nav .sub::before { content: ''; position: absolute; inset: -32px 0 100% 0; }  /* hover bridge up to the menu item */
     .has-sub:not([data-sub-hold]):hover .sub, .has-sub:not([data-sub-hold]):focus-within .sub,
     .has-sub[data-sub-open='true'] .sub { opacity: 1; visibility: visible; translate: 0 0; }
     .site-nav .sub ul { display: grid; gap: var(--space-1); }
     .site-nav .sub a { display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); }
     .site-nav .sub a:hover { background: var(--color-surface); }
-    .site-nav .sub__label { padding-inline: var(--space-3); }
+    .site-nav .sub__label, .site-nav .sub__set-label { padding-inline: var(--space-3); }
+    .site-nav .sub__sets { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); }
+    .site-nav .sub__group + .sub__group { border-inline-start: 1px solid var(--color-border); padding-inline-start: var(--space-5); }
   }
 
   .site-header__actions { display: flex; align-items: center; gap: var(--space-4); }

@@ -2,7 +2,7 @@
   "kind": "service",
   "order": 4,
   "ar": {
-    "name": "الاستعداد للموعد",
+    "name": "الاستعداد للموعد والمقابلة",
     "description": "نجهزك لموعد التقديم أو المقابلة: ما الذي تحضره معك، وكيف ترتب مستنداتك، وكيف تجيب عن الأسئلة المتوقعة بوضوح وصدق.",
     "audience": [
       "من لديه موعد تقديم أو مقابلة ويريد أن يذهب مستعدًا.",
@@ -13,6 +13,7 @@
       "قائمة بما تحضره يوم الموعد، وترتيب مستنداتك بحيث يسهل الوصول إليها.",
       "شرح ما يحدث عادةً في الموعد، مثل تسليم المستندات وأخذ البصمات والصورة.",
       "التدرب على الأسئلة المتوقعة حسب نوع تأشيرتك، وكيف تجيب بإيجاز وصدق.",
+      "جلسة مقابلة تجريبية على الأسئلة المتوقعة لنوع تأشيرتك، مع ملاحظات واضحة على إجاباتك.",
       "مراجعة اتساق إجاباتك مع ما ورد في طلبك ومستنداتك."
     ],
     "documents": [
@@ -35,7 +36,7 @@
     }
   },
   "en": {
-    "name": "Appointment Preparation",
+    "name": "Appointment & Interview Preparation",
     "description": "We prepare you for your application appointment or interview: what to bring, how to organize your documents, and how to answer the expected questions clearly and honestly.",
     "audience": [
       "People with an application appointment or interview who want to arrive prepared.",
@@ -46,6 +47,7 @@
       "A list of what to bring on the day, and organizing your documents so they are easy to reach.",
       "Explaining what usually happens at the appointment, such as handing in documents and giving fingerprints and a photo.",
       "Practicing the questions expected for your visa type, and how to answer briefly and honestly.",
+      "A mock interview on the questions usually asked for your visa type, with clear feedback on your answers.",
       "Checking that your answers are consistent with your application and documents."
     ],
     "documents": [

@@ -1,12 +1,12 @@
 ---
 /**
- * Contact Us. Skeleton (no design yet). Intro = brief part 03 (WaysZ) §5 intro adapted to WaysZ Visa.
- * Contact items (§5.1–5.4) and quick buttons (part 05) come ONLY from src/lib/site.ts: an empty value is not rendered
- * (TODO(client): all empty for now, so only the placeholders show). Visa requests go to /consultation/ — no form here.
+ * Contact Us (brief v3 §14, §19.4). Skeleton (no design yet): every block is a <TodoSection> carrying its copy.
+ * Contact data, branches and social links come ONLY from src/lib/site.ts (TODO(client): placeholders until the client
+ * sends the new entity's data); an empty value is not rendered. Visa requests go to /consultation/ — no form here.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TodoSection from '../components/TodoSection.astro';
-import { site, telHref, waHref } from '../lib/site';
+import { site, telHref, waHref, type SocialNetwork } from '../lib/site';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -17,25 +17,33 @@ const copy = {
   ar: {
     title: 'تواصل معنا',
     lead: 'يسعدنا تواصلك. أخبرنا باستفسارك، وسيتواصل معك فريق WaysZ Visa في أقرب وقت ممكن.',
-    phone: 'الهاتف', email: 'البريد الإلكتروني', whatsapp: 'واتساب',
+    phone: 'الهاتف', whatsapp: 'واتساب', email: 'البريد الإلكتروني', address: 'العنوان', hours: 'مواعيد العمل',
+    branches: 'فروعنا', map: 'افتح الخريطة',
     cardTitle: 'لديك طلب تأشيرة؟',
     cardText: 'لطلبات التأشيرة، املأ نموذج طلب الاستشارة بتفاصيل سفرك، وسيتواصل معك أحد مستشارينا لتحديد الخطوات المناسبة لحالتك.',
+    toolTitle: 'لست متأكدًا من نوع تأشيرتك؟',
+    toolText: 'جرّب «اعرف تأشيرتك» في أقل من دقيقة.',
   },
   en: {
     title: 'Contact us',
     lead: 'We’re glad to hear from you. Tell us your question, and the WaysZ Visa team will contact you as soon as possible.',
-    phone: 'Phone', email: 'Email', whatsapp: 'WhatsApp',
+    phone: 'Phone', whatsapp: 'WhatsApp', email: 'Email', address: 'Address', hours: 'Working hours',
+    branches: 'Our branches', map: 'Open map',
     cardTitle: 'Have a visa request?',
-    cardText: 'For visa requests, fill in the consultation request form with the details of your trip, and one of our consultants will contact you to set the right next steps for your case.',
+    cardText: 'Fill in the consultation request form with your trip details, and one of our consultants will contact you to set the right next steps.',
+    toolTitle: 'Not sure which visa you need?',
+    toolText: 'Try «Find your visa» in under a minute.',
   },
 }[lang];
 
-// §5.2 phone · §5.3 email · §5.4 WhatsApp — rendered only when site.ts has a value
+// phone · WhatsApp · email (links, LTR) · address · working hours — rendered only when site.ts has a value
 const phone: string = site.phone, email: string = site.email, whatsapp: string = site.whatsapp;
 const items = [
-  { label: copy.phone, value: phone, href: telHref(phone) },
-  { label: copy.email, value: email, href: `mailto:${email}` },
-  { label: copy.whatsapp, value: whatsapp, href: waHref(whatsapp, t.whatsapp.message) },
+  { label: copy.phone, value: phone, href: telHref(phone), ltr: true },
+  { label: copy.whatsapp, value: whatsapp && `+${whatsapp}`, href: waHref(whatsapp, t.whatsapp.message), ltr: true },
+  { label: copy.email, value: email, href: `mailto:${email}`, ltr: true },
+  { label: copy.address, value: site.address[lang] as string },
+  { label: copy.hours, value: site.hours[lang] as string },
 ].filter((i) => i.value);
 // part 05: «اتصل بنا» — «راسلنا على واتساب» — «أرسل بريدًا إلكترونيًا»
 const buttons = [
@@ -43,6 +51,7 @@ const buttons = [
   { label: t.cta.whatsapp, value: whatsapp, href: waHref(whatsapp, t.whatsapp.message), cls: 'btn--dark' },
   { label: t.cta.email, value: email, href: `mailto:${email}`, cls: 'btn--ghost' },
 ].filter((b) => b.value);
+const social = (Object.entries(site.social) as [SocialNetwork, string][]).filter(([, href]) => href);
 ---
 <BaseLayout lang={lang} title={t.pages.contact.title} description={t.pages.contact.description}>
   <header class="intro container stack">
@@ -50,17 +59,40 @@ const buttons = [
     <p class="lead">{copy.lead}</p>
   </header>
 
-  <TodoSection ref="5.1" title="بيانات التواصل — الهاتف · البريد الإلكتروني · واتساب (src/lib/site.ts)">
+  <TodoSection ref="19.4" title={`${copy.phone} · ${copy.whatsapp} · ${copy.email} · ${copy.address} · ${copy.hours}`}>
     {items.length > 0 && (
       <dl class="items">
         {items.map((i) => (
-          <div><dt>{i.label}</dt><dd><a href={i.href} dir="ltr"><bdi>{i.value}</bdi></a></dd></div>
+          <div><dt>{i.label}</dt><dd>{i.href
+            ? <a href={i.href} dir={i.ltr ? 'ltr' : undefined} rel="noopener"><bdi>{i.value}</bdi></a>
+            : i.value}</dd></div>
         ))}
       </dl>
     )}
   </TodoSection>
 
-  <TodoSection ref="5.6" title="أزرار الاتصال السريع — اتصل بنا · راسلنا على واتساب · أرسل بريدًا إلكترونيًا">
+  <TodoSection ref="19.4" title={copy.branches}>
+    <h2>{copy.branches}</h2>
+    <ul class="branches" role="list">
+      {site.branches.map((b) => (
+        <li class="stack">
+          <h3>{b.name[lang]}</h3>
+          <p>{b.address[lang]}</p>
+          <p>{b.hours[lang]}</p>
+          <p><a href={b.mapUrl} rel="noopener">{copy.map}</a></p>
+        </li>
+      ))}
+    </ul>
+  </TodoSection>
+
+  <TodoSection ref="19.4" title={t.footer.social}>
+    <h2>{t.footer.social}</h2>
+    <ul class="social" role="list">
+      {social.map(([net, href]) => <li><a href={href} rel="noopener">{t.social[net]}</a></li>)}
+    </ul>
+  </TodoSection>
+
+  <TodoSection ref="19.4" title={buttons.map((b) => b.label).join(' · ')}>
     {buttons.length > 0 && (
       <p class="actions">
         {buttons.map((b) => <a class:list={['btn', b.cls]} href={b.href} rel="noopener" data-magnetic>{b.label}</a>)}
@@ -68,15 +100,22 @@ const buttons = [
     )}
   </TodoSection>
 
-  <TodoSection ref="contact.card" title="بطاقة طلب الاستشارة → /consultation/">
+  <TodoSection ref="19.4" title={copy.cardTitle}>
     <h2>{copy.cardTitle}</h2>
     <p>{copy.cardText}</p>
     <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)} data-magnetic>{t.cta.request}</a></p>
+  </TodoSection>
+
+  <TodoSection ref="19.4" title={copy.toolTitle}>
+    <h2>{copy.toolTitle}</h2>
+    <p>{copy.toolText}</p>
+    <p><a class="btn btn--ghost" href={localizePath('/assessment/', lang)}>{t.nav.findVisa}</a></p>
   </TodoSection>
 </BaseLayout>
 
 <style>
   .intro { padding-block: 160px var(--space-6); }
   .items { display: grid; gap: var(--space-3); }
+  .branches, .social { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-5); }
   .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
 </style>

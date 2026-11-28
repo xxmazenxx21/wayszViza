@@ -1,0 +1,68 @@
+{
+  "kind": "service",
+  "order": 9,
+  "ar": {
+    "name": "تأشيرات الشركات والوفود",
+    "description": "تسافر فرق عملك لاجتماعات أو مشروعات أو معارض ومؤتمرات بالخارج؟ ننسق ملفات تأشيرات موظفيك أو وفدك في مكان واحد: قوائم مستندات موحدة، ومتابعة لكل مسافر، وتواصل واحد مع مسؤول السفر لديك.",
+    "audience": [
+      "الشركات التي يسافر موظفوها بانتظام.",
+      "الجهات المشاركة بوفود في المعارض والمؤتمرات الدولية.",
+      "منظمو الفعاليات الذين يستقبلون أو يرسلون وفودًا."
+    ],
+    "help": [
+      "تحديد نوع التأشيرة المناسب لكل مسافر حسب غرض الرحلة ووضعه.",
+      "قوائم مستندات موحدة لخطابات الشركة والدعوات وبيانات المسافرين.",
+      "تنسيق المواعيد والملفات لعدة مسافرين بالتوازي.",
+      "تقرير متابعة واضح لمسؤول السفر بحالة تجهيز كل ملف."
+    ],
+    "documents": [
+      "قائمة المسافرين ووظائفهم.",
+      "خطاب الشركة الموفدة.",
+      "خطابات الدعوة من الجهة المضيفة أو منظم الفعالية.",
+      "ما يثبت التسجيل في الفعالية، إن وُجد.",
+      "مستندات الشركة الرسمية، إن طُلبت."
+    ],
+    "documentsNote": "يحتاج كل مسافر أيضًا مستنداته الشخصية حسب نوع تأشيرته.",
+    "faq": [
+      { "q": "متى نبدأ تجهيز ملفات الوفد؟", "a": "كلما كان أبكر كان أفضل، خاصة قبل الفعاليات الكبرى ومواسم الذروة." },
+      { "q": "هل تتعاملون مع شخص واحد من الشركة؟", "a": "نعم، نتواصل مع منسق واحد، ونتابع مع كل مسافر ما يخص مستنداته الشخصية." }
+    ],
+    "cta": {
+      "title": "سفر فريقك بخطة واحدة واضحة",
+      "text": "تواصل معنا، ونرتب ملفات تأشيرات فريقك أو وفدك.",
+      "button": "اطلب استشارة"
+    }
+  },
+  "en": {
+    "name": "Corporate & Delegation Visas",
+    "description": "Does your team travel abroad for meetings, projects, exhibitions or conferences? We coordinate visa files for your staff or delegation in one place: unified document lists, follow-up for each traveler and a single point of contact with your travel coordinator.",
+    "audience": [
+      "Companies whose staff travel regularly.",
+      "Organizations sending delegations to international exhibitions and conferences.",
+      "Event organizers sending or receiving delegations."
+    ],
+    "help": [
+      "Identifying the right visa type for each traveler by trip purpose and situation.",
+      "Unified document lists for company letters, invitations and traveler details.",
+      "Coordinating appointments and files for several travelers in parallel.",
+      "A clear progress report for your travel coordinator on each file’s readiness."
+    ],
+    "documents": [
+      "The list of travelers and their roles.",
+      "A letter from the sending company.",
+      "Invitation letters from the host or event organizer.",
+      "Proof of event registration, if any.",
+      "Official company documents, if required."
+    ],
+    "documentsNote": "Each traveler also needs their own personal documents for their visa type.",
+    "faq": [
+      { "q": "When should we start preparing the delegation’s files?", "a": "The earlier the better, especially before major events and peak seasons." },
+      { "q": "Do you work with one contact at the company?", "a": "Yes, we coordinate with one point of contact and follow up with each traveler on their personal documents." }
+    ],
+    "cta": {
+      "title": "Your team’s travel, on one clear plan",
+      "text": "Contact us, and we’ll organize your team’s or delegation’s visa files.",
+      "button": "Request a consultation"
+    }
+  }
+}

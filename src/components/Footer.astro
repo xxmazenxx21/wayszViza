@@ -1,14 +1,33 @@
 ---
-/** Site footer (brief part 01 §ثانيًا «Footer»). The plane "lands" here: motion/scenes/footer-landing.ts */
+/**
+ * Site footer (brief v3 §1 «الفوتر»). Columns: quick links · visa types · our services · contact (src/lib/site.ts) ·
+ * social; bottom row: privacy · terms · «جزء من WaysZ» + copyright. The plane "lands" here: motion/scenes/footer-landing.ts
+ */
+import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
-import { site, telHref, waHref } from '../lib/site';
+import { site, telHref, waHref, type SocialNetwork } from '../lib/site';
 import { localizePath, useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
-const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[lang] || site.hours[lang]);   // TODO(client): empty until site.ts is filled
+
+const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
+const list = (kind: 'category' | 'service') => visas
+  .filter((v) => v.data.kind === kind)
+  .map((v) => ({ href: localizePath(`/visa-services/${v.id}/`, lang), label: v.data[lang].name }));
+
+const quick = [
+  { href: localizePath('/', lang), label: t.nav.home },
+  { href: localizePath('/visa-services/', lang), label: t.nav.visaServices },
+  { href: localizePath('/assessment/', lang), label: t.nav.findVisa },
+  { href: localizePath('/consultation/', lang), label: t.nav.consult },
+  { href: localizePath('/about/', lang), label: t.nav.about },
+  { href: localizePath('/contact/', lang), label: t.nav.contact },
+];
+const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[lang] || site.hours[lang]);
+const social = (Object.entries(site.social) as [SocialNetwork, string][]).filter(([, href]) => href);
 ---
 <footer class="site-footer theme-dark" data-scene="footer-landing">
   <!-- touchdown: runway centre line + threshold lights (decorative) -->
@@ -21,38 +40,49 @@ const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[
 
     <nav aria-label={t.footer.quickLinks}>
       <h2>{t.footer.quickLinks}</h2>
-      <ul role="list">
-        <li><a href={localizePath('/', lang)}>{t.nav.home}</a></li>
-        <li><a href={localizePath('/visa-services/', lang)}>{t.nav.visaServices}</a></li>
-        <li><a href={localizePath('/consultation/', lang)}>{t.nav.consult}</a></li>
-        <li><a href={localizePath('/about/', lang)}>{t.nav.about}</a></li>
-        <li><a href={localizePath('/contact/', lang)}>{t.nav.contact}</a></li>
-      </ul>
+      <ul role="list">{quick.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+    </nav>
+
+    <nav aria-label={t.nav.categories}>
+      <h2>{t.nav.categories}</h2>
+      <ul role="list">{list('category').map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+    </nav>
+
+    <nav aria-label={t.nav.services}>
+      <h2>{t.nav.services}</h2>
+      <ul role="list">{list('service').map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
     </nav>
 
     {hasContact && <div>
       <h2>{t.footer.contact}</h2>
       <ul role="list">
-        {site.email && <li><a href={`mailto:${site.email}`}><bdi>{site.email}</bdi></a></li>}
-        {site.phone && <li><a href={telHref(site.phone)}><bdi>{site.phone}</bdi></a></li>}
+        {site.phone && <li><a href={telHref(site.phone)} dir="ltr"><bdi>{site.phone}</bdi></a></li>}
         {site.whatsapp && <li><a href={waHref(site.whatsapp, t.whatsapp.message)} rel="noopener">{t.cta.whatsapp}</a></li>}
+        {site.email && <li><a href={`mailto:${site.email}`}><bdi>{site.email}</bdi></a></li>}
         {site.address[lang] && <li>{site.address[lang]}</li>}
         {site.hours[lang] && <li>{site.hours[lang]}</li>}
+        {site.branches.map((b) => <li><a href={b.mapUrl} rel="noopener">{b.name[lang]}</a></li>)}
       </ul>
     </div>}
 
-    <!-- brief part 04 §1.9: link to the main site -->
-    <div>
-      <h2>{t.mainSite.title}</h2>
+    {social.length > 0 && <div>
+      <h2>{t.footer.social}</h2>
       <ul role="list">
-        <li><a href={site.mainSite} rel="noopener">{t.cta.visitMain}</a></li>
+        {social.map(([net, href]) => <li><a href={href} rel="noopener">{t.social[net]}</a></li>)}
       </ul>
-    </div>
+    </div>}
   </div>
 
   <div class="container site-footer__bottom">
+    <nav aria-label={t.footer.legal}>
+      <ul role="list" class="site-footer__legal">
+        <li><a href={localizePath('/privacy/', lang)}>{t.nav.privacy}</a></li>
+        <li><a href={localizePath('/terms/', lang)}>{t.nav.terms}</a></li>
+        <!-- brief part 04 §1.9: link to the main site -->
+        <li><a href={site.mainSite} rel="noopener">{t.mainSite.title}</a></li>
+      </ul>
+    </nav>
     <p>© {year} {site.name}. {t.footer.rights}</p>
-    <!-- TODO: privacy policy + terms pages (not in the brief yet), then link them here -->
   </div>
 </footer>
 
@@ -70,27 +100,41 @@ const hasContact = !!(site.email || site.phone || site.whatsapp || site.address[
     mask: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
   }
   .site-footer__grid {
-    display: grid; gap: var(--space-7);
-    grid-template-columns: 1.6fr repeat(3, 1fr);
+    display: grid; gap: var(--space-7) var(--space-6);
+    grid-template-columns: 1fr 1fr;
   }
+  .site-footer__brand { grid-column: 1 / -1; }
   .site-footer__brand p { color: var(--color-ink-muted); max-width: 42ch; margin-block-start: var(--space-5); }
   .site-footer :global(.site-footer__mark) { width: 120px; }
   .site-footer h2 { font-size: var(--text-base); margin-block-end: var(--space-4); }
   .site-footer ul { display: grid; gap: var(--space-2); }
+  .site-footer li { color: var(--color-ink-muted); }
   .site-footer a { color: var(--color-ink-muted); text-decoration: none; }
   .site-footer a:hover { color: var(--color-ink); }
   .site-footer__bottom {
     margin-block-start: var(--space-8); padding-block-start: var(--space-5);
     border-block-start: 1px solid var(--color-border);
-    display: grid; gap: var(--space-2);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6);
     color: var(--color-ink-muted); font-size: var(--text-xs);
   }
-  @media (max-width: 1023px) {
-    .site-footer__grid { grid-template-columns: 1fr 1fr; }
-    .site-footer__brand { grid-column: 1 / -1; }
-  }
-  /* Curtain reveal on desktop (footer shorter than the viewport) */
+  .site-footer .site-footer__legal { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
   @media (min-width: 1024px) {
+    /* 9 types + 9 services: smaller, tighter lists and a one-line brand row keep the footer short */
+    .site-footer__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: var(--space-6); }
+    .site-footer__brand { display: flex; align-items: center; gap: var(--space-6); }
+    .site-footer__brand p { margin-block-start: 0; }
+    .site-footer :global(.site-footer__mark) { width: 96px; flex: none; }
+    .site-footer__grid ul { gap: var(--space-1); font-size: var(--text-sm); line-height: 1.55; }
+    .site-footer__grid h2 { margin-block-end: var(--space-3); }
+    .site-footer__bottom { margin-block-start: var(--space-7); }
+  }
+  @media (min-width: 1440px) {
+    .site-footer__grid { grid-template-columns: 1.3fr repeat(5, minmax(0, 1fr)); }
+    .site-footer__brand { grid-column: auto; display: block; }
+    .site-footer__brand p { margin-block-start: var(--space-5); }
+  }
+  /* Curtain reveal on desktop — only where the whole footer fits the screen (it is taller than before: 9 + 9 links) */
+  @media (min-width: 1024px) and (min-height: 860px) {
     .site-footer { position: sticky; bottom: 0; z-index: 0; }
   }
 </style>

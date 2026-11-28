@@ -1,11 +1,20 @@
 {
   "kind": "category",
-  "order": 3,
+  "group": "residence",
+  "order": 7,
   "ar": {
-    "name": "تأشيرة الهجرة والإقامة",
-    "description": "تفكر في الإقامة الطويلة أو العمل أو الاستقرار في دولة أخرى؟ نساعدك على فهم البرامج والمسارات المتاحة لوضعك وشروطها العامة، ونرشدك في تجهيز ملفك خطوة بخطوة.",
+    "name": "الهجرة والإقامة الدائمة",
+    "description": "تفكر في الاستقرار طويل المدى أو الإقامة الدائمة في دولة أخرى مع أسرتك؟ نساعدك على فهم مسارات الهجرة المتاحة لوضعك، مثل مسارات الكفاءات والترشيح الإقليمي، وشروطها العامة، ونرشدك في تجهيز ملفك خطوة بخطوة.",
+    "types": [
+      { "text": "مسارات الكفاءات المهنية (أنظمة النقاط)" },
+      { "text": "مسارات الترشيح الإقليمي أو المحلي" },
+      { "text": "الإقامة الدائمة عبر الأسرة" }
+    ],
+    "destinations": [
+      { "countries": ["CA", "AU", "NZ"] }
+    ],
     "audience": [
-      "الراغبون في العمل بالخارج، خاصة من لديهم عقد أو عرض وظيفي.",
+      "أصحاب الكفاءات والخبرات المهنية الراغبون في الهجرة عبر أنظمة النقاط أو الترشيح الإقليمي.",
       "الراغبون في الإقامة الطويلة أو الاستقرار مع أسرهم بالخارج.",
       "من يريد فهم الخيارات المتاحة له قبل أن يتخذ قراره."
     ],
@@ -25,7 +34,7 @@
     ],
     "documentsNote": "القائمة استرشادية؛ وتختلف برامج الهجرة والإقامة ومتطلباتها كثيرًا حسب الدولة والبرنامج ووضع المتقدم.",
     "faq": [
-      { "q": "هل تساعدونني في إيجاد وظيفة بالخارج؟", "a": "لا؛ خدمتنا استشارية وإرشادية في إجراءات التأشيرة والإقامة. وإذا كان لديك عرض عمل، نساعدك على فهم متطلبات تأشيرته وتجهيز ملفك." },
+      { "q": "لدي عرض عمل أو أريد البحث عن عمل، هل هذه الصفحة تناسبني؟", "a": "للعمل بعرض من صاحب عمل تناسبك تأشيرة العمل، وللبحث عن عمل بنفسك تأشيرة البحث عن عمل، ونرشدك في كلتيهما. أما إن كان هدفك الاستقرار الدائم مع أسرتك، فهذه صفحتك، ونوضح لك مسارات الكفاءات والترشيح الإقليمي." },
       { "q": "كيف أعرف المسار المناسب لي؟", "a": "نبدأ بجلسة نفهم فيها هدفك وتعليمك وخبرتك ووضعك العائلي، ثم نوضح لك المسارات المحتملة ومتطلباتها العامة، ويبقى القرار النهائي لك." },
       { "q": "هل يمكن أن تتغير الشروط أثناء تجهيز ملفي؟", "a": "نعم، فقد تعدّل الجهات الرسمية متطلباتها في أي وقت؛ لذلك نراجع المعلومات معك، ونرشدك إلى التحقق منها في المصدر الرسمي قبل التقديم." }
     ],
@@ -36,10 +45,18 @@
     }
   },
   "en": {
-    "name": "Immigration & Residence Visa",
-    "description": "Thinking about a long stay, working or settling in another country? We help you understand the programs and paths open to someone in your situation and their general conditions, and guide you as you prepare your file step by step.",
+    "name": "Immigration & Permanent Residence",
+    "description": "Thinking about settling long-term or gaining permanent residence in another country with your family? We help you understand the immigration paths open to you, such as skilled and regional-nomination routes, and their general conditions, and guide you as you prepare your file step by step.",
+    "types": [
+      { "text": "Skilled-worker paths (points-based systems)" },
+      { "text": "Regional or provincial nomination paths" },
+      { "text": "Family-based permanent residence" }
+    ],
+    "destinations": [
+      { "countries": ["CA", "AU", "NZ"] }
+    ],
     "audience": [
-      "People who want to work abroad, especially those with a contract or job offer.",
+      "Skilled professionals who want to immigrate through points-based or regional-nomination systems.",
       "People who want a long stay abroad or to settle there with their family.",
       "Anyone who wants to understand their options before making a decision."
     ],
@@ -59,7 +76,7 @@
     ],
     "documentsNote": "This list is for guidance only; immigration and residence programs and their requirements vary widely by country, program and the applicant’s situation.",
     "faq": [
-      { "q": "Do you help me find a job abroad?", "a": "No. Our service is advisory and guidance on visa and residence procedures. If you have a job offer, we help you understand the requirements of its visa and prepare your file." },
+      { "q": "I have a job offer, or want to look for work. Is this the right page?", "a": "To work on an offer from an employer, a work visa fits you; to look for work yourself, a job seeker visa does, and we guide you through both. If your goal is to settle permanently with your family, this is your page, and we explain the skilled and regional-nomination routes." },
       { "q": "How do I know which path suits me?", "a": "We start with a session to understand your goal, education, experience and family situation, then explain the possible paths and their general requirements. The final decision is always yours." },
       { "q": "Can the conditions change while I am preparing my file?", "a": "Yes. Official bodies may change their requirements at any time, so we review the information with you and guide you to check it with the official source before you apply." }
     ],

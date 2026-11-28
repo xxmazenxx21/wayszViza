@@ -1,0 +1,69 @@
+---
+/**
+ * Privacy policy (brief v3 §15, §19.6). The DRAFT of §19.6 as plain text, for the client (or his lawyer) to review.
+ * TODO(client): the legal entity name and the last-updated date; the privacy email comes from src/lib/site.ts.
+ * Design: a later step.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const entity = { ar: '[اسم الكيان]', en: '[entity name]' }[lang];     // TODO(client): legal name of the new entity
+const updated = { ar: '[التاريخ]', en: '[date]' }[lang];              // TODO(client): date of the approved text
+
+// {email} = site.email (rendered as a mailto link)
+const copy = {
+  ar: {
+    title: 'سياسة الخصوصية', updatedLabel: 'آخر تحديث:',
+    items: [
+      ['من نحن', `هذا الموقع تديره ${entity} تحت اسم WaysZ Visa، وهي جزء من WaysZ. توضح هذه السياسة كيف نتعامل مع بياناتك عند استخدامك الموقع.`],
+      ['البيانات التي نجمعها', 'ما تكتبه في نموذج طلب الاستشارة: الاسم، ورقم الهاتف، والبريد الإلكتروني، وبلد الإقامة، والوجهة، ونوع التأشيرة، والخدمات المطلوبة، وتفاصيل الرحلة، ووصف استفسارك. لا نطلب أي مستندات عبر الموقع. أداة «اعرف تأشيرتك» تعمل داخل متصفحك ولا ترسل إجاباتك إلينا إلا إذا أكملت طلب الاستشارة.'],
+      ['لماذا نستخدمها', 'للتواصل معك بخصوص طلبك، وتجهيز استشارتك، وتقديم الخدمات التي تطلبها. لا نبيع بياناتك ولا نستخدمها لأغراض لا علاقة لها بطلبك.'],
+      ['مشاركة البيانات', 'لا نشارك بياناتك إلا بالقدر اللازم لتقديم خدمتك، مثل مزودي الخدمات التقنية الذين يستقبلون رسائل النموذج، أو الجهات التي تطلب منا التعامل معها بخصوص ملفك.'],
+      ['مدة الاحتفاظ', 'نحتفظ ببياناتك طوال فترة التعامل معك، ثم للمدة اللازمة قانونيًا أو حتى تطلب حذفها.'],
+      ['حقوقك', 'يمكنك طلب الاطلاع على بياناتك أو تصحيحها أو حذفها في أي وقت عبر {email}.'],
+      ['ملفات تعريف الارتباط', 'يستخدم الموقع ما يلزم فقط لعمله وتذكّر تفضيلاتك البسيطة، مثل اللغة.'],
+      ['الأمان', 'نستخدم اتصالًا آمنًا (HTTPS) وإجراءات معقولة لحماية بياناتك.'],
+      ['التعديلات والتواصل', 'قد نحدّث هذه السياسة، ويظهر تاريخ آخر تحديث أعلى الصفحة. لأي سؤال عن الخصوصية: {email}.'],
+    ],
+  },
+  en: {
+    title: 'Privacy policy', updatedLabel: 'Last updated:',
+    items: [
+      ['Who we are', `This website is operated by ${entity} as WaysZ Visa, part of WaysZ. This policy explains how we handle your data when you use the site.`],
+      ['What we collect', 'What you enter in the consultation request form: name, phone, email, country of residence, destination, visa type, services needed, trip details and your inquiry. We don’t ask for documents through the site. «Find your visa» runs in your browser and sends nothing to us unless you continue to the consultation request.'],
+      ['Why we use it', 'To contact you about your request, prepare your consultation and provide the services you ask for. We don’t sell your data or use it for anything unrelated to your request.'],
+      ['Sharing', 'We share your data only as needed to provide your service, such as technical providers that receive form messages, or parties you ask us to deal with regarding your file.'],
+      ['Retention', 'We keep your data while we work with you, then for as long as the law requires or until you ask us to delete it.'],
+      ['Your rights', 'You can ask to access, correct or delete your data at any time via {email}.'],
+      ['Cookies', 'The site uses only what it needs to work and to remember simple preferences such as language.'],
+      ['Security', 'We use a secure connection (HTTPS) and reasonable measures to protect your data.'],
+      ['Changes and contact', 'We may update this policy; the last-updated date is shown at the top. Privacy questions: {email}.'],
+    ],
+  },
+}[lang];
+---
+<BaseLayout lang={lang} title={t.pages.privacy.title} description={t.pages.privacy.description}>
+  <article class="legal container stack">
+    <h1>{copy.title}</h1>
+    <p class="legal__date">{copy.updatedLabel} {updated}</p>
+    {copy.items.map(([h, p]) => (
+      <section class="stack">
+        <h2>{h}</h2>
+        <p>{p.split('{email}').map((part, i) => <>{i > 0 && <a href={`mailto:${site.email}`}><bdi>{site.email}</bdi></a>}{part}</>)}</p>
+      </section>
+    ))}
+  </article>
+</BaseLayout>
+
+<style>
+  .legal { padding-block: 160px var(--section-y); max-width: 72ch; }
+  .legal section { padding-block-start: var(--space-5); }
+  .legal h2 { font-size: var(--text-lg); }
+  .legal p { color: var(--color-ink-muted); line-height: 1.85; }
+  .legal__date { font-size: var(--text-sm); }
+</style>

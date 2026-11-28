@@ -1,20 +1,28 @@
 /**
  * Content collections. One JSON file per visa category OR service in src/content/visas/<slug>.json
- * (brief part 04 §3: «قالب واحد لكل خدمة أو فئة تأشيرة»). `kind` says which group it belongs to (header submenu,
- * Visa Services page): 'category' = the five visa types of §2.2 · 'service' = the four services of §1.2–1.5 / §2.1.
+ * (brief v3 §2, §3, §6: «قالب واحد لكل خدمة أو فئة تأشيرة»). `kind` says which group it belongs to (header submenu,
+ * footer, Visa Services page): 'category' = the nine visa types of §2 · 'service' = the nine services of §3.
+ * `order` = order inside its kind (§2: 1–9 · §3: 1–9). Categories also carry `group` (the four groups of §2).
  * The file name is the slug: student-visa.json → /visa-services/student-visa/ and /en/visa-services/student-visa/
- * Shape = the Visa Service Details Template (brief v3 §6, seven elements) in BOTH languages:
+ * Shape = the Visa Service Details Template (brief v3 §6) in BOTH languages:
  *   1 name · 2 description · 3 audience «لمن تناسب؟» · 4 help «كيف نساعد؟»
  *   5 documents «المستندات والمعلومات المطلوبة مبدئيًا» + documentsNote · 6 faq · 7 cta (start-consultation band)
+ *   optional: 2b types «أنواع شائعة» · 2c destinations «وجهات نعمل عليها» · 2d benefits «مزايا شائعة»
+ * Destinations are ISO 3166-1 alpha-2 codes ("DE"); names come from src/lib/countries.ts (Intl), never stored.
  * No legal notice on visa pages (removed by the client, brief v3 §6).
  */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+const iso = z.string().regex(/^[A-Z]{2}$/, 'ISO 3166-1 alpha-2 code, e.g. "DE"');
+
 const localized = z.object({
   name: z.string(),
   description: z.string(),
+  types: z.array(z.object({ title: z.string().optional(), text: z.string() })).optional(),          // 2b
+  destinations: z.array(z.object({ label: z.string().optional(), countries: z.array(iso).min(1) })).optional(), // 2c
+  benefits: z.array(z.object({ title: z.string(), text: z.string() })).optional(),                  // 2d
   audience: z.array(z.string()),
   help: z.array(z.string()),
   documents: z.array(z.string()),
@@ -23,14 +31,17 @@ const localized = z.object({
   cta: z.object({ title: z.string(), text: z.string(), button: z.string() }),
 });
 
+export const visaGroups = ['visit', 'study', 'work', 'residence'] as const;
+export type VisaGroup = (typeof visaGroups)[number];
+
+const base = { order: z.number(), ar: localized, en: localized };
+
 const visas = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/visas' }),
-  schema: z.object({
-    kind: z.enum(['category', 'service']),
-    order: z.number(),        // order inside its kind, as in the brief (§2.2 categories · §2.1 services)
-    ar: localized,
-    en: localized,
-  }),
+  schema: z.discriminatedUnion('kind', [
+    z.object({ kind: z.literal('category'), group: z.enum(visaGroups), ...base }).strict(),
+    z.object({ kind: z.literal('service'), ...base }).strict(),
+  ]),
 });
 
 export const collections = { visas };

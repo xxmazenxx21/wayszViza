@@ -1,8 +1,6 @@
 ---
 /**
- * Home — a short FAQ (addition): five questions people really ask a visa consultancy, in our own words.
- * Ideas from boundless.com, atlys.com, visahq.com, y-axis.com, oravisa.com and official guidance — no text taken.
- * Nothing promises a visa, an approval, an appointment or a processing time.
+ * Home — FAQ: the eight questions of brief v3 §19.1 (final list), word for word.
  * Scenes: accordion (open / close) + paper-faq (closed answers `inert`, the rows arrive once). No JS: all open.
  */
 import { useTranslations, type Lang } from '../../i18n';
@@ -12,18 +10,24 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const items = {
   ar: [
-    ['هل تضمنون الموافقة على التأشيرة؟', 'لا. قرار منح التأشيرة أو رفضها للسفارة أو الجهة الرسمية المختصة وحدها. ما نقدمه استشارة وإرشاد: ملف أوضح، وخطوات مفهومة، واستعداد أفضل لموعدك.'],
-    ['متى أبدأ التجهيز قبل موعد سفري؟', 'كلما بدأت مبكرًا كان أفضل؛ فمواعيد التقديم ومدة دراسة الطلبات تختلف من دولة لأخرى ومن وقت لآخر، ولا يستطيع أحد أن يعدك بمدة محددة. نساعدك على ترتيب خطواتك لتكون جاهزًا دون تأخير من جانبك.'],
-    ['هل يمكنني التقديم بنفسي دون استشارة؟', 'نعم، يمكن ذلك في كثير من الحالات. وتفيدك الاستشارة أكثر إذا لم تكن متأكدًا من نوع التأشيرة، أو تسافر لأول مرة، أو سبق رفض طلب لك، أو تريد مراجعة ملفك قبل التقديم.'],
+    ['كيف تساعدونني على تقوية فرص قبول طلبي؟', 'نبني ملفك على غرض سفرك الحقيقي: نوع التأشيرة الصحيح، ومستندات مرتبة ومتسقة، وخطاب غرض واضح، واستعداد جيد للموعد والمقابلة. الملف القوي هو أفضل ما تقدمه لنفسك.'],
+    ['متى أبدأ التجهيز قبل موعد سفري؟', 'كلما بدأت مبكرًا كان أفضل؛ فمواعيد التقديم ومدة دراسة الطلبات تختلف من دولة لأخرى ومن موسم لآخر. نرتب معك خطواتك لتكون جاهزًا في الوقت المناسب.'],
+    ['هل يمكنني التقديم بنفسي دون استشارة؟', 'نعم، في كثير من الحالات. وتفيدك الاستشارة أكثر إذا لم تكن متأكدًا من نوع التأشيرة، أو تسافر لأول مرة، أو سبق رفض طلب لك، أو تريد مراجعة ملفك قبل التقديم.'],
     ['ماذا أجهز قبل جلسة الاستشارة؟', 'يكفي أن تكون المعلومات معك: بيانات جواز سفرك، والدولة التي تقصدها، وموعد سفرك المتوقع وغرضه، وأي خطابات لديك مثل دعوة أو قبول دراسي، وخطاب الرفض إن وُجد. لا ترسل صور المستندات عبر الموقع.'],
-    ['سبق رفض طلبي، هل يمكنني التقديم مرة أخرى؟', 'غالبًا لا يمنعك الرفض من إعادة التقديم، لكن ذلك يختلف حسب الدولة وسبب الرفض. نبدأ بمراجعة خطاب الرفض لفهم أسبابه، ثم نوضح لك ما يحتاج إلى تحسين قبل أن تقرر.'],
+    ['سبق رفض طلبي، هل يمكنني التقديم مرة أخرى؟', 'غالبًا نعم. في خدمة «مراجعة الرفض وإعادة التقديم» نقرأ خطاب الرفض معك، ونحدد نقاط الضعف، ونبني ملفًا أقوى قبل أن تتقدم من جديد.'],
+    ['هل تحجزون موعد التقديم بدلًا مني؟', 'نعم، نتولى حجز موعدك في الجهة المعتمدة ونختار معك أنسب موعد متاح.'],
+    ['هل تخدمون الشركات والوفود؟', 'نعم. ننسق ملفات تأشيرات فرق العمل والمشاركين في المعارض والمؤتمرات في مكان واحد.'],
+    ['هل تعملون على برامج الإقامة والجنسية عن طريق الاستثمار؟', 'نعم، بصفتنا وكيلًا معتمدًا. نقارن معك البرامج المتاحة في أوروبا والكاريبي وغيرها، ونرافقك في ملفك حتى صدور القرار.'],
   ],
   en: [
-    ['Do you guarantee visa approval?', 'No. The decision to grant or refuse a visa belongs to the embassy or the competent authority alone. What we offer is advice and guidance: a clearer file, steps you understand, and better preparation for your appointment.'],
-    ['How early should I start preparing before my trip?', 'The earlier the better: appointment availability and processing times differ from one country to another and change over time, and no one can promise you a set timeframe. We help you plan your steps so nothing is delayed on your side.'],
-    ['Can I apply on my own without a consultation?', 'Yes, in many cases you can. A consultation helps most when you are unsure which visa you need, are traveling for the first time, have had an application refused, or want your file reviewed before you apply.'],
-    ['What should I prepare before the consultation session?', 'Having the information with you is enough: your passport details, your destination, your expected travel date and purpose, any letters you have such as an invitation or an admission letter, and a refusal letter if there is one. Don’t send copies of documents through the website.'],
-    ['My application was refused before. Can I apply again?', 'A refusal usually doesn’t stop you from reapplying, but this depends on the country and the reason for the refusal. We start by reviewing the refusal letter to understand why, then explain what needs improving before you decide.'],
+    ['How do you help me strengthen my application?', 'We build your file around your real purpose: the right visa type, organized and consistent documents, a clear cover letter and solid preparation for your appointment and interview. A strong file is the best thing you can bring.'],
+    ['How early should I start preparing before my trip?', 'The earlier the better: appointment availability and processing times differ by country and by season. We plan your steps with you so you’re ready on time.'],
+    ['Can I apply on my own without a consultation?', 'Yes, in many cases. A consultation helps most when you’re unsure which visa you need, are traveling for the first time, have had a refusal, or want your file reviewed before you apply.'],
+    ['What should I prepare before the consultation?', 'Having the information with you is enough: your passport details, destination, expected travel date and purpose, any letters such as an invitation or admission letter, and a refusal letter if there is one. Don’t send copies of documents through the website.'],
+    ['My application was refused. Can I apply again?', 'Usually yes. With our «Refusal review & reapplication» service we read the refusal letter with you, pinpoint the weak points and build a stronger file before you apply again.'],
+    ['Can you book my submission appointment?', 'Yes, we book your appointment with the authorized center and pick the best available slot with you.'],
+    ['Do you work with companies and delegations?', 'Yes. We coordinate visa files for business teams and for exhibition and conference participants, in one place.'],
+    ['Do you handle residency and citizenship by investment?', 'Yes, as an authorized agent. We compare the programs in Europe, the Caribbean and beyond with you, and support your file until a decision is made.'],
   ],
 }[lang];
 ---

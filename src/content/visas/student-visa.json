@@ -1,15 +1,20 @@
 {
   "kind": "category",
-  "order": 1,
+  "group": "study",
+  "order": 4,
   "ar": {
     "name": "تأشيرة الدراسة",
     "description": "حصلت على قبول دراسي بالخارج، أو تستعد للتقديم؟ نرشدك في متطلبات تأشيرة الدراسة للدولة التي تقصدها، ونساعدك على تنظيم مستندات القبول والتمويل، وتقديم خطتك الدراسية بشكل واضح ومقنع.",
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "US", "CA", "AU", "GB", "NZ", "MY"] }
+    ],
     "audience": [
       "الطلاب الحاصلون على قبول من جامعة أو معهد بالخارج.",
       "المتقدمون للدراسات العليا أو برامج اللغة أو التبادل الطلابي.",
       "أولياء الأمور الراغبون في فهم المتطلبات المالية لأبنائهم."
     ],
     "help": [
+      "الإرشاد في خطوات القبول: اختيار البرنامج المناسب، وتجهيز مستندات التقديم للجامعة أو المعهد.",
       "شرح متطلبات تأشيرة الدراسة للدولة المقصودة.",
       "مراجعة خطاب القبول والمستندات الأكاديمية والمالية.",
       "الإرشاد في خطاب الغرض من الدراسة إن كان مطلوبًا.",
@@ -25,9 +30,10 @@
     ],
     "documentsNote": "القائمة استرشادية وتختلف حسب الدولة والمؤسسة التعليمية ووضع المتقدم.",
     "faq": [
-      { "q": "هل تقدمون الطلب نيابة عني؟", "a": "خدمتنا استشارية وإرشادية؛ نساعدك على تجهيز ملفك وفهم الخطوات، ويتم التقديم وفق إجراءات السفارة." },
+      { "q": "هل تقدمون الطلب نيابة عني؟", "a": "نرافقك في كل خطوة حتى التقديم: نجهز ملفك معك، ونرشدك في تعبئة الطلب، ونساعدك على حجز موعدك، ثم تحضر الموعد بنفسك لتسليم طلبك وأخذ البصمات وفق إجراءات السفارة." },
       { "q": "سبق رفض طلبي، هل يمكنكم مساعدتي؟", "a": "نعم، نراجع خطاب الرفض وملفك السابق ونرشدك إلى نقاط التحسين قبل إعادة التقديم." },
-      { "q": "هل تحتاج مستنداتي إلى ترجمة؟", "a": "في أغلب الحالات نعم، ويمكنك ترجمتها ترجمة معتمدة من خلال خدمات WaysZ." }
+      { "q": "هل تحتاج مستنداتي إلى ترجمة؟", "a": "في أغلب الحالات نعم، ويمكنك ترجمتها ترجمة معتمدة من خلال خدمات WaysZ." },
+      { "q": "هل يمكن أن يرافقني أفراد أسرتي؟", "a": "بعض الدول تسمح بذلك بشروط ومستندات إضافية. نوضح لك ما يناسب وجهتك." }
     ],
     "cta": {
       "title": "خطوتك الدراسية القادمة تبدأ هنا",
@@ -38,12 +44,16 @@
   "en": {
     "name": "Student Visa",
     "description": "Have you been accepted to study abroad, or are you getting ready to apply? We guide you through the student visa requirements of the country you are heading to, and help you organize your admission and funding documents and present your study plan clearly and convincingly.",
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "US", "CA", "AU", "GB", "NZ", "MY"] }
+    ],
     "audience": [
       "Students accepted by a university or institute abroad.",
       "Applicants to postgraduate studies, language programs or student exchange.",
       "Parents who want to understand the financial requirements for their children."
     ],
     "help": [
+      "Guidance on the admission steps: choosing a suitable program and preparing your application to the university or institute.",
       "Explaining the student visa requirements of your destination country.",
       "Reviewing your admission letter and your academic and financial documents.",
       "Guidance on the statement of purpose, if one is required.",
@@ -59,9 +69,10 @@
     ],
     "documentsNote": "This list is for guidance only and varies by country, educational institution and the applicant’s situation.",
     "faq": [
-      { "q": "Do you submit the application on my behalf?", "a": "Our service is advisory and guidance only: we help you prepare your file and understand the steps, and the application is submitted according to the embassy’s procedures." },
+      { "q": "Do you submit the application on my behalf?", "a": "We are with you every step of the way to submission: we prepare your file with you, guide you through the application form and help you book your appointment; you then attend it in person to hand in your application and give your fingerprints, as the embassy’s procedures require." },
       { "q": "My application was refused before. Can you help me?", "a": "Yes. We review the refusal letter and your previous file, and guide you to the points to improve before you reapply." },
-      { "q": "Do my documents need to be translated?", "a": "In most cases, yes, and you can have them translated with a certified translation through WaysZ services." }
+      { "q": "Do my documents need to be translated?", "a": "In most cases, yes, and you can have them translated with a certified translation through WaysZ services." },
+      { "q": "Can my family come with me?", "a": "Some countries allow it, with extra conditions and documents. We explain what applies to your destination." }
     ],
     "cta": {
       "title": "Your next study step starts here",

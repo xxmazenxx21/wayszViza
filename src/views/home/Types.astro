@@ -16,6 +16,7 @@ interface Props { lang: Lang; names: Record<string, { ar: string; en: string }> 
 const { lang, names } = Astro.props;
 const t = useTranslations(lang);
 const suits = { ar: 'تناسب:', en: 'Suited to:' }[lang];
+// TODO(step 3): show all 9 categories in their 4 groups (brief v3 §4 1.5c) — this section was built for these 5.
 const cards = [
   { slug: 'student-visa', img: student, en: 'Student Visa',
     text: { ar: 'للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.', en: 'For enrolling in universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.' },

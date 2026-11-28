@@ -1,0 +1,111 @@
+{
+  "kind": "category",
+  "group": "residence",
+  "order": 9,
+  "ar": {
+    "name": "الإقامة والجنسية عن طريق الاستثمار",
+    "description": "برامج تتيح لك ولأسرتك الإقامة في دولة جديدة، أو الحصول على جنسية ثانية، مقابل استثمار مؤهل وفق شروط كل دولة. بصفتنا وكيلًا معتمدًا، نساعدك على مقارنة البرامج المناسبة لأهدافك، وفهم متطلباتها العامة، ونرافقك في تجهيز ملفك ومتابعته حتى صدور القرار.",
+    "types": [
+      { "title": "الجنسية عن طريق الاستثمار", "text": "جنسية ثانية وجواز سفر للمستثمر وأسرته، وغالبًا دون اشتراط الانتقال للإقامة." },
+      { "title": "الإقامة عن طريق الاستثمار", "text": "إقامة طويلة أو دائمة للمستثمر وأسرته، وقد تفتح لاحقًا طريقًا للجنسية بشروط ومدد تحددها الدولة." },
+      { "title": "مسارات الاستثمار الشائعة", "text": "العقارات، والمساهمة في صندوق حكومي أو تنموي، وتأسيس نشاط تجاري أو المساهمة فيه، وأدوات استثمارية أخرى يحددها البرنامج." }
+    ],
+    "destinations": [
+      { "label": "الجنسية", "countries": ["AG", "DM", "GD", "KN", "LC", "TR", "NR"] },
+      { "label": "الإقامة", "countries": ["MT", "PT", "CY", "HU", "GR"] }
+    ],
+    "benefits": [
+      { "title": "أمان لأسرتك", "text": "فرص أوسع في التعليم والرعاية الصحية، وإمكانية ضم أفراد الأسرة." },
+      { "title": "حرية تنقل أوسع", "text": "بعض الجوازات والإقامات تسهّل السفر إلى وجهات كثيرة دون تأشيرة مسبقة." },
+      { "title": "استثمار له قيمة", "text": "بعض المسارات تكون في أصول مثل العقارات، وفق شروط البرنامج." },
+      { "title": "فرص للأعمال", "text": "وجود قانوني يساعدك على توسيع أعمالك دوليًا." },
+      { "title": "بديل للمستقبل", "text": "خيار إقامة أو انتقال لك ولأسرتك حين تحتاجه." }
+    ],
+    "audience": [
+      "الأفراد والعائلات الباحثون عن إقامة بديلة أو جنسية ثانية.",
+      "المستثمرون ورجال الأعمال الراغبون في حرية تنقل أوسع لأعمالهم.",
+      "من يخطط لمستقبل تعليمي أو معيشي مختلف لأسرته."
+    ],
+    "help": [
+      "تقييم مبدئي لأهدافك ووضع أسرتك، ومقارنة البرامج المتاحة من حيث المتطلبات العامة والمزايا والالتزامات.",
+      "شرح مسارات الاستثمار المتاحة في كل برنامج، والتنسيق مع المختصين القانونيين والماليين عند الحاجة.",
+      "قائمة مستندات مخصصة لك ولأفراد أسرتك، ومراجعة ما جهزته، وترجمته ترجمة معتمدة.",
+      "تقديم الملف ومتابعته مع الجهات المختصة بصفتنا وكيلًا معتمدًا للبرامج التي نعمل عليها، وإبقاؤك على اطلاع بكل خطوة."
+    ],
+    "documents": [
+      "جوازات سفر سارية لك ولأفراد أسرتك.",
+      "شهادات الميلاد والزواج.",
+      "ما يثبت مصدر الأموال.",
+      "شهادة الحالة الجنائية.",
+      "الفحص الطبي، إن طُلب.",
+      "تأمين صحي، إن طُلب.",
+      "مستندات الاستثمار المختار حسب البرنامج."
+    ],
+    "documentsNote": "القائمة استرشادية؛ ولكل برنامج متطلبات تحقق خاصة به وقد تتغير دون إشعار.",
+    "faq": [
+      { "q": "ما الفرق بين الإقامة والجنسية عن طريق الاستثمار؟", "a": "الإقامة تمنحك حق العيش في الدولة دون جنسيتها، وقد تفتح طريقًا للجنسية لاحقًا بشروط. أما الجنسية فتمنحك جوازها وحقوق مواطنيها." },
+      { "q": "هل يجب أن أنتقل للعيش في الدولة؟", "a": "أغلب برامج الجنسية لا تشترط الانتقال، أما برامج الإقامة فقد تشترط حدًا أدنى من التواجد. نوضح لك شروط كل برنامج." },
+      { "q": "هل يمكن أن تشمل أسرتي؟", "a": "أغلب البرامج تسمح بضم الزوج أو الزوجة والأبناء، وأحيانًا الوالدين، بشروط تختلف من برنامج لآخر." },
+      { "q": "لماذا يلزم التقديم عبر وكيل معتمد؟", "a": "كثير من برامج الجنسية لا تقبل الطلبات إلا عبر وكلاء مرخصين من الدولة. نعمل على هذه البرامج بصفتنا وكيلًا معتمدًا." },
+      { "q": "كم تستغرق الإجراءات؟", "a": "تختلف حسب البرنامج وإجراءات التحقق وسرعة تجهيز المستندات، ونعطيك تصورًا واضحًا للمدة المتوقعة في الاستشارة." }
+    ],
+    "cta": {
+      "title": "قرار بهذا الحجم يستحق مقارنة هادئة",
+      "text": "ابدأ استشارتك، ونقارن معك البرامج المناسبة لك ولأسرتك.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Residency & Citizenship by Investment",
+    "description": "Programs that let you and your family live in a new country, or obtain a second citizenship, in return for a qualifying investment under each country’s rules. As an authorized agent, we help you compare the programs that fit your goals, understand their general requirements, and support you in preparing and following your file until a decision is made.",
+    "types": [
+      { "title": "Citizenship by investment", "text": "A second citizenship and passport for the investor and their family, often without a requirement to relocate." },
+      { "title": "Residency by investment", "text": "Long-term or permanent residence for the investor and their family, which may later open a path to citizenship under conditions and timeframes set by the country." },
+      { "title": "Common investment routes", "text": "Real estate, a contribution to a government or development fund, starting or investing in a business, and other instruments set by the program." }
+    ],
+    "destinations": [
+      { "label": "Citizenship", "countries": ["AG", "DM", "GD", "KN", "LC", "TR", "NR"] },
+      { "label": "Residency", "countries": ["MT", "PT", "CY", "HU", "GR"] }
+    ],
+    "benefits": [
+      { "title": "Security for your family", "text": "Wider access to education and healthcare, and the option to include family members." },
+      { "title": "Wider mobility", "text": "Some passports and residence permits make travel to many destinations easier without a prior visa." },
+      { "title": "An investment with value", "text": "Some routes are in assets such as real estate, under the program’s conditions." },
+      { "title": "Business opportunities", "text": "A legal presence that helps you grow your business internationally." },
+      { "title": "A plan B for the future", "text": "A residence or relocation option for you and your family when you need it." }
+    ],
+    "audience": [
+      "Individuals and families looking for an alternative residency or a second citizenship.",
+      "Investors and business people who want wider mobility for their business.",
+      "Those planning a different future of study or living for their family."
+    ],
+    "help": [
+      "A preliminary assessment of your goals and your family’s situation, and a comparison of available programs by general requirements, benefits and obligations.",
+      "Explaining each program’s investment routes, and coordinating with legal and financial professionals when needed.",
+      "A document list tailored to you and your family, a review of what you’ve prepared, and certified translation.",
+      "Submitting and following up your file with the competent authorities as an authorized agent for the programs we work on, and keeping you informed at every step."
+    ],
+    "documents": [
+      "Valid passports for you and your family members.",
+      "Birth and marriage certificates.",
+      "Proof of source of funds.",
+      "A police clearance certificate.",
+      "A medical exam, if required.",
+      "Health insurance, if required.",
+      "Documents for the chosen investment, depending on the program."
+    ],
+    "documentsNote": "This list is a guide; each program has its own due-diligence requirements, which may change without notice.",
+    "faq": [
+      { "q": "What’s the difference between residency and citizenship by investment?", "a": "Residency lets you live in the country without its citizenship and may later open a path to it under conditions. Citizenship gives you its passport and its citizens’ rights." },
+      { "q": "Do I have to move to the country?", "a": "Most citizenship programs don’t require relocation; residency programs may require a minimum stay. We explain each program’s conditions." },
+      { "q": "Can my family be included?", "a": "Most programs allow a spouse and children, and sometimes parents, under conditions that differ by program." },
+      { "q": "Why do I need an authorized agent?", "a": "Many citizenship programs only accept applications through government-licensed agents. We work on these programs as an authorized agent." },
+      { "q": "How long does it take?", "a": "It depends on the program, its checks and how quickly your documents are ready, and we give you a clear idea of the expected timeline in your consultation." }
+    ],
+    "cta": {
+      "title": "A decision this big deserves a calm comparison",
+      "text": "Start your consultation, and we’ll compare the right programs for you and your family.",
+      "button": "Start your consultation"
+    }
+  }
+}

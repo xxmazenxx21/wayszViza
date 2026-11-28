@@ -11,6 +11,7 @@ import { localizePath, useTranslations, type Lang } from '../../i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+// TODO(step 3): the four core services with their brief v3 §3 names, then §1.5b — the `paper` act's panels were built for these 4.
 const items = [
   { slug: 'visa-consultation', en: 'Visa Consultation', ar: 'استشارة التأشيرة',
     text: { ar: 'جلسة مخصصة لفهم غرض سفرك ووضعك، وتحديد نوع التأشيرة المناسب ومتطلباته والخطوات المتوقعة.', en: 'A dedicated session to understand the purpose of your trip and your situation, and to identify the right visa type, its requirements and the expected steps.' } },

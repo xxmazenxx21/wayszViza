@@ -1,9 +1,13 @@
 {
   "kind": "category",
-  "order": 2,
+  "group": "visit",
+  "order": 3,
   "ar": {
     "name": "تأشيرة الأعمال والمؤتمرات",
     "description": "مدعو إلى اجتماع عمل، أو تشارك في معرض أو مؤتمر دولي؟ نرشدك في متطلبات تأشيرة الأعمال، ونساعدك على تجهيز خطابات الدعوة ومستندات جهة العمل، وعرض غرض زيارتك ومدتها بوضوح.",
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "GB", "US", "CA"] }
+    ],
     "audience": [
       "رجال الأعمال والموظفون المسافرون لحضور اجتماعات أو زيارة شركاء.",
       "العارضون والزوار في المعارض التجارية الدولية.",
@@ -38,6 +42,9 @@
   "en": {
     "name": "Business & Conference Visa",
     "description": "Invited to a business meeting, or taking part in an international exhibition or conference? We guide you through the business visa requirements and help you prepare the invitation letters and employer documents, and present the purpose and length of your visit clearly.",
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "GB", "US", "CA"] }
+    ],
     "audience": [
       "Business people and employees traveling for meetings or to visit partners.",
       "Exhibitors and visitors at international trade exhibitions.",

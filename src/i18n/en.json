@@ -11,6 +11,7 @@
     "label": "Main navigation",
     "home": "Home",
     "visaServices": "Visa services",
+    "findVisa": "Find your visa",
     "consult": "Request a consultation",
     "main": "WaysZ",
     "menu": "Open menu",
@@ -19,7 +20,15 @@
     "contact": "Contact",
     "categories": "Visa types",
     "services": "Our services",
-    "submenu": "Visa services menu"
+    "submenu": "Visa services menu",
+    "groups": {
+      "visit": "Visit",
+      "study": "Study",
+      "work": "Work",
+      "residence": "Residence & investment"
+    },
+    "privacy": "Privacy policy",
+    "terms": "Terms and conditions"
   },
   "cta": {
     "start": "Start your consultation",
@@ -38,12 +47,17 @@
     "audience": "Who is it for?",
     "help": "How we help",
     "documents": "Documents and information needed to start",
-    "faq": "Frequently asked questions"
+    "faq": "Frequently asked questions",
+    "types": "Common types",
+    "destinations": "Destinations we work with",
+    "benefits": "Common benefits"
   },
   "footer": {
     "about": "A website specialized in visa consultations and guidance through visa procedures, for anyone traveling to work, study, visit or live abroad.",
     "quickLinks": "Quick links",
     "contact": "Contact us",
+    "social": "Follow us",
+    "legal": "Legal",
     "rights": "All rights reserved."
   },
   "whatsapp": {
@@ -55,6 +69,7 @@
     "phone": "Please enter a valid phone number",
     "email": "Please enter a valid email address",
     "service": "Please choose a service",
+    "residence": "Please choose your country of residence",
     "success": "Your consultation request has been received. One of our consultants will contact you through the method you chose.",
     "error": "The message couldn't be sent. Please try again or reach us on WhatsApp.",
     "sending": "Sending…",
@@ -63,11 +78,15 @@
   "pages": {
     "home": {
       "title": "WaysZ Visa | Your path to a visa starts with the right step",
-      "description": "Whether you are traveling to study, work, live abroad or visit your family, we offer specialized consultations and practical guidance to help you understand the visa requirements, prepare your file and get ready for your appointment with confidence."
+      "description": "Complete visa and immigration consulting: tourism, study, work, residence, and residency or citizenship by investment. We prepare your file, book your appointment and get you ready for your interview."
     },
     "visaServices": {
       "title": "Visa services | WaysZ Visa",
-      "description": "Whether you are traveling to study, work or attend a conference, or to visit your family or live abroad, we help you understand your visa requirements and prepare your file step by step."
+      "description": "9 visa types and 9 services in one place: from choosing the right visa and preparing documents to booking your appointment and refusal reviews."
+    },
+    "assessment": {
+      "title": "Find the right visa for you | WaysZ Visa",
+      "description": "Answer a few short questions in under a minute and find the visa type closest to your situation, its destinations and the services you need."
     },
     "consultation": {
       "title": "Request your consultation | WaysZ Visa",
@@ -75,17 +94,33 @@
     },
     "about": {
       "title": "About us | WaysZ Visa",
-      "description": "WaysZ Visa is a specialized platform of WaysZ for visa consultations and guidance through visa procedures, with clear steps."
+      "description": "WaysZ Visa is a WaysZ platform specialized in visa and immigration consulting, and an authorized agent for residency and citizenship by investment programs."
     },
     "contact": {
       "title": "Contact us | WaysZ Visa",
       "description": "We’re glad to hear from you. Tell us your question, and the WaysZ Visa team will contact you as soon as possible."
     },
+    "privacy": {
+      "title": "Privacy policy | WaysZ Visa",
+      "description": "How WaysZ Visa collects, uses and protects your data when you contact us or request a consultation."
+    },
+    "terms": {
+      "title": "Terms and conditions | WaysZ Visa",
+      "description": "The terms of use of the WaysZ Visa website and our consulting services."
+    },
     "notFound": {
       "title": "Page not found | WaysZ Visa",
-      "description": "We couldn't find that page.",
-      "heading": "This road doesn't exist",
+      "description": "We couldn’t find the page you’re looking for.",
+      "heading": "Looks like you took a road that doesn’t exist",
+      "text": "The page may have moved or no longer exists. Pick your destination from here:",
       "back": "Back to home"
     }
+  },
+  "social": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "tiktok": "TikTok"
   }
 }

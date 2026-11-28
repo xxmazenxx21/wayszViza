@@ -1,0 +1,41 @@
+---
+/**
+ * «اعرف تأشيرتك» — the preliminary assessment tool (brief v3 §11). Skeleton for now: title + intro of §11 and a
+ * <TodoSection> for the tool. The tool runs fully in the browser, sends nothing, and its result opens /consultation/
+ * prefilled (?type= · ?service= · ?destination=). Design + logic: a later step.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TodoSection from '../components/TodoSection.astro';
+import { localizePath, useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const copy = {
+  ar: {
+    title: 'اعرف تأشيرتك المناسبة',
+    lead: 'أسئلة قصيرة لا تستغرق دقيقة، ونرشح لك نوع التأشيرة الأقرب لحالتك والخدمات التي قد تحتاجها.',
+    todo: 'اعرف تأشيرتك — أداة التقييم المبدئي: 5 أسئلة (+1b، 1c) ← الفئة المرشحة ووجهاتها والخدمات المقترحة ← طلب الاستشارة معبّأ',
+  },
+  en: {
+    title: 'Find the right visa for you',
+    lead: 'A few short questions, under a minute, and we’ll suggest the visa type closest to your situation, its destinations and the services you may need.',
+    todo: 'Find your visa — the assessment tool: 5 questions (+1b, 1c) → suggested category, its destinations and services → prefilled consultation request',
+  },
+}[lang];
+---
+<BaseLayout lang={lang} title={t.pages.assessment.title} description={t.pages.assessment.description}>
+  <header class="intro container stack">
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+  </header>
+
+  <TodoSection ref="11" title={copy.todo}>
+    <p><a class="btn btn--accent" href={localizePath('/consultation/', lang)}>{t.cta.request}</a></p>
+  </TodoSection>
+</BaseLayout>
+
+<style>
+  .intro { padding-block: 160px var(--space-6); }
+</style>

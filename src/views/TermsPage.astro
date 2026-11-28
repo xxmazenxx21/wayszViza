@@ -1,0 +1,69 @@
+---
+/**
+ * Terms and conditions (brief v3 §15, §19.7). The DRAFT of §19.7 as plain text, for the client (or his lawyer) to
+ * review. TODO(client): last-updated date and the governing law (country); the email comes from src/lib/site.ts.
+ * Design: a later step.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const updated = { ar: '[التاريخ]', en: '[date]' }[lang];      // TODO(client): date of the approved text
+const country = { ar: '[الدولة]', en: '[country]' }[lang];    // TODO(client): governing law
+
+// {email} = site.email (rendered as a mailto link)
+const copy = {
+  ar: {
+    title: 'الشروط والأحكام', updatedLabel: 'آخر تحديث:',
+    items: [
+      ['القبول', 'باستخدامك موقع WaysZ Visa فأنت توافق على هذه الشروط.'],
+      ['طبيعة الخدمة', 'نقدم استشارات وإرشادًا وخدمات مساندة في إجراءات التأشيرات والهجرة، ونعمل كوكيل معتمد في برامج الإقامة والجنسية عن طريق الاستثمار التي نعلن عنها. قرارات منح التأشيرات والإقامات والجنسيات تصدرها الجهات الحكومية المختصة.'],
+      ['المعلومات على الموقع', 'المحتوى للتعريف العام، وقد تتغير متطلبات الدول. التفاصيل الخاصة بحالتك تُحدد في الاستشارة.'],
+      ['مسؤوليتك', 'تقديم معلومات ومستندات صحيحة وكاملة، والالتزام بالمواعيد التي يتم الاتفاق عليها.'],
+      ['الأتعاب والرسوم', 'تُتفق أتعاب خدماتنا معك قبل البدء. رسوم السفارات ومراكز التقديم والجهات الحكومية والحجوزات تُدفع لأصحابها.'],
+      ['الملكية الفكرية', 'محتوى الموقع وتصميمه ملك WaysZ، ولا يجوز نسخه دون إذن.'],
+      ['الروابط الخارجية', 'قد يحتوي الموقع على روابط لمواقع أخرى لسنا مسؤولين عن محتواها.'],
+      ['التعديلات', 'قد نحدّث هذه الشروط، ويظهر تاريخ آخر تحديث أعلى الصفحة.'],
+      ['القانون والتواصل', `تخضع هذه الشروط لقوانين ${country}. لأي سؤال: {email}.`],
+    ],
+  },
+  en: {
+    title: 'Terms and conditions', updatedLabel: 'Last updated:',
+    items: [
+      ['Acceptance', 'By using the WaysZ Visa website you agree to these terms.'],
+      ['Our service', 'We provide consulting, guidance and support services for visa and immigration procedures, and act as an authorized agent for the residency and citizenship by investment programs we list. Visa, residence and citizenship decisions are issued by the competent government authorities.'],
+      ['Information on the site', 'Content is for general information, and country requirements may change. The details for your case are set in your consultation.'],
+      ['Your responsibility', 'Providing accurate, complete information and documents, and keeping the agreed appointments.'],
+      ['Fees', 'Our service fees are agreed with you before we start. Embassy, application-center, government and booking fees are paid to those parties.'],
+      ['Intellectual property', 'The site’s content and design belong to WaysZ and may not be copied without permission.'],
+      ['External links', 'The site may link to other websites whose content we’re not responsible for.'],
+      ['Changes', 'We may update these terms; the last-updated date is shown at the top.'],
+      ['Law and contact', `These terms are governed by the laws of ${country}. Questions: {email}.`],
+    ],
+  },
+}[lang];
+---
+<BaseLayout lang={lang} title={t.pages.terms.title} description={t.pages.terms.description}>
+  <article class="legal container stack">
+    <h1>{copy.title}</h1>
+    <p class="legal__date">{copy.updatedLabel} {updated}</p>
+    {copy.items.map(([h, p]) => (
+      <section class="stack">
+        <h2>{h}</h2>
+        <p>{p.split('{email}').map((part, i) => <>{i > 0 && <a href={`mailto:${site.email}`}><bdi>{site.email}</bdi></a>}{part}</>)}</p>
+      </section>
+    ))}
+  </article>
+</BaseLayout>
+
+<style>
+  .legal { padding-block: 160px var(--section-y); max-width: 72ch; }
+  .legal section { padding-block-start: var(--space-5); }
+  .legal h2 { font-size: var(--text-lg); }
+  .legal p { color: var(--color-ink-muted); line-height: 1.85; }
+  .legal__date { font-size: var(--text-sm); }
+</style>

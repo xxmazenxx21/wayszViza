@@ -1,0 +1,93 @@
+{
+  "kind": "category",
+  "group": "work",
+  "order": 5,
+  "ar": {
+    "name": "تأشيرة العمل",
+    "description": "حصلت على عرض عمل من جهة بالخارج؟ نرشدك في متطلبات تأشيرة العمل، ونساعدك على تنظيم مستندات صاحب العمل ومؤهلاتك وخبراتك، لتقدّم ملفًا واضحًا ومتسقًا.",
+    "types": [
+      { "text": "تأشيرات الكفاءات المهنية" },
+      { "text": "تأشيرات العمل المؤقت المرتبطة بصاحب عمل محدد" },
+      { "text": "النقل داخل الشركة إلى فرع بالخارج" },
+      { "text": "العمل الموسمي" }
+    ],
+    "destinations": [
+      { "countries": ["CA", "AU", "US", "GB", "NZ", "DE", "AT", "SE", "FR", "BE", "MY"] }
+    ],
+    "audience": [
+      "أصحاب عروض العمل من جهات بالخارج.",
+      "الموظفون المنقولون إلى فرع أو شركة تابعة بالخارج.",
+      "أصحاب المهن والمهارات المطلوبة في سوق العمل بالخارج."
+    ],
+    "help": [
+      "التأكد من أن نوع تأشيرة العمل يناسب عرضك ووضعك المهني.",
+      "مراجعة عقد العمل أو خطاب العرض ومستندات الكفالة من صاحب العمل، والتأكد من وضوح بياناتها.",
+      "تنظيم شهاداتك وخبراتك ومستندات اللغة إن طُلبت، والإرشاد في معادلة المؤهلات عند الحاجة.",
+      "الإرشاد في تعبئة الطلب وتجهيزك للمقابلة إن كانت مطلوبة، مع ترجمة معتمدة لمستنداتك."
+    ],
+    "documents": [
+      "جواز سفر ساري المفعول.",
+      "عقد العمل أو خطاب عرض العمل.",
+      "مستندات الكفالة أو الموافقة من صاحب العمل، إن طُلبت.",
+      "الشهادات الدراسية والمهنية.",
+      "شهادات الخبرة.",
+      "ما يثبت مستوى اللغة، إن طُلب.",
+      "شهادة الحالة الجنائية والفحص الطبي، إن طُلبا."
+    ],
+    "documentsNote": "القائمة استرشادية؛ وتختلف المستندات عادةً حسب الدولة ونوع الوظيفة وصاحب العمل.",
+    "faq": [
+      { "q": "هل تساعدونني في إيجاد وظيفة بالخارج؟", "a": "خدمتنا تبدأ بعد حصولك على عرض العمل؛ نرشدك في تجهيز ملف التأشيرة. وإن لم يكن لديك عرض بعد، قد تناسبك تأشيرة البحث عن عمل." },
+      { "q": "هل يلزم أن يكفلني صاحب العمل؟", "a": "في أغلب تأشيرات العمل نعم، وتختلف المستندات المطلوبة منه حسب الدولة. نوضح لك ما يخص حالتك." },
+      { "q": "هل يمكن أن تنضم أسرتي إليّ لاحقًا؟", "a": "بعض الدول تسمح بذلك بشروط. نشرح لك المسار المناسب ومستنداته." }
+    ],
+    "cta": {
+      "title": "عرض عملك يستحق ملفًا بنفس القوة",
+      "text": "ابدأ استشارتك الآن، ونرشدك في تجهيز ملف تأشيرة العمل خطوة بخطوة.",
+      "button": "ابدأ استشارتك"
+    }
+  },
+  "en": {
+    "name": "Work Visa",
+    "description": "Got a job offer from an employer abroad? We guide you through the work visa requirements and help you organize your employer’s documents, your qualifications and your experience into a clear, consistent file.",
+    "types": [
+      { "text": "Skilled-worker visas" },
+      { "text": "Temporary work visas tied to one employer" },
+      { "text": "Intra-company transfer to a branch abroad" },
+      { "text": "Seasonal work" }
+    ],
+    "destinations": [
+      { "countries": ["CA", "AU", "US", "GB", "NZ", "DE", "AT", "SE", "FR", "BE", "MY"] }
+    ],
+    "audience": [
+      "Holders of job offers from employers abroad.",
+      "Employees transferring to a branch or affiliate abroad.",
+      "Professionals in occupations and skills in demand abroad."
+    ],
+    "help": [
+      "Confirming that the work visa type fits your offer and professional situation.",
+      "Reviewing your contract or offer letter and the employer’s sponsorship documents, and making sure their details are clear.",
+      "Organizing your certificates, experience and language documents if required, and guiding you on recognizing your qualifications when needed.",
+      "Guiding you through the application and preparing you for the interview if one is required, with certified translation of your documents."
+    ],
+    "documents": [
+      "A valid passport.",
+      "Your employment contract or job offer letter.",
+      "The employer’s sponsorship or approval documents, if required.",
+      "Academic and professional certificates.",
+      "Experience letters.",
+      "Proof of language level, if required.",
+      "A police clearance certificate and medical exam, if required."
+    ],
+    "documentsNote": "This list is a guide; required documents usually vary by country, job type and employer.",
+    "faq": [
+      { "q": "Can you help me find a job abroad?", "a": "Our service starts once you have a job offer; we guide you in preparing your visa file. If you don’t have an offer yet, a job seeker visa may suit you." },
+      { "q": "Does my employer need to sponsor me?", "a": "For most work visas, yes, and the documents required from them vary by country. We explain what applies to you." },
+      { "q": "Can my family join me later?", "a": "Some countries allow it under conditions. We explain the right path and its documents." }
+    ],
+    "cta": {
+      "title": "Your job offer deserves an equally strong file",
+      "text": "Start your consultation now, and we’ll guide you through your work visa file step by step.",
+      "button": "Start your consultation"
+    }
+  }
+}

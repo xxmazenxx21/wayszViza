@@ -1,9 +1,18 @@
 {
   "kind": "category",
-  "order": 5,
+  "group": "visit",
+  "order": 1,
   "ar": {
-    "name": "تأشيرة الزيارة القصيرة",
+    "name": "تأشيرة السياحة والزيارة القصيرة",
     "description": "تخطط لرحلة سياحية أو زيارة قصيرة؟ نساعدك على توضيح غرض زيارتك وخط سير رحلتك، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة، ليقدّم ملفك صورة متسقة وواضحة.",
+    "types": [
+      { "text": "دخول لمرة واحدة" },
+      { "text": "دخول متعدد خلال فترة محددة" },
+      { "text": "تأشيرة عبور (ترانزيت) للمرور بمطار أو دولة" }
+    ],
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "GB", "US", "CA"] }
+    ],
     "audience": [
       "المسافرون في رحلات سياحية قصيرة المدة.",
       "من يزور أصدقاء أو يحضر مناسبة خاصة بالخارج لفترة قصيرة.",
@@ -25,7 +34,7 @@
     ],
     "documentsNote": "القائمة استرشادية؛ وتختلف المستندات المطلوبة عادةً حسب الدولة ووضعك المهني والمالي.",
     "faq": [
-      { "q": "هل أحجز تذاكر الطيران والفندق قبل التقديم؟", "a": "تطلب بعض الدول حجزًا مبدئيًا، لكن يُنصح عادةً بعدم دفع مبالغ غير قابلة للاسترداد قبل صدور القرار. نوضح لك ما يُطلب في حالتك." },
+      { "q": "هل أحتاج حجز طيران وفندق قبل التقديم؟", "a": "كثير من الجهات تطلب ما يثبت خط سير الرحلة. نوضح لك ما يناسب ملفك، ويمكننا ترتيب حجوزات تناسب متطلبات الملف." },
       { "q": "لماذا يهتم موظف التأشيرات بما يثبت عودتي؟", "a": "لأن تأشيرة الزيارة مؤقتة؛ لذلك تساعد مستندات مثل خطاب العمل أو الدراسة والالتزامات العائلية على توضيح أنك ستعود بعد رحلتك." },
       { "q": "سبق رفض طلب زيارة لي، هل أعيد التقديم؟", "a": "نراجع معك خطاب الرفض وملفك السابق، ونوضح لك نقاط التحسين قبل أن تقرر إعادة التقديم." }
     ],
@@ -36,8 +45,16 @@
     }
   },
   "en": {
-    "name": "Tourist Visa",
+    "name": "Tourist & Short-Visit Visa",
     "description": "Planning a holiday or a short visit? We help you explain the purpose of your visit and your itinerary, and organize your financial documents and proof of your ties to home, so your file gives a consistent, clear picture.",
+    "types": [
+      { "text": "Single entry" },
+      { "text": "Multiple entry within a set period" },
+      { "text": "Transit visa for passing through an airport or country" }
+    ],
+    "destinations": [
+      { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "GB", "US", "CA"] }
+    ],
     "audience": [
       "Travelers on short holiday trips.",
       "People visiting friends or attending a private occasion abroad for a short time.",
@@ -59,7 +76,7 @@
     ],
     "documentsNote": "This list is for guidance only; the documents usually requested vary by country and by your professional and financial situation.",
     "faq": [
-      { "q": "Should I book my flight and hotel before applying?", "a": "Some countries ask for a provisional booking, but it is usually advised not to pay non-refundable amounts before the decision. We explain what is requested in your case." },
+      { "q": "Do I need flight and hotel bookings before applying?", "a": "Many authorities ask for proof of your itinerary. We explain what suits your file and can arrange bookings that meet its requirements." },
       { "q": "Why does the visa officer care about proof that I will return?", "a": "Because a visit visa is temporary. Documents such as a letter from your employer or school, and your family commitments, help show that you will return after your trip." },
       { "q": "A visit visa of mine was refused before. Should I reapply?", "a": "We review the refusal letter and your previous file with you, and explain the points to improve before you decide to reapply." }
     ],
