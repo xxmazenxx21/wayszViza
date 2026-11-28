@@ -283,8 +283,21 @@ starts from exactly it), `sky-all` (css tier: behind the hero once the title set
   </div>
 </div>
 …
+<section data-scene="paper-pocket">…</section> <section data-scene="paper-tabs">…</section>                <!-- §1.5b · §1.5c, DOM -->
+<section data-scene="paper-finder">…</section> <section data-scene="paper-why">…</section>               <!-- §1.5d · §1.5e, DOM -->
+<div class="hatlas theme-dark">                                                                              <!-- §1.6b → §1.6c -->
+  <div class="hatlas__stage stage-host" data-scene="home-atlas" data-dest="DE,TR,US,AU,MY,DM,…" data-legs="0" data-mood="network"></div>
+  <div class="hatlas__body"><section data-scene="home-destinations" data-shot="destinations">…</section>
+    <section data-scene="paper-postcards" data-shot="audience">…</section></div>
+</div>
 <section class="pcta" data-scene="paper-cta"><div class="pcta__stage stage-host"></div>…</section>   <!-- finale host -->
 ```
+
+- §1.6b reuses the visa template's act `atlas` through its contract only (`readAtlasConfig` + `createAtlasAct` +
+  bridge `atlas`): `data-dest` lists one landmark country per region first (stop k = region k), then the rest; the
+  tail shot `audience` runs 0 → 0.9 while the middle of the screen goes from the postcards' top to where the host
+  leaves, so the act's own exit fade ends before any edge shows. The act builds on the visitor's first scroll pause
+  (fallback: `top 160%` of the section) — never mid-scroll.
 
 - `createPaperAct(host, 'journey' | 'finale')` — one act, two hosts; the stage hands the canvas to the most visible
   host. The finale act is built in idle time right after the stage boots (programs + atlas shared, nothing compiles
@@ -412,9 +425,14 @@ paths they name live in the WaysZ repo) or add new scenes.
 | 1       | Home · Hero (title, subtitle, 2 buttons + the alternative title) | act `paper`: closed booklet among paper flakes, foil mark · still `paper-hero(-m).webp` | `paper-thread` (one sticky host, hero → §1.5) · `paper-hero` (sticky 210lvh: words rise, text leaves, cover opens, booklet lies down, alternative title on the text side) — BUILT |
 | 1.1     | Home · how we help                        | act `paper`: the first spread pops up, three problems fixed · still `paper-help.webp` | `paper-help` (sticky 260lvh → `paper.fix` 0…3, the three phrases underlined in turn) — BUILT |
 | 1.2–1.5 | Home · the four services                  | act `paper`: a page turn (curl) per service onto its pop-up diorama · stills `paper-s1…s4.webp` | `paper-services` (sticky 560lvh, 4 rests → `paper.turn` / `paper.act`, panels by opacity) — BUILT |
-| +       | Home · «أنواع التأشيرات» (5 categories + not sure) | Pexels photos (`visa-*.jpg`) | `data-reveal` — BUILT |
+| 1.5b    | Home · extra services (5 slips)           | — (DOM)                                                       | `paper-pocket`: the booklet's back pocket; wide: sticky 270lvh, the slips rise out and fan into an arc (scrubbed) · small: each slip comes out as it scrolls in — BUILT |
+| 1.5c    | Home · «ما غرض رحلتك؟» (9 categories in 4 groups + «لست متأكدًا…» → /assessment/) | Pexels photos (`visa-*.jpg`, 9) | `paper-tabs`: the groups are a folder's index tabs (ARIA tabs), choosing one deals its cards — BUILT |
+| 1.5d    | Home · «محتار تبدأ منين؟» (→ /assessment/) | — (DOM)                                                       | `paper-finder`: sample question cards flip through and settle on a suggested visa (plays when in view) — BUILT |
+| 1.5e    | Home · «أكثر من تجهيز أوراق» (5 points)    | — (DOM, our own line icons)                                   | `paper-why`: rows of a perforated sheet, perforations run across + icons draw (scrubbed), heading CSS-sticky — BUILT |
 | 1.6     | Home · help steps (4)                     | —     | `paper-steps`: the stitching becomes a sky-blue thread (DrawSVG, scrubbed), steps light — BUILT |
-| +       | Home · FAQ (5)                            | —     | `accordion` + `paper-faq` — BUILT |
+| 1.6b    | Home · «وجهات نرافقك إليها» (countries by region → /consultation/?destination=) | act `atlas` reused («network» world) in its own host `.hatlas__stage` · still `atlas-network(-m).webp` | `home-atlas` (thread: shots destinations → audience; built on the first scroll pause) · `home-destinations` (sticky, a rest per region → `atlas.stop`) — BUILT |
+| 1.6c    | Home · «من تجارب عملائنا» (placeholders, `showTestimonials`) | act `atlas`: the Earth steps back and fades to night | `paper-postcards`: postcards land with a turn that settles (scrubbed) — BUILT |
+| +       | Home · FAQ (8, brief v3 §19.1)            | —     | `accordion` + `paper-faq` — BUILT |
 | 1.8     | Home · start-consultation CTA             | act `paper` (finale host): the booklet returns, ribbon slides out · still `paper-finale.webp` | `paper-cta`: the «ملف جاهز» seal (DOM) lands once, the booklet bounces — BUILT |
 | 1.9     | Home · «جزء من WaysZ» (link to waysz.org) | WaysZ gate photo | `boarding-pass` reused, reversed (WaysZ Visa → WaysZ), amber via `[data-brand="main"]` — BUILT |
 | —       | Footer                                    | logo  | `footer-landing` (runway + touchdown) — BUILT (kept from WaysZ) |

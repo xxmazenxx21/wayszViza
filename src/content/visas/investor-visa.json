@@ -5,6 +5,7 @@
   "ar": {
     "name": "تأشيرة المستثمر ورواد الأعمال",
     "description": "تخطط للاستثمار في نشاط قائم أو لتأسيس مشروعك بالخارج؟ كثير من الدول تقدم تأشيرات لجذب المستثمرين ورواد الأعمال. نساعدك على فهم المسارات المتاحة وشروطها العامة، ونرشدك في تجهيز خطة العمل وإثبات الأموال والخبرة.",
+    "summary": { "text": "لمن يريد الاستثمار في نشاط قائم أو تأسيس مشروع بالخارج. نرشدك في خطة العمل وإثبات الأموال والخبرة.", "fit": "المستثمرين وأصحاب الأعمال ورواد المشروعات الناشئة." },
     "types": [
       { "text": "تأشيرة رائد الأعمال لتأسيس مشروع جديد" },
       { "text": "تأشيرة المستثمر في نشاط قائم" },
@@ -48,6 +49,7 @@
   "en": {
     "name": "Investor & Entrepreneur Visa",
     "description": "Planning to invest in an existing business or start your own abroad? Many countries offer visas to attract investors and entrepreneurs. We help you understand the available paths and their general conditions, and guide you in preparing your business plan, proof of funds and experience.",
+    "summary": { "text": "For those who want to invest in an existing business or start one abroad. We guide you on your business plan, proof of funds and experience.", "fit": "investors, business owners and start-up founders." },
     "types": [
       { "text": "Entrepreneur visa for starting a new business" },
       { "text": "Investor visa for an existing business" },

@@ -8,6 +8,7 @@
  *   1 name · 2 description · 3 audience «لمن تناسب؟» · 4 help «كيف نساعد؟»
  *   5 documents «المستندات والمعلومات المطلوبة مبدئيًا» + documentsNote · 6 faq · 7 cta (start-consultation band)
  *   optional: 2b types «أنواع شائعة» · 2c destinations «وجهات نعمل عليها» · 2d benefits «مزايا شائعة»
+ *   summary (categories): the short line of brief v3 §7 + its «تناسب:» line — the category cards (Home §1.5c, Visa Services)
  * Destinations are ISO 3166-1 alpha-2 codes ("DE"); names come from src/lib/countries.ts (Intl), never stored.
  * No legal notice on visa pages (removed by the client, brief v3 §6).
  */
@@ -20,6 +21,7 @@ const iso = z.string().regex(/^[A-Z]{2}$/, 'ISO 3166-1 alpha-2 code, e.g. "DE"')
 const localized = z.object({
   name: z.string(),
   description: z.string(),
+  summary: z.object({ text: z.string(), fit: z.string() }).optional(),                              // §7 short line (category cards)
   types: z.array(z.object({ title: z.string().optional(), text: z.string() })).optional(),          // 2b
   destinations: z.array(z.object({ label: z.string().optional(), countries: z.array(iso).min(1) })).optional(), // 2c
   benefits: z.array(z.object({ title: z.string(), text: z.string() })).optional(),                  // 2d

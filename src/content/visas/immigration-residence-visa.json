@@ -5,6 +5,7 @@
   "ar": {
     "name": "الهجرة والإقامة الدائمة",
     "description": "تفكر في الاستقرار طويل المدى أو الإقامة الدائمة في دولة أخرى مع أسرتك؟ نساعدك على فهم مسارات الهجرة المتاحة لوضعك، مثل مسارات الكفاءات والترشيح الإقليمي، وشروطها العامة، ونرشدك في تجهيز ملفك خطوة بخطوة.",
+    "summary": { "text": "للاستقرار طويل المدى أو الإقامة الدائمة في دولة أخرى. نساعدك على فهم المسارات المتاحة لوضعك وتجهيز ملفك.", "fit": "الراغبين في الاستقرار بالخارج مع أسرهم." },
     "types": [
       { "text": "مسارات الكفاءات المهنية (أنظمة النقاط)" },
       { "text": "مسارات الترشيح الإقليمي أو المحلي" },
@@ -47,6 +48,7 @@
   "en": {
     "name": "Immigration & Permanent Residence",
     "description": "Thinking about settling long-term or gaining permanent residence in another country with your family? We help you understand the immigration paths open to you, such as skilled and regional-nomination routes, and their general conditions, and guide you as you prepare your file step by step.",
+    "summary": { "text": "For long-term settlement or permanent residence in another country. We help you understand the paths open to you and prepare your file.", "fit": "those looking to settle abroad with their families." },
     "types": [
       { "text": "Skilled-worker paths (points-based systems)" },
       { "text": "Regional or provincial nomination paths" },

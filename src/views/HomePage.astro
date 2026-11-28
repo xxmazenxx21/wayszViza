@@ -1,24 +1,36 @@
 ---
 /**
- * Home — «رحلة الورق» / "The Paper Journey" (docs/home-creative-treatment.md).
- * Copy: brief part 04 «محتوى موقع WaysZ Visa», Home Page, every element in its order, word for word (Arabic is the
- * source; English is a faithful translation). Additions built on the brief: «أنواع التأشيرات» (part 04 §2.2) and the
- * FAQ (brief v3 §19.1). TODO(step 3): the new Home of brief v3 §4 (1.5b–1.6c, all 9 types / 9 services).
+ * Home — «رحلة الورق» / "The Paper Journey" (docs/home-creative-treatment.md), the sections of brief v3 §4 in order:
+ * 1.0 hero · 1.1 how we help · 1.2–1.5 the four core services · 1.5b extra services · 1.5c visa types (4 groups) ·
+ * 1.5d find your visa · 1.5e why WaysZ Visa · 1.6 steps · 1.6b destinations · 1.6c testimonials · FAQ (§19.1) ·
+ * 1.8 call · 1.9 part of WaysZ. Names and short lines come from src/content/visas/*.json; countries from
+ * src/data/destinations.ts + src/lib/countries.ts; testimonials from src/data/testimonials.ts.
  *
- * ONE stage host (`.paper__stage`, CSS sticky) behind hero → §1.1 → §1.2–1.5: the act `paper` (scene paper-thread)
- * draws the booklet there; the sections scroll over it. §1.8 has its own host for the reprise (scene paper-cta).
- * One file per section in views/home/. css tier / no JS: our own stills of the paper world (render-paper-still.mjs).
+ * Stage hosts (one renderer, the canvas goes to the most visible host):
+ *  - `.paper__stage` (CSS sticky) behind hero → §1.1 → §1.2–1.5: the act `paper` (scene paper-thread).
+ *  - `.hatlas__stage` (CSS sticky) behind §1.6b → §1.6c: the visa template's act `atlas` in its «network» world, reused
+ *    through its contract (scene home-atlas); loaded only near the section.
+ *  - `.pcta__stage` in §1.8: the paper booklet's reprise (scene paper-cta).
+ * Pins: none (every held screen is CSS sticky + a scrubbed ScrollTrigger). §1.5b–1.5e are DOM + GSAP.
+ * css tier / no JS: our own stills (render-paper-still.mjs · render-atlas-still.mjs) — the page is complete without them.
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from './home/Hero.astro';
 import Help from './home/Help.astro';
 import Services from './home/Services.astro';
+import Extras from './home/Extras.astro';
 import Types from './home/Types.astro';
+import Finder from './home/Finder.astro';
+import Why from './home/Why.astro';
+import Destinations from './home/Destinations.astro';
+import Testimonials from './home/Testimonials.astro';
 import Steps from './home/Steps.astro';
 import Faq from './home/Faq.astro';
 import Cta from './home/Cta.astro';
 import Main from './home/Main.astro';
+import { regions } from '../data/destinations';
+import { showTestimonials } from '../data/testimonials';
 import { useTranslations, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -26,6 +38,10 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const visas = (await getCollection('visas')).sort((a, b) => a.data.order - b.data.order);
 const names = Object.fromEntries(visas.map((v) => [v.id, { ar: v.data.ar.name, en: v.data.en.name }]));
+// the globe of §1.6b: one landmark country per region first (the camera rests on region k = stop k), then the rest
+const LANDMARK: Record<string, string> = { schengen: 'DE', europe: 'TR', 'north-america': 'US', oceania: 'AU', asia: 'MY', cbi: 'DM' };
+const landmarks = regions.map((r) => LANDMARK[r.id] ?? r.countries[0]);
+const globe = [...landmarks, ...regions.flatMap((r) => r.countries).filter((c) => !landmarks.includes(c))].join(',');
 ---
 <BaseLayout lang={lang} title={t.pages.home.title} description={t.pages.home.description} preloader headerOverlay>
   <div class="paper theme-dark">
@@ -33,11 +49,28 @@ const names = Object.fromEntries(visas.map((v) => [v.id, { ar: v.data.ar.name, e
     <div class="paper__body">
       <Hero lang={lang} />
       <Help lang={lang} />
-      <Services lang={lang} />
+      <Services lang={lang} names={names} />
     </div>
   </div>
-  <Types lang={lang} names={names} />
+  <Extras lang={lang} />
+  <Types lang={lang} />
+  <Finder lang={lang} />
+  <Why lang={lang} />
   <Steps lang={lang} />
+  <div class="hatlas theme-dark">
+    <div class="hatlas__stage stage-host" data-scene="home-atlas" aria-hidden="true" data-dest={globe} data-legs="0" data-mood="network">
+      <div class="hatlas__still atlas-still">
+        <picture>
+          <source media="(max-width: 1023px)" srcset="/media/img/atlas-network-m.webp" width="780" height="1688" />
+          <img src="/media/img/atlas-network.webp" alt="" width="2400" height="1000" loading="lazy" decoding="async" />
+        </picture>
+      </div>
+    </div>
+    <div class="hatlas__body">
+      <Destinations lang={lang} />
+      {showTestimonials ? <Testimonials lang={lang} /> : <div class="hatlas__tail" data-shot="audience" aria-hidden="true"></div>}
+    </div>
+  </div>
   <Faq lang={lang} />
   <Cta lang={lang} />
   <Main lang={lang} />
@@ -56,6 +89,20 @@ const names = Object.fromEntries(visas.map((v) => [v.id, { ar: v.data.ar.name, e
   .paper__stage.is-drawing ~ .paper__body .paper-still,
   .paper__stage.is-drawing ~ .paper__body .psvc__item.is-active .paper-still,   /* beats the panels' own .is-active rule */
   .pcta__stage.is-drawing ~ .paper-still { opacity: 0; }
+  /* §1.6b → §1.6c: the globe's host sticks to the screen while the two sections scroll over it (also without JS: the
+     still stays behind them). The still sits under the canvas and steps aside while the canvas paints. */
+  .hatlas { position: relative; background: var(--color-bg); }
+  .hatlas__stage { position: sticky; inset: 0 auto auto 0; width: 100%; height: 100vh; height: 100lvh; }
+  .hatlas__body { position: relative; margin-block-start: -100vh; margin-block-start: -100lvh; }
+  .hatlas__stage .stage-canvas { position: relative; z-index: 1; }
+  .hatlas__still { position: absolute; inset: 0; transition: opacity 0.9s var(--ease-out); -webkit-mask: linear-gradient(to bottom, transparent, black 18%, black 78%, transparent); mask: linear-gradient(to bottom, transparent, black 18%, black 78%, transparent); }
+  .hatlas__still img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+  .hatlas__stage.is-drawing .hatlas__still { opacity: 0; }
+  .hatlas__tail { height: 70vh; height: 70lvh; }
+  @media (min-width: 1024px) {
+    .hatlas__still img { object-position: 0% 50%; }
+    [dir='rtl'] .hatlas__still img { object-position: 100% 50%; }
+  }
   /* dev: re-rendering the stills (scripts/render-paper-still.mjs) */
   .is-poster .paper__body, .is-poster .pcta__in, .is-poster .pcta .paper-still { visibility: hidden; }
 </style>

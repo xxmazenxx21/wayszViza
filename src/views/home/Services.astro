@@ -1,27 +1,27 @@
 ---
 /**
- * Home §1.2–1.5 — Visa Consultation · Document Readiness · Application Guidance · Appointment Preparation
- * (brief part 04: Arabic name + the brief's English name + text). Each links to its detail page.
+ * Home §1.2–1.5 — the four core services (brief v3 §4: the same four, the same v2 texts, the names of §3 — read from
+ * src/content/visas/<slug>.json): Arabic name + English name + text. Each links to its detail page.
  * Scene: motion/scenes/paper-services.ts. ONE sticky screen with four rests: each service is a page turn onto its
  * own pop-up diorama (bridge.paper.turn / act). Panels are stacked and faded with opacity only: a focused link
  * scrolls its panel into place. css tier: our four stills cross-fade with the panels. No JS: a plain list.
  */
 import { localizePath, useTranslations, type Lang } from '../../i18n';
 
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; names: Record<string, { ar: string; en: string }> }
+const { lang, names } = Astro.props;
 const t = useTranslations(lang);
-// TODO(step 3): the four core services with their brief v3 §3 names, then §1.5b — the `paper` act's panels were built for these 4.
+// the order of the `paper` act's four dioramas (consultation · documents · form · appointment)
 const items = [
-  { slug: 'visa-consultation', en: 'Visa Consultation', ar: 'استشارة التأشيرة',
+  { slug: 'visa-consultation',
     text: { ar: 'جلسة مخصصة لفهم غرض سفرك ووضعك، وتحديد نوع التأشيرة المناسب ومتطلباته والخطوات المتوقعة.', en: 'A dedicated session to understand the purpose of your trip and your situation, and to identify the right visa type, its requirements and the expected steps.' } },
-  { slug: 'document-readiness', en: 'Document Readiness', ar: 'جاهزية المستندات',
+  { slug: 'document-readiness',
     text: { ar: 'قائمة مستندات مخصصة لحالتك، ومراجعة ما جهزته، وتنبيهك إلى أي نواقص قبل التقديم.', en: 'A document checklist tailored to your case, a review of what you have prepared, and alerts about anything missing before you apply.' } },
-  { slug: 'application-guidance', en: 'Application Guidance', ar: 'الإرشاد في الطلب',
+  { slug: 'application-guidance',
     text: { ar: 'إرشادك خطوة بخطوة في تعبئة نموذج الطلب، وتوضيح كل خانة لتتجنب الأخطاء الشائعة.', en: 'Step-by-step guidance as you fill in the application form, with every field explained so you avoid common mistakes.' } },
-  { slug: 'appointment-preparation', en: 'Appointment Preparation', ar: 'الاستعداد للموعد',
+  { slug: 'appointment-preparation',
     text: { ar: 'تجهيزك لموعد التقديم أو المقابلة: ما الذي تحضره، وكيف تجيب عن الأسئلة المتوقعة بوضوح وصدق.', en: 'Preparing you for your application appointment or interview: what to bring, and how to answer the expected questions clearly and honestly.' } },
-];
+].map((s) => ({ ...s, ...names[s.slug] }));
 ---
 <section class="psvc" data-scene="paper-services" data-shot data-waypoint aria-labelledby="psvc-title">
   <div class="psvc__sticky">

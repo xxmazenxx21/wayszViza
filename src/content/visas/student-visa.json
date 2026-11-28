@@ -5,6 +5,7 @@
   "ar": {
     "name": "تأشيرة الدراسة",
     "description": "حصلت على قبول دراسي بالخارج، أو تستعد للتقديم؟ نرشدك في متطلبات تأشيرة الدراسة للدولة التي تقصدها، ونساعدك على تنظيم مستندات القبول والتمويل، وتقديم خطتك الدراسية بشكل واضح ومقنع.",
+    "summary": { "text": "للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.", "fit": "الطلاب المقبولين أو المتقدمين لبرامج دراسية." },
     "destinations": [
       { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "US", "CA", "AU", "GB", "NZ", "MY"] }
     ],
@@ -44,6 +45,7 @@
   "en": {
     "name": "Student Visa",
     "description": "Have you been accepted to study abroad, or are you getting ready to apply? We guide you through the student visa requirements of the country you are heading to, and help you organize your admission and funding documents and present your study plan clearly and convincingly.",
+    "summary": { "text": "To join universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.", "fit": "admitted students and program applicants." },
     "destinations": [
       { "countries": ["DE", "FR", "ES", "IT", "PT", "NL", "BE", "AT", "SE", "CH", "GR", "MT", "HU", "US", "CA", "AU", "GB", "NZ", "MY"] }
     ],

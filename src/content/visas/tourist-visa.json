@@ -5,6 +5,7 @@
   "ar": {
     "name": "تأشيرة السياحة والزيارة القصيرة",
     "description": "تخطط لرحلة سياحية أو زيارة قصيرة؟ نساعدك على توضيح غرض زيارتك وخط سير رحلتك، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة، ليقدّم ملفك صورة متسقة وواضحة.",
+    "summary": { "text": "للرحلات السياحية والزيارات القصيرة. نساعدك على توضيح غرض الزيارة وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة.", "fit": "المسافرين في رحلات قصيرة المدة." },
     "types": [
       { "text": "دخول لمرة واحدة" },
       { "text": "دخول متعدد خلال فترة محددة" },
@@ -47,6 +48,7 @@
   "en": {
     "name": "Tourist & Short-Visit Visa",
     "description": "Planning a holiday or a short visit? We help you explain the purpose of your visit and your itinerary, and organize your financial documents and proof of your ties to home, so your file gives a consistent, clear picture.",
+    "summary": { "text": "For holidays and short visits. We help you explain your purpose and organize your financial documents and proof of ties to home.", "fit": "travelers on short trips." },
     "types": [
       { "text": "Single entry" },
       { "text": "Multiple entry within a set period" },

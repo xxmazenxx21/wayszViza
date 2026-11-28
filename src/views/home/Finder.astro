@@ -1,0 +1,138 @@
+---
+/**
+ * Home §1.5d «اعرف تأشيرتك» — «محتار تبدأ منين؟» + text + «ابدأ التقييم» → /assessment/ (brief v3 §4 1.5d).
+ * Scene: motion/scenes/paper-finder.ts. Beside the text, a small stack of paper question cards plays a short sample of
+ * the tool (questions of brief v3 §11): an answer is picked on each card, the card flips away, the next one comes up,
+ * and the stack settles on the suggested visa (its name read from the JSON). It is an illustration (aria-hidden); the
+ * real tool is the button. Plays when the section comes into view, again when it comes back. DOM only, no 3D.
+ * No JS: the stack shows its settled state (the suggestion on top).
+ */
+import { getEntry } from 'astro:content';
+import { localizePath, type Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const student = (await getEntry('visas', 'student-visa'))!.data[lang].name;
+const copy = {
+  ar: {
+    title: 'محتار تبدأ منين؟',
+    text: 'أجب عن أسئلة قصيرة، ونرشح لك نوع التأشيرة الأقرب لحالتك والخدمات التي قد تحتاجها. النتيجة مبدئية، والاستشارة هي التي تحدد طريقك بدقة.',
+    button: 'ابدأ التقييم',
+    result: 'بناءً على إجاباتك، قد يناسبك:',
+    // sample answers (the picked one is marked with *)
+    cards: [
+      ['ما الغرض الأساسي من سفرك؟', ['سياحة أو زيارة قصيرة', '*الدراسة', 'وظيفة لديّ عرض بها']],
+      ['هل لديك ما يدعم غرضك؟', ['*نعم', 'ليس بعد', 'لست متأكدًا']],
+      ['متى تخطط للسفر؟', ['خلال شهر', '*خلال 1–3 أشهر', 'لم أحدد بعد']],
+    ] as [string, string[]][],
+  },
+  en: {
+    title: 'Not sure where to start?',
+    text: 'Answer a few short questions and we’ll suggest the visa type closest to your situation and the services you may need. The result is preliminary; your consultation sets your path precisely.',
+    button: 'Start the assessment',
+    result: 'Based on your answers, this may suit you:',
+    cards: [
+      ['What is the main purpose of your trip?', ['Tourism or a short visit', '*Study', 'A job I have an offer for']],
+      ['Do you have something that supports your purpose?', ['*Yes', 'Not yet', 'I’m not sure']],
+      ['When are you planning to travel?', ['Within a month', '*In 1–3 months', 'Not decided yet']],
+    ] as [string, string[]][],
+  },
+}[lang];
+const check = 'M5 12.5l4.2 4L19 7';
+---
+<section class="pfind section theme-dark" data-scene="paper-finder" data-waypoint aria-labelledby="pfind-title">
+  <div class="pfind__glow" aria-hidden="true"></div>
+  <div class="container pfind__in">
+    <div class="pfind__text">
+      <h2 class="pfind__title" id="pfind-title">{copy.title}</h2>
+      <p class="pfind__lead">{copy.text}</p>
+      <a class="btn btn--accent pfind__btn" href={localizePath('/assessment/', lang)} data-magnetic>
+        {copy.button}
+        <svg class="icon-dir" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="pfind__stack" aria-hidden="true">
+      <div class="pfind__sheet pfind__sheet--2"></div>
+      <div class="pfind__sheet pfind__sheet--1"></div>
+      {copy.cards.map(([q, answers], k) => (
+        <div class="pfind__card theme-light" data-card={k}>
+          <p class="pfind__dots">{copy.cards.map((_, d) => <span class={d <= k ? 'is-on' : ''}></span>)}</p>
+          <p class="pfind__q">{q}</p>
+          <ul class="pfind__answers" role="list">
+            {answers.map((a) => (
+              <li class={a.startsWith('*') ? 'pfind__a is-pick' : 'pfind__a'}>
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d={check} /></svg>
+                {a.replace(/^\*/, '')}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="pfind__card pfind__card--result theme-light" data-card="result">
+        <p class="pfind__dots">{copy.cards.map(() => <span class="is-on"></span>)}</p>
+        <p class="pfind__label">{copy.result}</p>
+        <p class="pfind__visa">{student}</p>
+        <svg class="pfind__route" viewBox="0 0 220 40"><path d="M6 30 C 60 30, 120 26, 196 10" /><path class="pfind__plane" d="M210 7 194 15l3-6-5-5 18 3Z" /></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pfind { position: relative; overflow: clip; }
+  .pfind__glow {
+    position: absolute; inset: auto -20% -40% auto; width: 70vmax; height: 70vmax; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent);
+  }
+  :global([dir='rtl']) .pfind__glow { inset: auto auto -40% -20%; }
+  .pfind__in { position: relative; display: grid; gap: var(--space-8); align-items: center; }
+  .pfind__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
+  :global([dir='rtl']) .pfind__title { line-height: 1.4; }
+  .pfind__lead { margin-block-start: var(--space-4); max-width: 46ch; font-size: var(--text-lg); line-height: 1.85; color: color-mix(in srgb, var(--color-ink) 86%, transparent); }
+  .pfind__btn { margin-block-start: var(--space-6); min-height: 54px; gap: var(--space-3); }
+
+  /* the stack: every card in the same place, two blank sheets behind for depth */
+  .pfind__stack { position: relative; display: grid; width: min(100%, 26rem); justify-self: center; perspective: 900px; }
+  .pfind__sheet, .pfind__card { grid-area: 1 / 1; border-radius: var(--radius-lg); }
+  .pfind__sheet { background: color-mix(in srgb, var(--color-surface) 70%, var(--color-ink)); opacity: 0.35; }
+  .pfind__sheet--1 { rotate: 3deg; translate: 0 10px; }
+  .pfind__sheet--2 { rotate: -4deg; translate: 0 18px; opacity: 0.2; }
+  .pfind__card {
+    position: relative; display: grid; align-content: start; gap: var(--space-4); min-height: 19rem;
+    padding: var(--space-6); background: var(--color-surface); color: var(--color-ink);
+    box-shadow: 0 30px 60px -24px color-mix(in srgb, black 80%, transparent);
+    transform-origin: 50% 0;
+  }
+  .pfind__dots { display: flex; gap: 6px; }
+  .pfind__dots span { width: 22px; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--color-ink) 14%, transparent); }
+  .pfind__dots span.is-on { background: var(--color-accent-strong); }
+  .pfind__q { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-xl); line-height: 1.45; }
+  .pfind__answers { display: grid; gap: var(--space-2); }
+  .pfind__a {
+    display: flex; align-items: center; gap: var(--space-3); min-height: 44px; padding-inline: var(--space-4);
+    border-radius: var(--radius-pill); border: 1px solid var(--color-border); font-size: var(--text-sm);
+    transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+  }
+  .pfind__a svg { flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.3s var(--ease-out); }
+  /* picked: always shown without JS; with JS the scene picks it during the sample */
+  .pfind__a.is-pick, :global(.pfind.is-live) .pfind__a.is-picked { background: var(--color-accent-strong); border-color: var(--color-accent-strong); color: var(--color-on-accent); }
+  .pfind__a.is-pick svg, :global(.pfind.is-live) .pfind__a.is-picked svg { opacity: 1; }
+  :global(.pfind.is-live) .pfind__a.is-pick:not(.is-picked) { background: transparent; border-color: var(--color-border); color: var(--color-ink); }
+  :global(.pfind.is-live) .pfind__a.is-pick:not(.is-picked) svg { opacity: 0; }
+  .pfind__card--result { align-content: center; text-align: center; justify-items: center; box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 30px 70px -20px color-mix(in srgb, var(--color-accent) 45%, transparent); }
+  .pfind__card--result .pfind__dots { position: absolute; top: var(--space-6); inset-inline-start: var(--space-6); }
+  .pfind__label { color: var(--color-ink-muted); line-height: 1.6; }
+  .pfind__visa { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.4rem); line-height: 1.3; color: var(--color-accent-ink); }
+  .pfind__route { width: 11rem; height: 2rem; fill: none; stroke: color-mix(in srgb, var(--color-accent) 60%, transparent); stroke-width: 1.6; stroke-dasharray: 2 5; stroke-linecap: round; }
+  .pfind__plane { fill: var(--color-accent); stroke: none; }
+  :global([dir='rtl']) .pfind__route { scale: -1 1; }
+  /* without JS: the settled stack — the suggestion on top, the questions under it */
+  :global(html:not(.js)) .pfind__card:not(.pfind__card--result) { visibility: hidden; }
+
+  @media (min-width: 1024px) {
+    .pfind__in { grid-template-columns: 1.1fr 1fr; }
+    .pfind__stack { justify-self: end; }
+    .pfind__card { min-height: 21rem; padding: var(--space-7); }
+  }
+</style>

@@ -5,6 +5,7 @@
   "ar": {
     "name": "تأشيرة العمل",
     "description": "حصلت على عرض عمل من جهة بالخارج؟ نرشدك في متطلبات تأشيرة العمل، ونساعدك على تنظيم مستندات صاحب العمل ومؤهلاتك وخبراتك، لتقدّم ملفًا واضحًا ومتسقًا.",
+    "summary": { "text": "لمن لديه عرض عمل من جهة بالخارج. نرشدك في مستندات صاحب العمل ومؤهلاتك وخطوات التقديم.", "fit": "أصحاب عروض العمل والمنقولين داخل شركاتهم." },
     "types": [
       { "text": "تأشيرات الكفاءات المهنية" },
       { "text": "تأشيرات العمل المؤقت المرتبطة بصاحب عمل محدد" },
@@ -49,6 +50,7 @@
   "en": {
     "name": "Work Visa",
     "description": "Got a job offer from an employer abroad? We guide you through the work visa requirements and help you organize your employer’s documents, your qualifications and your experience into a clear, consistent file.",
+    "summary": { "text": "For anyone with a job offer from an employer abroad. We guide you through the employer’s documents, your qualifications and the application steps.", "fit": "job-offer holders and intra-company transferees." },
     "types": [
       { "text": "Skilled-worker visas" },
       { "text": "Temporary work visas tied to one employer" },

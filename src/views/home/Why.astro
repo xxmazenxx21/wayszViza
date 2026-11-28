@@ -1,0 +1,111 @@
+---
+/**
+ * Home §1.5e «لماذا WaysZ Visa؟» — «أكثر من تجهيز أوراق» + text + the five points of brief v3 §4 1.5e.
+ * Scene: motion/scenes/paper-why.ts. Not a grid of cards: the five points are the rows of one sheet, torn along
+ * perforated lines. Wide screens: the heading stays beside the sheet (CSS sticky). As each row crosses the screen its
+ * perforation runs across from the reading side (scrubbed) and its icon — our own line drawing — draws itself.
+ * No JS: every row drawn.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = {
+  ar: {
+    title: 'أكثر من تجهيز أوراق',
+    text: 'نرافقك بإرشاد واضح، وخطة تناسب حالتك، واهتمام بكل تفصيلة في ملفك.',
+    items: [
+      ['إرشاد عن خبرة', 'فريق يتابع تحديثات متطلبات السفارات، ويشرح لك المطلوب بلغة بسيطة.'],
+      ['خطة على مقاس حالتك', 'لا قوائم جاهزة؛ نبني خطواتك ومستنداتك على غرض سفرك ووضعك أنت.'],
+      ['وضوح كامل', 'نوضح لك كل خطوة وكل التكاليف قبل أن تبدأ.'],
+      ['وجهات متعددة', 'من أوروبا وأمريكا الشمالية إلى أستراليا، وبرامج الإقامة والجنسية عن طريق الاستثمار بصفتنا وكيلًا معتمدًا.'],
+      ['خصوصية بياناتك', 'نتعامل مع مستنداتك وبياناتك بسرية، ونوضح لك الطريقة الآمنة لمشاركتها.'],
+    ],
+  },
+  en: {
+    title: 'More than paperwork',
+    text: 'We stay with you through clear guidance, a plan that fits your case and attention to every detail of your file.',
+    items: [
+      ['Experienced guidance', 'A team that follows embassy requirement updates and explains what you need in plain language.'],
+      ['A plan built around you', 'No ready-made lists; your steps and documents are built on your purpose and your situation.'],
+      ['Full transparency', 'We explain every step and every cost before you start.'],
+      ['Many destinations', 'From Europe and North America to Australia, plus residency and citizenship by investment programs as an authorized agent.'],
+      ['Your privacy', 'Your documents and data are handled confidentially, and we show you the safe way to share them.'],
+    ],
+  },
+}[lang];
+// our own line icons (48 × 48): a compass · a route to a pin · a lens · a globe with a route · a shield with a lock
+const icons = [
+  'M24 6a18 18 0 1 0 0 36a18 18 0 1 0 0-36M30 18l-4 8-8 4 4-8z',
+  'M8 38c6 0 6-8 12-8s6 6 12 6M34 22c0-4 3-7 6-7M34 22a6 6 0 1 1 12 0c0 5-6 11-6 11s-6-6-6-11',
+  'M21 8a13 13 0 1 0 0 26a13 13 0 1 0 0-26M30.5 30.5 41 41M15 21a6 6 0 0 1 6-6',
+  'M24 6a18 18 0 1 0 0 36a18 18 0 1 0 0-36M6 24h36M24 6c-6 6-6 30 0 36M24 6c6 6 6 30 0 36',
+  'M24 5 39 11v11c0 10-7 17-15 21C16 39 9 32 9 22V11zM18 24h12v9H18zM20 24v-3a4 4 0 0 1 8 0v3',
+];
+---
+<section class="pwhy section" data-scene="paper-why" data-waypoint aria-labelledby="pwhy-title">
+  <div class="container pwhy__in">
+    <header class="pwhy__head">
+      <h2 class="pwhy__title" id="pwhy-title">{copy.title}</h2>
+      <p class="pwhy__text">{copy.text}</p>
+    </header>
+    <ul class="pwhy__sheet" role="list">
+      {copy.items.map(([title, text], i) => (
+        <li class="pwhy__row">
+          <span class="pwhy__perf" aria-hidden="true"></span>
+          <svg class="pwhy__icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true"><path d={icons[i]} /></svg>
+          <div class="pwhy__body">
+            <h3 class="pwhy__name">{title}</h3>
+            <p class="pwhy__line">{text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pwhy { background: var(--color-bg-alt); }
+  .pwhy__in { display: grid; gap: var(--space-7); }
+  .pwhy__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; max-width: 14ch; }
+  :global([dir='rtl']) .pwhy__title { line-height: 1.4; }
+  .pwhy__text { margin-block-start: var(--space-4); max-width: 40ch; font-size: var(--text-lg); line-height: 1.85; color: var(--color-ink-muted); }
+
+  /* the sheet: one paper, its rows torn along perforations */
+  .pwhy__sheet {
+    position: relative; padding: var(--space-3) var(--space-6); border-radius: var(--radius-lg);
+    background: var(--color-surface); box-shadow: var(--shadow-md);
+  }
+  .pwhy__row { position: relative; display: grid; grid-template-columns: auto 1fr; gap: var(--space-5); align-items: start; padding-block: var(--space-6); }
+  .pwhy__perf {
+    position: absolute; inset-inline: 0; top: 0; height: 0;
+    border-block-start: 2px dashed color-mix(in srgb, var(--color-ink) 18%, transparent);
+    transform-origin: 0 50%;
+  }
+  :global([dir='rtl']) .pwhy__perf { transform-origin: 100% 50%; }
+  .pwhy__row:first-child .pwhy__perf { display: none; }
+  /* the two punched notches at each end of a perforation */
+  .pwhy__row:not(:first-child)::before, .pwhy__row:not(:first-child)::after {
+    content: ''; position: absolute; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--color-bg-alt);
+  }
+  .pwhy__row:not(:first-child)::before { inset-inline-start: calc(-1 * var(--space-6) - 9px); }
+  .pwhy__row:not(:first-child)::after { inset-inline-end: calc(-1 * var(--space-6) - 9px); }
+  .pwhy__icon { width: 3rem; height: 3rem; fill: none; stroke: var(--color-accent-ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .pwhy__name { font-size: var(--text-xl); line-height: 1.4; }
+  .pwhy__line { margin-block-start: var(--space-2); color: var(--color-ink-muted); line-height: 1.8; max-width: 52ch; }
+
+  @media (max-width: 639px) {
+    .pwhy__sheet { padding-inline: var(--space-5); }
+    .pwhy__row:not(:first-child)::before { inset-inline-start: calc(-1 * var(--space-5) - 9px); }
+    .pwhy__row:not(:first-child)::after { inset-inline-end: calc(-1 * var(--space-5) - 9px); }
+    .pwhy__row { gap: var(--space-4); }
+    .pwhy__icon { width: 2.5rem; height: 2.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .pwhy__in { grid-template-columns: 1fr 1.35fr; gap: var(--space-9); align-items: start; }
+    .pwhy__head { position: sticky; top: calc(76px + var(--space-7)); }
+    .pwhy__sheet { padding-inline: var(--space-7); }
+    .pwhy__row:not(:first-child)::before { inset-inline-start: calc(-1 * var(--space-7) - 9px); }
+    .pwhy__row:not(:first-child)::after { inset-inline-end: calc(-1 * var(--space-7) - 9px); }
+  }
+</style>

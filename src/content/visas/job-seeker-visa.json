@@ -5,6 +5,7 @@
   "ar": {
     "name": "تأشيرة البحث عن عمل",
     "description": "تريد دخول دولة للبحث عن عمل فيها بنفسك؟ بعض الدول تمنح أصحاب المؤهلات والخبرات المطلوبة تأشيرة مؤقتة لهذا الغرض. نساعدك على فهم شروطها العامة، وتجهيز ملف مؤهلاتك وخطة بحثك.",
+    "summary": { "text": "للمهنيين الذين يريدون دخول دولة للبحث عن عمل فيها. نساعدك على فهم الشروط العامة وتجهيز ملف مؤهلاتك وخطة بحثك.", "fit": "أصحاب المهارات والخبرات المطلوبة." },
     "destinations": [
       { "countries": ["DE", "AT", "SE", "PT", "NL", "BE"] }
     ],
@@ -43,6 +44,7 @@
   "en": {
     "name": "Job Seeker Visa",
     "description": "Want to enter a country to look for work there yourself? Some countries grant qualified, experienced professionals a temporary visa for this purpose. We help you understand its general conditions and prepare your qualifications file and job search plan.",
+    "summary": { "text": "For professionals who want to enter a country to look for work there. We help you understand the general conditions and prepare your qualifications file and search plan.", "fit": "skilled, experienced professionals." },
     "destinations": [
       { "countries": ["DE", "AT", "SE", "PT", "NL", "BE"] }
     ],

@@ -5,6 +5,7 @@
   "ar": {
     "name": "الإقامة والجنسية عن طريق الاستثمار",
     "description": "برامج تتيح لك ولأسرتك الإقامة في دولة جديدة، أو الحصول على جنسية ثانية، مقابل استثمار مؤهل وفق شروط كل دولة. بصفتنا وكيلًا معتمدًا، نساعدك على مقارنة البرامج المناسبة لأهدافك، وفهم متطلباتها العامة، ونرافقك في تجهيز ملفك ومتابعته حتى صدور القرار.",
+    "summary": { "text": "برامج تمنح الإقامة أو جنسية ثانية مقابل استثمار مؤهل. بصفتنا وكيلًا معتمدًا، نساعدك على مقارنة البرامج وتجهيز ملفك.", "fit": "الأفراد والعائلات الباحثين عن إقامة أو جنسية ثانية." },
     "types": [
       { "title": "الجنسية عن طريق الاستثمار", "text": "جنسية ثانية وجواز سفر للمستثمر وأسرته، وغالبًا دون اشتراط الانتقال للإقامة." },
       { "title": "الإقامة عن طريق الاستثمار", "text": "إقامة طويلة أو دائمة للمستثمر وأسرته، وقد تفتح لاحقًا طريقًا للجنسية بشروط ومدد تحددها الدولة." },
@@ -58,6 +59,7 @@
   "en": {
     "name": "Residency & Citizenship by Investment",
     "description": "Programs that let you and your family live in a new country, or obtain a second citizenship, in return for a qualifying investment under each country’s rules. As an authorized agent, we help you compare the programs that fit your goals, understand their general requirements, and support you in preparing and following your file until a decision is made.",
+    "summary": { "text": "Programs that grant residency or a second citizenship in return for a qualifying investment. As an authorized agent, we help you compare programs and prepare your file.", "fit": "individuals and families seeking residency or a second citizenship." },
     "types": [
       { "title": "Citizenship by investment", "text": "A second citizenship and passport for the investor and their family, often without a requirement to relocate." },
       { "title": "Residency by investment", "text": "Long-term or permanent residence for the investor and their family, which may later open a path to citizenship under conditions and timeframes set by the country." },

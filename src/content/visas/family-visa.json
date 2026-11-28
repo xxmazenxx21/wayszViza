@@ -5,6 +5,7 @@
   "ar": {
     "name": "التأشيرة العائلية",
     "description": "تريد زيارة أقاربك أو الالتحاق بأفراد أسرتك المقيمين بالخارج؟ نرشدك في إثبات صلة القرابة، وتجهيز مستندات الداعي، وتنظيم ملفك بحيث يعكس غرض زيارتك بوضوح.",
+    "summary": { "text": "لزيارة الأقارب بدعوة منهم أو الالتحاق بأفراد الأسرة بالخارج. نرشدك في إثبات صلة القرابة وتجهيز مستندات الداعي.", "fit": "من لديه أقارب أو زوج أو زوجة بالخارج." },
     "types": [
       { "text": "زيارة عائلية بدعوة يتحمل فيها المسافر تكاليف رحلته" },
       { "text": "زيارة عائلية يتكفل فيها الداعي بالإقامة والتكاليف" },
@@ -48,6 +49,7 @@
   "en": {
     "name": "Family Visa",
     "description": "Want to visit your relatives, or join family members who live abroad? We guide you on proving your family relationship, preparing the inviting person’s documents, and organizing your file so it shows the purpose of your visit clearly.",
+    "summary": { "text": "To visit relatives on their invitation or join family members abroad. We guide you on proving the relationship and preparing the host’s documents.", "fit": "anyone with relatives or a spouse abroad." },
     "types": [
       { "text": "Family visit where the traveler covers the trip" },
       { "text": "Family visit where the host covers stay and costs" },

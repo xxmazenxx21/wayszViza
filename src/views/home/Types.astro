@@ -1,81 +1,147 @@
 ---
 /**
- * Home — «أنواع التأشيرات» (addition, built on brief part 04 §2.2): the five categories as cards with a photo, the
- * brief's short description and its «تناسب:» line, each linking to its detail page; + «لست متأكدًا من نوع تأشيرتك؟»
- * → the consultation page. Light motion only (data-reveal). Photos: docs/media-credits.md (Pexels).
+ * Home §1.5c «أنواع التأشيرات» — «ما غرض رحلتك؟» + text + the nine categories in the four groups of brief v3 §2
+ * (Visit · Study · Work · Residence & investment). Each card: photo + name + the §7 short line and its «تناسب:» line
+ * (`summary` in src/content/visas/<slug>.json) + a link to its page. The last card «لست متأكدًا من نوع تأشيرتك؟» goes to
+ * the assessment tool (/assessment/), not the consultation.
+ * Scene: motion/scenes/paper-tabs.ts. The groups are the index tabs of a paper folder (ARIA tabs, arrow keys): choosing
+ * one deals its cards onto the folder like sheets laid on a desk. Phones: the four tabs in a 2 × 2 grid, the cards in a
+ * column. No JS: every group in turn with its heading, all nine cards. Photos: docs/media-credits.md (Pexels).
  */
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { visaGroups, type VisaGroup } from '../../content.config';
 import { localizePath, useTranslations, type Lang } from '../../i18n';
-import student from '../../assets/media/visa-student.jpg';
-import business from '../../assets/media/visa-business.jpg';
-import immigration from '../../assets/media/visa-immigration.jpg';
-import family from '../../assets/media/visa-family.jpg';
 import tourist from '../../assets/media/visa-tourist.jpg';
+import family from '../../assets/media/visa-family.jpg';
+import business from '../../assets/media/visa-business.jpg';
+import student from '../../assets/media/visa-student.jpg';
+import work from '../../assets/media/visa-work.jpg';
+import jobSeeker from '../../assets/media/visa-job-seeker.jpg';
+import immigration from '../../assets/media/visa-immigration.jpg';
+import investor from '../../assets/media/visa-investor.jpg';
+import investment from '../../assets/media/visa-investment.jpg';
 
-interface Props { lang: Lang; names: Record<string, { ar: string; en: string }> }
-const { lang, names } = Astro.props;
+interface Props { lang: Lang }
+const { lang } = Astro.props;
 const t = useTranslations(lang);
-const suits = { ar: 'تناسب:', en: 'Suited to:' }[lang];
-// TODO(step 3): show all 9 categories in their 4 groups (brief v3 §4 1.5c) — this section was built for these 5.
-const cards = [
-  { slug: 'student-visa', img: student, en: 'Student Visa',
-    text: { ar: 'للالتحاق بالجامعات والمعاهد وبرامج اللغة بالخارج. نساعدك على تنظيم مستندات القبول والتمويل وخطتك الدراسية.', en: 'For enrolling in universities, institutes and language programs abroad. We help you organize your admission and funding documents and your study plan.' },
-    fit: { ar: 'الطلاب المقبولين أو المتقدمين لبرامج دراسية.', en: 'Students who have been accepted to, or are applying for, study programs.' } },
-  { slug: 'business-visa', img: business, en: 'Business Visa',
-    text: { ar: 'لحضور الاجتماعات والمعارض والمؤتمرات الدولية أو زيارة الشركاء. نرشدك في خطابات الدعوة ومستندات جهة العمل.', en: 'For attending meetings and international exhibitions and conferences, or visiting partners. We guide you on invitation letters and your employer’s documents.' },
-    fit: { ar: 'رجال الأعمال والعارضين والمشاركين في المؤتمرات.', en: 'Business people, exhibitors and conference participants.' } },
-  { slug: 'immigration-residence-visa', img: immigration, en: 'Immigration & Residence Visa',
-    text: { ar: 'للإقامة الطويلة أو العمل أو الهجرة إلى دولة أخرى. نساعدك على فهم البرامج المتاحة وشروطها وتجهيز ملفك.', en: 'For a long stay, work or immigration to another country. We help you understand the available programs and their conditions, and prepare your file.' },
-    fit: { ar: 'الراغبين في الإقامة أو العمل أو الاستقرار بالخارج.', en: 'People who want to live, work or settle abroad.' } },
-  { slug: 'family-visa', img: family, en: 'Family Visa',
-    text: { ar: 'لزيارة الأقارب أو الالتحاق بأفراد الأسرة المقيمين بالخارج. نرشدك في إثبات صلة القرابة وتجهيز مستندات الداعي.', en: 'For visiting relatives or joining family members who live abroad. We guide you on proving your relationship and preparing the inviting person’s documents.' },
-    fit: { ar: 'من لديهم أقارب من الدرجة الأولى أو أزواج بالخارج.', en: 'People with first-degree relatives or a spouse abroad.' } },
-  { slug: 'tourist-visa', img: tourist, en: 'Tourist Visa',
-    text: { ar: 'للزيارات القصيرة. نساعدك على توضيح غرض الزيارة، وتنظيم مستنداتك المالية وما يثبت ارتباطك بالعودة.', en: 'For short visits. We help you explain the purpose of your visit and organize your financial documents and proof of your ties to home.' },
-    fit: { ar: 'المسافرين في زيارات قصيرة المدة.', en: 'Travelers on short visits.' } },
-];
-const unsure = {
-  ar: { title: 'لست متأكدًا من نوع تأشيرتك؟', text: 'أخبرنا بغرض سفرك ووجهتك ومدة إقامتك، وسنساعدك على تحديد الفئة المناسبة ومتطلباتها قبل أن تبدأ.' },
-  en: { title: 'Not sure which visa you need?', text: 'Tell us the purpose of your trip, your destination and how long you plan to stay, and we’ll help you identify the right category and its requirements before you start.' },
+const photos: Record<string, ImageMetadata> = {
+  'tourist-visa': tourist, 'family-visa': family, 'business-visa': business, 'student-visa': student, 'work-visa': work,
+  'job-seeker-visa': jobSeeker, 'immigration-residence-visa': immigration, 'investor-visa': investor,
+  'investment-residency-citizenship': investment,
+};
+const categories = (await getCollection('visas'))
+  .flatMap((e) => (e.data.kind === 'category' ? [{ id: e.id, ...e.data }] : []))
+  .sort((a, b) => a.order - b.order);
+const groups = visaGroups.map((g) => ({ id: g, label: t.nav.groups[g], items: categories.filter((c) => c.group === g) }));
+const copy = {
+  ar: {
+    title: 'ما غرض رحلتك؟',
+    text: 'اختر غرض سفرك، ونوضح لك نوع التأشيرة الأقرب له ومتطلباته العامة.',
+    unsure: 'لست متأكدًا من نوع تأشيرتك؟',
+    unsureText: 'أجب عن أسئلة قصيرة في أقل من دقيقة، ونرشح لك نوع التأشيرة الأقرب لحالتك.',
+  },
+  en: {
+    title: 'What is your trip for?',
+    text: 'Choose why you are traveling, and we’ll show you the visa type that fits it best and its general requirements.',
+    unsure: 'Not sure which visa you need?',
+    unsureText: 'Answer a few short questions in under a minute and we’ll suggest the visa type closest to your situation.',
+  },
 }[lang];
+// our own line icons (24 × 24): a suitcase · an open book · a briefcase · a house with a key
+const icons: Record<VisaGroup, string> = {
+  visit: 'M5 8h14v11H5zM9 8V5h6v3M9 8v11M15 8v11M7 21v-2M17 21v-2',
+  study: 'M3 6c3-1 6-1 9 1 3-2 6-2 9-1v13c-3-1-6-1-9 1-3-2-6-2-9-1zM12 7v13',
+  work: 'M3 8h18v11H3zM8 8V5h8v3M3 13h18M11 12h2v2h-2z',
+  residence: 'M4 11 12 4l8 7M6 9.5V20h12V9.5M10 20v-5h4v5',
+};
 ---
-<section class="ptypes section" data-waypoint aria-labelledby="ptypes-title">
+<section class="ptypes section" id="visa-types" data-scene="paper-tabs" data-waypoint aria-labelledby="ptypes-title">
   <div class="container">
-    <h2 class="ptypes__title" id="ptypes-title" data-reveal>{t.nav.categories}</h2>
-    <ul class="ptypes__grid" role="list">
-      {cards.map((c) => (
-        <li class="ptype" data-reveal>
-          <a class="ptype__link" href={localizePath(`/visa-services/${c.slug}/`, lang)}>
-            <div class="ptype__media">
-              <Image src={c.img} alt="" widths={[420, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw" format="webp" quality={66} loading="lazy" decoding="async" />
-            </div>
-            <div class="ptype__body">
-              {lang === 'ar' && <p class="ptype__en" lang="en" dir="ltr">{c.en}</p>}
-              <h3 class="ptype__name">{names[c.slug]?.[lang] ?? c.en}</h3>
-              <p class="ptype__text">{c.text[lang]}</p>
-              <p class="ptype__fit"><strong>{suits}</strong>{' '}{c.fit[lang]}</p>
-            </div>
-          </a>
-        </li>
+    <header class="ptypes__head">
+      <h2 class="ptypes__title" id="ptypes-title">{copy.title}</h2>
+      <p class="ptypes__text">{copy.text}</p>
+    </header>
+
+    <div class="ptypes__tabs" role="tablist" aria-labelledby="ptypes-title" hidden>
+      {groups.map((g, i) => (
+        <button class="ptypes__tab" type="button" role="tab" id={`ptab-${g.id}`} aria-controls={`ppanel-${g.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d={icons[g.id]} /></svg>
+          <span>{g.label}</span>
+        </button>
       ))}
-      <li class="ptype ptype--unsure" data-reveal>
-        <div class="ptype__body">
-          <h3 class="ptype__name">{unsure.title}</h3>
-          <p class="ptype__text">{unsure.text}</p>
-          <a class="link-arrow ptype__more" href={localizePath('/consultation/', lang)}>
-            {t.cta.request}
-            <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+    </div>
+
+    <div class="ptypes__folder">
+      {groups.map((g) => (
+        <div class="ptypes__panel" id={`ppanel-${g.id}`} data-group={g.id}>
+          <h3 class="ptypes__group">{g.label}</h3>
+          <ul class="ptypes__grid" role="list" data-n={g.items.length}>
+            {g.items.map((c) => (
+              <li class="ptype">
+                <a class="ptype__link" href={localizePath(`/visa-services/${c.id}/`, lang)}>
+                  <div class="ptype__media">
+                    <Image src={photos[c.id]} alt="" widths={[420, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw" format="webp" quality={66} loading="lazy" decoding="async" />
+                  </div>
+                  <div class="ptype__body">
+                    {lang === 'ar' && <p class="ptype__en" lang="en" dir="ltr">{c.en.name}</p>}
+                    <h4 class="ptype__name">{c[lang].name}</h4>
+                    <p class="ptype__text">{c[lang].summary?.text}</p>
+                    {c[lang].summary && <p class="ptype__fit"><strong>{t.visa.suits}</strong>{' '}{c[lang].summary!.fit}</p>}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-      </li>
-    </ul>
+      ))}
+    </div>
+
+    <a class="ptypes__unsure theme-dark" href={localizePath('/assessment/', lang)}>
+      <svg class="ptypes__compass" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" /><circle cx="24" cy="24" r="15" stroke-dasharray="2 4" /><path class="ptypes__needle" d="M24 10l4.5 14L24 38l-4.5-14Z" /></svg>
+      <span class="ptypes__unsure-body">
+        <span class="ptypes__unsure-title">{copy.unsure}</span>
+        <span class="ptypes__unsure-text">{copy.unsureText}</span>
+      </span>
+      <span class="ptypes__unsure-go">
+        {t.nav.findVisa}
+        <svg class="icon-dir" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
   </div>
 </section>
 
 <style>
-  .ptypes { background: var(--color-bg); }
+  .ptypes { background: var(--color-bg); overflow-x: clip; }   /* dealt cards arrive tilted: never a sideways scroll */
   .ptypes__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); line-height: 1.25; }
-  .ptypes__grid { display: grid; gap: var(--space-5); margin-block-start: var(--space-7); grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  :global([dir='rtl']) .ptypes__title { line-height: 1.4; }
+  .ptypes__text { margin-block-start: var(--space-4); max-width: 46ch; font-size: var(--text-lg); line-height: 1.8; color: var(--color-ink-muted); }
+
+  /* the index tabs of the folder */
+  .ptypes__tabs { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); margin-block-start: var(--space-7); }
+  .ptypes__tabs[hidden] { display: none; }
+  .ptypes__tab {
+    position: relative; display: flex; align-items: center; gap: var(--space-3); min-height: 56px;
+    padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
+    font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-base); line-height: 1.3; text-align: start;
+    color: var(--color-ink); background: var(--color-bg-alt); border: 1px solid var(--color-border);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .ptypes__tab svg { flex: none; fill: none; stroke: var(--color-accent-ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-base) var(--ease-out); }
+  .ptypes__tab:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .ptypes__tab[aria-selected='true'] { background: var(--color-brand); color: var(--color-on-brand); border-color: var(--color-brand); box-shadow: var(--shadow-md); }
+  .ptypes__tab[aria-selected='true'] svg { stroke: var(--color-accent); }
+
+  .ptypes__folder { margin-block-start: var(--space-6); }
+  .ptypes__panel + .ptypes__panel { margin-block-start: var(--space-8); }
+  .ptypes__group { font-size: var(--text-xl); margin-block-end: var(--space-4); }
+  .ptypes__grid { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+
+  /* with JS: tabs; one panel at a time (the others are `hidden` by the scene); the group's name is the tab */
+  :global(.is-tabs) .ptypes__panel + .ptypes__panel { margin-block-start: 0; }
+  :global(.is-tabs) .ptypes__group { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .ptypes__panel:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 8px; border-radius: var(--radius-lg); }
+
   .ptype { border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; }
   .ptype__link { display: flex; flex-direction: column; width: 100%; text-decoration: none; color: inherit; }
   .ptype__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-bg-alt); }
@@ -88,8 +154,41 @@ const unsure = {
   .ptype__text { color: var(--color-ink-muted); line-height: 1.8; }
   .ptype__fit { font-size: var(--text-sm); color: var(--color-ink-muted); margin-block-start: var(--space-2); }
   .ptype__fit strong { color: var(--color-ink); font-weight: var(--weight-bold); }
-  .ptype--unsure { background: var(--color-brand); color: var(--color-on-brand); align-items: end; }
-  .ptype--unsure .ptype__body { padding: var(--space-7) var(--space-6); }
-  .ptype--unsure .ptype__text { color: color-mix(in srgb, var(--color-on-brand) 82%, transparent); }
-  .ptype__more { color: var(--color-on-brand); font-weight: var(--weight-bold); text-decoration: none; margin-block-start: var(--space-4); }
+
+  /* «لست متأكدًا…»: the last card, a night slip with a compass → the assessment */
+  .ptypes__unsure {
+    display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--space-4) var(--space-5);
+    margin-block-start: var(--space-6); padding: var(--space-6); border-radius: var(--radius-lg);
+    background: var(--color-bg); text-decoration: none; color: var(--color-ink); box-shadow: var(--shadow-md);
+  }
+  .ptypes__compass { width: 3.5rem; height: 3.5rem; fill: none; stroke: color-mix(in srgb, var(--color-accent) 70%, transparent); stroke-width: 1.6; transition: rotate var(--dur-slow) var(--ease-out); }
+  .ptypes__needle { fill: var(--color-accent); stroke: none; transform-origin: 24px 24px; transition: rotate 1.2s var(--ease-out); }
+  .ptypes__unsure:hover .ptypes__needle, .ptypes__unsure:focus-visible .ptypes__needle { rotate: 200deg; }
+  .ptypes__unsure-body { display: grid; gap: var(--space-2); }
+  .ptypes__unsure-title { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-xl); line-height: 1.35; }
+  .ptypes__unsure-text { color: var(--color-ink-muted); line-height: 1.75; }
+  .ptypes__unsure-go { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--weight-bold); color: var(--color-link); }
+  .ptypes__unsure-go svg { transition: translate var(--dur-base) var(--ease-out); }
+  .ptypes__unsure:hover .ptypes__unsure-go svg { translate: calc(6px * var(--dir, 1)) 0; }
+  :global([dir='rtl']) .ptypes__unsure { --dir: -1; }
+
+  @media (max-width: 479px) {
+    .ptypes__tab { gap: var(--space-2); padding-inline: var(--space-3); font-size: var(--text-sm); }
+    .ptypes__tab svg { width: 22px; height: 22px; }
+  }
+  @media (min-width: 640px) {
+    .ptypes__grid[data-n='2'] { grid-template-columns: repeat(2, 1fr); }
+    /* one card in a group (study): a wide card, the photo beside the text */
+    .ptypes__grid[data-n='1'] .ptype__link { display: grid; grid-template-columns: 1.1fr 1fr; }
+    .ptypes__grid[data-n='1'] .ptype__media { aspect-ratio: auto; min-height: 18rem; }
+    .ptypes__grid[data-n='1'] .ptype__body { align-content: center; padding: var(--space-7); }
+    .ptypes__unsure { grid-template-columns: auto 1fr auto; }
+    .ptypes__unsure-go { grid-column: auto; }
+  }
+  @media (min-width: 1024px) {
+    .ptypes__tabs { grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
+    .ptypes__tab { min-height: 64px; font-size: var(--text-lg); padding-inline: var(--space-5); }
+    .ptypes__grid[data-n='3'] { grid-template-columns: repeat(3, 1fr); }
+    .ptypes__grid[data-n='1'] .ptype__name { font-size: var(--text-2xl); }
+  }
 </style>
